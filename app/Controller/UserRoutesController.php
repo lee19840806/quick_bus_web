@@ -153,4 +153,9 @@ class UserRoutesController extends AppController {
             $this->set('navPoints', $navPoints);
         }
     }
+    
+    public function ajaxCheckRouteName()
+    {
+        
+    }
 }

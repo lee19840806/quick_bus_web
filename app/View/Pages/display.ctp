@@ -1,43 +1,40 @@
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jENePgN7TufGt711E1uIb7BA"></script>
 <div class="row">
     <div class="col-md-3">
-        <h4>How to use?</h4>
+        <strong>如何使用</strong>
         <ol style="padding-left: 20px">
-            <li>Set a <strong>unique</strong> route name</li>
-            <li><strong>Click the map</strong> to add navigation points (at least 2 points)</li>
-            <li>Click the button <strong>"Submit"</strong></li>
+            <li>输入一个唯一的路线名（字母+数字）</li>
+            <li>点击地图，添加或修改路线</li>
+            <li>点击“提交此路线”</li>
         </ol>
         <div><hr/></div>
-        <form class="form-horizontal" action="/UserRoutes/submit" method="post">
+        <form class="col-md-12 form-horizontal" action="/UserRoutes/submit" method="post">
             <div style="display:none;">
                 <input type="hidden" name="_method" value="POST"/>
             </div>
             <div class="form-group">
-                <label class="col-md-5 control-label">Route&nbsp;Name</label>
-                <div class="col-md-7">
+                <label class="pull-left control-label">路线名</label>
+                <div>
                     <input type="text" name="data[UserRoute][name]" class="form-control" required="required"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="pull-left control-label" style="margin-left: 15px">Points&nbsp;Selected</label>
-                <div class="col-md-12">
+                <label class="pull-left control-label">已添加以下导航点</label>
+                <div>
                     <textarea class="form-control input-sm" id="points" name="data[UserRoute][points]" rows="6" readonly></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-warning btn-xs" id="btnReset">Reset</button>
-                    <button type="button" class="btn btn-warning btn-xs" id="btnRemovePoint">Remove&nbsp;Last&nbsp;Point</button>
-                </div>
+                    <button type="button" class="btn btn-warning btn-xs" id="btnReset">重置</button>
+                    <button type="button" class="btn btn-warning btn-xs" id="btnRemovePoint">删除一个导航点</button>
             </div>
-            <div><hr/></div>
             <div class="form-group">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary btn-block">Submit The Route</button>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-block" id="btnSubmit"><strong>提交此线路</strong></button>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-12">
+                <div>
                     <input type="hidden" name="navPoints" id="hidden_vars"/>
                 </div>
             </div>
@@ -126,10 +123,21 @@
                 $("#hidden_vars").val("");
                 $("#hidden_vars").val(JSON.stringify(navPoints));
             };
+            
+        var eventBeforeRouteSubmit =
+            function(e)
+            {
+                e.preventDefault();
+            };
+            
+        var eventAjaxRouteName =
+            $.ajax
+            );
         
         map.addEventListener("click", eventAddingPoints);
         polyline.addEventListener("lineupdate", lineUpdate);
         $("#btnReset").click(eventReset);
         $("#btnRemovePoint").click(eventRemovePoint);
+        $("#btnSubmit").click(eventBeforeRouteSubmit);
     </script>
 </div>
