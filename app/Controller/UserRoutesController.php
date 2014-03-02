@@ -24,8 +24,8 @@ class UserRoutesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator', 'Session');
-
-/**
+    
+    /**
  * index method
  *
  * @return void
@@ -156,6 +156,28 @@ class UserRoutesController extends AppController {
     
     public function ajaxCheckRouteName()
     {
-        
+//        if ($this->request->is('ajax'))
+//        {
+//            $findResult = $this->UserRoute->find('first', array(
+//                'conditions' => array(
+//                    'user_id' => $this->Auth->user('id'),
+//                    'name' => $this->request->data['routeName']
+//                    )
+//                )
+//            );
+            
+//            if (count($findResult) == 0)
+//            {
+//                $this->set('is_available', 'yes');
+//            }
+//            else
+//            {
+//                $this->set('is_available', 'no');
+//            }
+
+            $aaa = $this->request->data('routeName');
+            $this->set('is_available', $aaa);
+            $this->render('/UserRoutes/ajaxReturn', 'ajax');
+//        }
     }
 }

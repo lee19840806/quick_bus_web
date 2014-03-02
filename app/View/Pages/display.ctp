@@ -8,14 +8,14 @@
             <li>点击“提交此路线”</li>
         </ol>
         <div><hr/></div>
-        <form class="col-md-12 form-horizontal" action="/UserRoutes/submit" method="post">
+        <form class="col-md-12 form-horizontal" id="formRouteInfo" action="/UserRoutes/submit" method="post">
             <div style="display:none;">
                 <input type="hidden" name="_method" value="POST"/>
             </div>
             <div class="form-group">
                 <label class="pull-left control-label">路线名</label>
                 <div>
-                    <input type="text" name="data[UserRoute][name]" class="form-control" required="required"/>
+                    <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"/>
                 </div>
             </div>
             <div class="form-group">
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <div>
-                    <button type="submit" class="btn btn-primary btn-block" id="btnSubmit"><strong>提交此线路</strong></button>
+                    <button type="button" class="btn btn-primary btn-block" id="btnSubmit"><strong>提交此线路</strong></button>
                 </div>
             </div>
             <div class="form-group">
@@ -127,12 +127,29 @@
         var eventBeforeRouteSubmit =
             function(e)
             {
-                e.preventDefault();
+                var aaa = $("#inputRouteName").val();
+                $.ajax(
+                {
+                    url: "/UserRoutes/ajaxCheckRouteName",
+                    data: {routeName: $("#inputRouteName").val()},
+//                    dataType: "json",
+                    type: "POST",
+                    success: function(json) {alert("ajax success " + json);
+//                        if (json)
+//                        {
+//                            $("#formRouteInfo").submit();
+//                        }
+//                        else
+//                        {
+//                            alert("已存在相同的路线名，请输入一个新的路线名");
+//                        }
+                    },
+                    error: function(xhr, status) {
+                        alert("无法提交线路，请稍后再试" + "json: " + xhr + "; " + status);
+                    }
+                }
+                );
             };
-            
-        var eventAjaxRouteName =
-            $.ajax
-            );
         
         map.addEventListener("click", eventAddingPoints);
         polyline.addEventListener("lineupdate", lineUpdate);

@@ -30,9 +30,6 @@
 		echo $this->Html->meta('icon');
 
 //		echo $this->Html->css('cake.generic');
-//        echo $this->Html->css('skeleton/base');
-//        echo $this->Html->css('skeleton/layout');
-//        echo $this->Html->css('skeleton/skeleton');
         echo $this->Html->css('bootstrap');
 
 		echo $this->fetch('meta');
