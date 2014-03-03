@@ -127,27 +127,47 @@
         var eventBeforeRouteSubmit =
             function(e)
             {
-                var aaa = $("#inputRouteName").val();
-                $.ajax(
+                if ($("#inputRouteName").val() === "")
                 {
-                    url: "/UserRoutes/ajaxCheckRouteName",
-                    data: {routeName: $("#inputRouteName").val()},
-//                    dataType: "json",
-                    type: "POST",
-                    success: function(json) {alert("ajax success " + json);
-//                        if (json)
-//                        {
-//                            $("#formRouteInfo").submit();
-//                        }
-//                        else
-//                        {
-//                            alert("已存在相同的路线名，请输入一个新的路线名");
-//                        }
-                    },
-                    error: function(xhr, status) {
-                        alert("无法提交线路，请稍后再试" + "json: " + xhr + "; " + status);
-                    }
+                    alert("请填写一个有效的路线名");
+                    $("#inputRouteName").fadeOut();
+                    $("#inputRouteName").fadeIn();
+                    $("#inputRouteName").focus();
+                    return;
                 }
+                
+                if (polyline.getPath().length < 2)
+                {
+                    alert("请至少在地图上点取2个导航点，组成有效的线路");
+                    $("#baidu_map").fadeOut();
+                    $("#baidu_map").fadeIn();
+                    $("#baidu_map").focus();
+                    return;
+                }
+                
+                $.ajax(
+                    {
+                        url: "/UserRoutes/ajaxCheckRouteName",
+                        data: {routeName: $("#inputRouteName").val()},
+                        type: "POST",
+                        timeout: 1500,
+                        success: function(result) {
+                            if (result === "yes")
+                            {
+                                $("#formRouteInfo").submit();
+                            }
+                            else
+                            {
+                                alert("已存在相同的路线名，请输入一个新的路线名");
+                                $("#inputRouteName").fadeOut();
+                                $("#inputRouteName").fadeIn();
+                                $("#inputRouteName").focus();
+                            }
+                        },
+                        error: function(xhr, status) {
+                            alert("无法提交线路，请稍后再试");
+                        }
+                    }
                 );
             };
         
