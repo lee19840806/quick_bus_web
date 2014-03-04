@@ -1,41 +1,87 @@
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jENePgN7TufGt711E1uIb7BA"></script>
 <div class="row">
     <div class="col-md-3">
-        <strong>如何使用</strong>
-        <ol style="padding-left: 20px">
-            <li>输入一个唯一的路线名（字母+数字）</li>
-            <li>点击地图，添加或修改路线</li>
-            <li>点击“提交此路线”</li>
-        </ol>
+        <div id="divHelpFirstStep">
+            <strong>第1步，设置线路</strong>
+            <ol style="padding-left: 20px">
+                <li>输入一个唯一的路线名（字母+数字）</li>
+                <li>点击地图，添加或修改路线</li>
+                <li>点击“下一步，设置报站点”</li>
+            </ol>
+        </div>
+        <div id="divHelpSecondStep" style="display: none">
+            <strong>第2步，设置报站点</strong>
+            <ol style="padding-left: 20px">
+                <li>备选点已显示在地图上</li>
+                <li>点击备选点，作为报站点</li>
+                <li>点击“下一步，设置触发点”</li>
+            </ol>
+        </div>
+        <div id="divHelpThirdStep" style="display: none">
+            <strong>第3步，设置触发点</strong>
+            <ol style="padding-left: 20px">
+                <li>选择相应的报站点</li>
+                <li>在地图上根据提示选择触发点</li>
+                <li>点击“完成，提交此路线配置”</li>
+            </ol>
+        </div>
         <div><hr/></div>
         <form class="col-md-12 form-horizontal" id="formRouteInfo" action="/UserRoutes/submit" method="post">
-            <div style="display:none;">
+            <div style="display: none">
                 <input type="hidden" name="_method" value="POST"/>
+                <input type="hidden" name="navPoints" id="hiddenNavPoints"/>
+                <input type="hidden" name="stationPoints" id="hiddenStationPoints"/>
+                <input type="hidden" name="TriggerPoints" id="hiddenTriggerPoints"/>
             </div>
-            <div class="form-group">
-                <label class="pull-left control-label">路线名</label>
-                <div>
-                    <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"/>
+            <div id="divFirstStep">
+                <div class="form-group">
+                    <label class="pull-left control-label">路线名</label>
+                    <div>
+                        <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="pull-left control-label">已添加以下导航点</label>
+                    <div>
+                        <textarea class="form-control input-sm" id="inputNavPoints" name="data[UserRoute][navPoints]" rows="6" readonly></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <button type="button" class="btn btn-default btn-xs" id="btnReset">重置</button>
+                        <button type="button" class="btn btn-default btn-xs" id="btnRemovePoint">删除一个导航点</button>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="button" class="btn btn-primary btn-block" id="btnGoToSecondStep"><strong>下一步，设置报站点</strong></button>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="pull-left control-label">已添加以下导航点</label>
-                <div>
-                    <textarea class="form-control input-sm" id="points" name="data[UserRoute][points]" rows="6" readonly></textarea>
+            <div id="divSecondStep" style="display: none">
+                <div class="form-group">
+                    <label class="pull-left control-label">已添加以下报站点</label>
+                    <div>
+                        <textarea class="form-control input-sm" id="inputStationPoints" name="data[UserRoute][stationPoints]" rows="6" readonly></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="button" class="btn btn-warning btn-block" id="btnBackToFirstStep"><strong>上一步，设置线路</strong></button>
+                        <button type="button" class="btn btn-primary btn-block" id="btnGoToThirdStep"><strong>下一步，设置触发点</strong></button>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                    <button type="button" class="btn btn-warning btn-xs" id="btnReset">重置</button>
-                    <button type="button" class="btn btn-warning btn-xs" id="btnRemovePoint">删除一个导航点</button>
-            </div>
-            <div class="form-group">
-                <div>
-                    <button type="button" class="btn btn-primary btn-block" id="btnSubmit"><strong>提交此线路</strong></button>
+            <div id="divThirdStep" style="display: none">
+                <div class="form-group">
+                    <label class="pull-left control-label">已添加以下触发点</label>
+                    <div>
+                        <textarea class="form-control input-sm" id="inputTriggerPoints" name="data[UserRoute][triggerPoints]" rows="6" readonly></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <input type="hidden" name="navPoints" id="hidden_vars"/>
+                <div class="form-group">
+                    <div>
+                        <button type="button" class="btn btn-warning btn-block" id="btnBackToSecondStep"><strong>上一步，设置报站点</strong></button>
+                        <button type="button" class="btn btn-primary btn-block" id="btnGoToSubmit"><strong>完成，提交此路线配置</strong></button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -59,8 +105,8 @@
         var eventReset =
             function(e)
             {
-                $("#hidden_vars").val("");
-                $("#points").html("");
+                $("#hiddenNavPoints").val("");
+                $("#inputNavPoints").html("");
                 polyline.setPath([]);
                 
                 disableEventAddingPoints = 0;
@@ -108,7 +154,7 @@
                 
                 justRemovedPoint = 0;
 
-                $("#points").html("");
+                $("#inputNavPoints").html("");
                 
                 var navPoints = [];
                 
@@ -117,31 +163,27 @@
                     var myPoint = {sequence: i + 1, longitude: path[i].lng, latitude: path[i].lat};
                     navPoints.push(myPoint);
                     var num = i + 1;
-                    $("#points").html($("#points").html() + num + ". " + path[i].lng + ", " + path[i].lat + ";\n");
+                    $("#inputNavPoints").html($("#inputNavPoints").html() + num + ". " + path[i].lng + ", " + path[i].lat + ";\n");
                 }
                 
-                $("#hidden_vars").val("");
-                $("#hidden_vars").val(JSON.stringify(navPoints));
+                $("#hiddenNavPoints").val("");
+                $("#hiddenNavPoints").val(JSON.stringify(navPoints));
             };
             
-        var eventBeforeRouteSubmit =
+        var eventGoToSecondStep =
             function(e)
             {
                 if ($("#inputRouteName").val() === "")
                 {
                     alert("请填写一个有效的路线名");
-                    $("#inputRouteName").fadeOut();
-                    $("#inputRouteName").fadeIn();
-                    $("#inputRouteName").focus();
+                    $("#inputRouteName").fadeOut().fadeIn().focus();
                     return;
                 }
                 
                 if (polyline.getPath().length < 2)
                 {
                     alert("请至少在地图上点取2个导航点，组成有效的线路");
-                    $("#baidu_map").fadeOut();
-                    $("#baidu_map").fadeIn();
-                    $("#baidu_map").focus();
+                    $("#baidu_map").fadeOut().fadeIn().focus();
                     return;
                 }
                 
@@ -154,14 +196,13 @@
                         success: function(result) {
                             if (result === "yes")
                             {
-                                $("#formRouteInfo").submit();
+                                $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                                $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
                             }
                             else
                             {
                                 alert("已存在相同的路线名，请输入一个新的路线名");
-                                $("#inputRouteName").fadeOut();
-                                $("#inputRouteName").fadeIn();
-                                $("#inputRouteName").focus();
+                                $("#inputRouteName").fadeOut().fadeIn().focus();
                             }
                         },
                         error: function(xhr, status) {
@@ -171,10 +212,34 @@
                 );
             };
         
+        var eventBackToFirstStep =
+            function(e)
+            {
+                $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
+                $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
+            };
+        
+        var eventGoToThirdStep =
+            function(e)
+            {
+                $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
+                $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
+            };
+        
+        var eventBackToSecondStep =
+            function(e)
+            {
+                $("#divThirdStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+            };
+        
         map.addEventListener("click", eventAddingPoints);
         polyline.addEventListener("lineupdate", lineUpdate);
         $("#btnReset").click(eventReset);
         $("#btnRemovePoint").click(eventRemovePoint);
-        $("#btnSubmit").click(eventBeforeRouteSubmit);
+        $("#btnGoToSecondStep").click(eventGoToSecondStep);
+        $("#btnBackToFirstStep").click(eventBackToFirstStep);
+        $("#btnGoToThirdStep").click(eventGoToThirdStep);
+        $("#btnBackToSecondStep").click(eventBackToSecondStep);
     </script>
 </div>
