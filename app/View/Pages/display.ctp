@@ -176,37 +176,53 @@
                 if ($("#inputRouteName").val() === "")
                 {
                     alert("请填写一个有效的路线名");
-                    $("#inputRouteName").fadeOut().fadeIn().focus();
+                    $("#inputRouteName").fadeOut(
+                        function(){$("#inputRouteName").fadeIn(
+                            function(){$("#inputRouteName").focus();
+                        });
+                    });
                     return;
                 }
                 
                 if (polyline.getPath().length < 2)
                 {
                     alert("请至少在地图上点取2个导航点，组成有效的线路");
-                    $("#baidu_map").fadeOut().fadeIn().focus();
+                    $("#baidu_map").fadeOut(function(){$("#baidu_map").fadeIn();});
                     return;
                 }
+                
+                $("#btnGoToSecondStep").attr("disabled", true);
                 
                 $.ajax(
                     {
                         url: "/UserRoutes/ajaxCheckRouteName",
-                        data: {routeName: $("#inputRouteName").val()},
                         type: "POST",
-                        timeout: 1500,
+                        data: {routeName: $("#inputRouteName").val()},
+                        timeout: 5000,
                         success: function(result) {
                             if (result === "yes")
                             {
                                 $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
                                 $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                                
+                                getReadyForSecondStep();
                             }
                             else
                             {
                                 alert("已存在相同的路线名，请输入一个新的路线名");
-                                $("#inputRouteName").fadeOut().fadeIn().focus();
+                                $("#inputRouteName").fadeOut(
+                                    function(){$("#inputRouteName").fadeIn(
+                                        function(){$("#inputRouteName").focus();
+                                    });
+                                });
                             }
                         },
                         error: function(xhr, status) {
                             alert("无法提交线路，请稍后再试");
+                        },
+                        complete: function()
+                        {
+                            $("#btnGoToSecondStep").attr("disabled", false);
                         }
                     }
                 );
@@ -232,6 +248,45 @@
                 $("#divThirdStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
                 $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
             };
+        
+        function calculateBearing(p0, p1)
+        {
+            var y = Math.sin(p1.lng - p0.lng) * Math.cos(p1.lat);
+            var x = Math.cos(p0.lat) * Math.sin(p1.lat) - Math.sin(p0.lat) * Math.cos(p1.lat) * Math.cos(p1.lng - p0.lng);
+            var bearingInRadian = Math.atan2(y, x);
+            // var bearingInDegree = (bearingInRadian * 180) / Math.PI;
+            
+            return bearingInRadian;
+        }
+        
+        function calculateNextPoint(p0, bearingInRadian)
+        {
+            var d = 0.025;      // d is the distance travelled in kilometer
+            var R = 6371;       // R is the Earth's radius in kilometer
+            
+            var latNew = p0.lat + 
+                Math.asin(Math.sin(p0.lat) * Math.cos(d/R) + Math.cos(p0.lat) * Math.sin(d/R) * Math.cos(bearingInRadian));
+            var lngNew = p0.lng + Math.atan2(
+                Math.sin(bearingInRadian) * Math.sin(d/R) * Math.cos(p0.lat), Math.cos(d/R) - Math.sin(p0.lat) * Math.sin(latNew)
+                );
+            
+            return {lng: lngNew, lat: latNew};
+        }
+        
+        function getReadyForSecondStep()
+        {
+            var path = polyline.getPath();
+            pathLength = path.length;
+
+            var bearingInRadian = calculateBearing(path[0], path[1]);
+            var nextPointObj = calculateNextPoint(path[0], bearingInRadian);
+            
+            //var marker1 = new BMap.Marker(new BMap.Point(path[0].lng + 0.0009, path[0].lat));
+            var marker1 = new BMap.Marker(new BMap.Point(nextPointObj.lng, nextPointObj.lat));
+            map.addOverlay(marker1);
+            
+            alert(Math.round((bearingInRadian * 180 / Math.PI) * 100) / 100 + ", " + nextPointObj.lng + ", " + nextPointObj.lat);
+        }
         
         map.addEventListener("click", eventAddingPoints);
         polyline.addEventListener("lineupdate", lineUpdate);
