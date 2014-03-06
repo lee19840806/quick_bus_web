@@ -12,8 +12,8 @@
         <div id="divHelpSecondStep" style="display: none">
             <strong>第2步，设置报站点</strong>
             <ol style="padding-left: 20px">
-                <li>备选点已显示在地图上</li>
-                <li>点击备选点，作为报站点</li>
+                <li>按途经站点的先后顺序，点击蓝线</li>
+                <li>红色标记为报站点</li>
                 <li>点击“下一步，设置触发点”</li>
             </ol>
         </div>
@@ -47,8 +47,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                        <button type="button" class="btn btn-default btn-xs" id="btnReset">重置</button>
-                        <button type="button" class="btn btn-default btn-xs" id="btnRemovePoint">删除一个导航点</button>
+                    <button type="button" class="btn btn-default btn-xs" id="btnReset">重置</button>
+                    <button type="button" class="btn btn-default btn-xs" id="btnRemovePoint">删除一个导航点</button>
                 </div>
                 <div class="form-group">
                     <div>
@@ -62,6 +62,10 @@
                     <div>
                         <textarea class="form-control input-sm" id="inputStationPoints" name="data[UserRoute][stationPoints]" rows="6" readonly></textarea>
                     </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default btn-xs" id="btnResetStationPoints">清除所有站点</button>
+                    <button type="button" class="btn btn-default btn-xs" id="btnRemoveStationPoint">删除一个站点</button>
                 </div>
                 <div class="form-group">
                     <div>
@@ -95,9 +99,12 @@
         map.enableScrollWheelZoom();
         map.addControl(new BMap.NavigationControl());
         map.addControl(new BMap.ScaleControl());
+        map.disableDoubleClickZoom();
         
         var polyline = new BMap.Polyline([], {strokeColor: "blue", strokeWeight: 5, strokeOpacity: 0.5});
         map.addOverlay(polyline);
+        
+        var stationMarkers = [];
         
         var disableEventAddingPoints = 0;
         var justRemovedPoint = 0;
@@ -205,7 +212,10 @@
                                 $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
                                 $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
                                 
-                                getReadyForSecondStep();
+                                polyline.disableEditing();
+                                map.removeEventListener("click", eventAddingPoints);
+                                polyline.removeEventListener("lineupdate", lineUpdate);
+                                polyline.addEventListener("click", eventLineClick);
                             }
                             else
                             {
@@ -233,6 +243,27 @@
             {
                 $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
                 $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
+                
+                map.addEventListener("click", eventAddingPoints);
+                polyline.removeEventListener("click", eventLineClick);
+                polyline.addEventListener("lineupdate", lineUpdate);
+                
+                polyline.enableEditing();
+                
+                disableEventAddingPoints = 0;
+                justRemovedPoint = 0;
+                
+                $("#hiddenStationPoints").val("");
+                $("#inputStationPoints").html("");
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    map.removeOverlay(stationMarkers[i]);
+                }
+                
+                stationMarkers = [];
             };
         
         var eventGoToThirdStep =
@@ -249,52 +280,88 @@
                 $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
             };
         
-        function calculateBearing(p0, p1)
-        {
-            var y = Math.sin(p1.lng - p0.lng) * Math.cos(p1.lat);
-            var x = Math.cos(p0.lat) * Math.sin(p1.lat) - Math.sin(p0.lat) * Math.cos(p1.lat) * Math.cos(p1.lng - p0.lng);
-            var bearingInRadian = Math.atan2(y, x);
-            // var bearingInDegree = (bearingInRadian * 180) / Math.PI;
-            
-            return bearingInRadian;
-        }
+        var eventLineClick =
+            function(e)
+            {
+                var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
+                map.addOverlay(marker);
+                
+                stationMarkers.push(marker);
+                var stationMarkersLength = stationMarkers.length;
+                
+                $("#inputStationPoints").html("");
+                
+                var stationPoints = [];
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    var stationPoint = {sequence: i + 1, 
+                        longitude: stationMarkers[i].getPosition().lng, latitude: stationMarkers[i].getPosition().lat};
+                    stationPoints.push(stationPoint);
+                    var num = i + 1;
+                    $("#inputStationPoints").html($("#inputStationPoints").html() + 
+                        num + ". " + stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat + ";\n");
+                }
+                
+                $("#hiddenStationPoints").val("");
+                $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+            };
         
-        function calculateNextPoint(p0, bearingInRadian)
-        {
-            var d = 0.025;      // d is the distance travelled in kilometer
-            var R = 6371;       // R is the Earth's radius in kilometer
-            
-            var latNew = p0.lat + 
-                Math.asin(Math.sin(p0.lat) * Math.cos(d/R) + Math.cos(p0.lat) * Math.sin(d/R) * Math.cos(bearingInRadian));
-            var lngNew = p0.lng + Math.atan2(
-                Math.sin(bearingInRadian) * Math.sin(d/R) * Math.cos(p0.lat), Math.cos(d/R) - Math.sin(p0.lat) * Math.sin(latNew)
-                );
-            
-            return {lng: lngNew, lat: latNew};
-        }
+        var eventResetStationPoints =
+            function(e)
+            {
+                $("#hiddenStationPoints").val("");
+                $("#inputStationPoints").html("");
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    map.removeOverlay(stationMarkers[i]);
+                }
+                
+                stationMarkers = [];
+            };
         
-        function getReadyForSecondStep()
-        {
-            var path = polyline.getPath();
-            pathLength = path.length;
+        var eventRemoveStationPoint =
+            function(e)
+            {
+                if (stationMarkers.length > 0)
+                {
+                    map.removeOverlay(stationMarkers[stationMarkers.length - 1]);
+                    stationMarkers.pop();
+                    
+                    var stationMarkersLength = stationMarkers.length;
+                    
+                    $("#inputStationPoints").html("");
+                    
+                    var stationPoints = [];
+                
+                    for (var i = 0; i < stationMarkersLength; i++)
+                    {
+                        var stationPoint = {sequence: i + 1, 
+                            longitude: stationMarkers[i].getPosition().lng, latitude: stationMarkers[i].getPosition().lat};
+                        stationPoints.push(stationPoint);
+                        var num = i + 1;
+                        $("#inputStationPoints").html($("#inputStationPoints").html() + 
+                            num + ". " + stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat + ";\n");
+                    }
 
-            var bearingInRadian = calculateBearing(path[0], path[1]);
-            var nextPointObj = calculateNextPoint(path[0], bearingInRadian);
-            
-            //var marker1 = new BMap.Marker(new BMap.Point(path[0].lng + 0.0009, path[0].lat));
-            var marker1 = new BMap.Marker(new BMap.Point(nextPointObj.lng, nextPointObj.lat));
-            map.addOverlay(marker1);
-            
-            alert(Math.round((bearingInRadian * 180 / Math.PI) * 100) / 100 + ", " + nextPointObj.lng + ", " + nextPointObj.lat);
-        }
+                    $("#hiddenStationPoints").val("");
+                    $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+                }
+            };
         
         map.addEventListener("click", eventAddingPoints);
         polyline.addEventListener("lineupdate", lineUpdate);
+        
         $("#btnReset").click(eventReset);
         $("#btnRemovePoint").click(eventRemovePoint);
         $("#btnGoToSecondStep").click(eventGoToSecondStep);
         $("#btnBackToFirstStep").click(eventBackToFirstStep);
         $("#btnGoToThirdStep").click(eventGoToThirdStep);
         $("#btnBackToSecondStep").click(eventBackToSecondStep);
+        $("#btnResetStationPoints").click(eventResetStationPoints);
+        $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
     </script>
 </div>
