@@ -21,7 +21,7 @@
             <strong>第3步，设置触发点</strong>
             <ol style="padding-left: 20px">
                 <li>选择相应的报站点</li>
-                <li>在地图上根据提示选择触发点</li>
+                <li>在路线上点击，选择触发点</li>
                 <li>点击“完成，提交此路线配置”</li>
             </ol>
         </div>
@@ -35,13 +35,13 @@
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
-                    <label class="pull-left control-label">路线名</label>
+                    <label class="control-label">路线名</label>
                     <div>
                         <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="pull-left control-label">已添加以下导航点</label>
+                    <label class="control-label">已添加以下导航点</label>
                     <div>
                         <textarea class="form-control input-sm" id="inputNavPoints" name="data[UserRoute][navPoints]" rows="6" readonly></textarea>
                     </div>
@@ -58,7 +58,7 @@
             </div>
             <div id="divSecondStep" style="display: none">
                 <div class="form-group">
-                    <label class="pull-left control-label">已添加以下报站点</label>
+                    <label class="control-label">已添加以下报站点</label>
                     <div>
                         <textarea class="form-control input-sm" id="inputStationPoints" name="data[UserRoute][stationPoints]" rows="6" readonly></textarea>
                     </div>
@@ -76,7 +76,14 @@
             </div>
             <div id="divThirdStep" style="display: none">
                 <div class="form-group">
-                    <label class="pull-left control-label">已添加以下触发点</label>
+                    <label class="control-label">选择站点，然后添加触发点</label>
+                    <div>
+                        <select class="form-control input-sm" id="selectStationPoint">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">已设置的“站点-触发点”</label>
                     <div>
                         <textarea class="form-control input-sm" id="inputTriggerPoints" name="data[UserRoute][triggerPoints]" rows="6" readonly></textarea>
                     </div>
@@ -271,6 +278,16 @@
             {
                 $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
                 $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
+                
+                $("#selectStationPoint").empty();
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    $("#selectStationPoint").append($("<option>", {value: i + 1,
+                        text: i + 1 + ". " + stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat}));
+                }
             };
         
         var eventBackToSecondStep =
@@ -284,6 +301,9 @@
             function(e)
             {
                 var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
+                var label = new BMap.Label((stationMarkers.length + 1).toString());
+                label.setOffset(new BMap.Size(-13, 2));
+                marker.setLabel(label);
                 map.addOverlay(marker);
                 
                 stationMarkers.push(marker);
