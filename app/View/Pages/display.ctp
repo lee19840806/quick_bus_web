@@ -222,7 +222,7 @@
                                 polyline.disableEditing();
                                 map.removeEventListener("click", eventAddingPoints);
                                 polyline.removeEventListener("lineupdate", lineUpdate);
-                                polyline.addEventListener("click", eventLineClick);
+                                polyline.addEventListener("click", eventAddStationPoint);
                             }
                             else
                             {
@@ -252,7 +252,7 @@
                 $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
                 
                 map.addEventListener("click", eventAddingPoints);
-                polyline.removeEventListener("click", eventLineClick);
+                polyline.removeEventListener("click", eventAddStationPoint);
                 polyline.addEventListener("lineupdate", lineUpdate);
                 
                 polyline.enableEditing();
@@ -276,12 +276,23 @@
         var eventGoToThirdStep =
             function(e)
             {
+                if (stationMarkers.length === 0)
+                {
+                    alert("请在路线上至少设置1个站点（点击地图中的蓝线）");
+                    $("#baidu_map").fadeOut(function(){$("#baidu_map").fadeIn();});
+                    return;
+                }
+                
+                polyline.removeEventListener("click", eventAddStationPoint);
+                
                 $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
                 $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
                 
                 $("#selectStationPoint").empty();
                 
                 var stationMarkersLength = stationMarkers.length;
+                
+                $("#selectStationPoint").append($("<option>", {value: 0, text: "选择1个站点"}));
                 
                 for (var i = 0; i < stationMarkersLength; i++)
                 {
@@ -293,11 +304,21 @@
         var eventBackToSecondStep =
             function(e)
             {
+                polyline.removeEventListener("click", eventAddTriggerPoint);
+                polyline.addEventListener("click", eventAddStationPoint);
+                
                 $("#divThirdStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
                 $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    stationMarkers[i].setAnimation(null);
+                }
             };
         
-        var eventLineClick =
+        var eventAddStationPoint =
             function(e)
             {
                 var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
@@ -372,6 +393,34 @@
                 }
             };
         
+        var eventStationPointChange =
+            function(e)
+            {
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    stationMarkers[i].setAnimation(null);
+                }
+                
+                if (parseInt(e.target.value) === 0)
+                {
+                    polyline.removeEventListener("click", eventAddTriggerPoint);
+                }
+                else if (parseInt(e.target.value) > 0)
+                {
+                    polyline.removeEventListener("click", eventAddTriggerPoint);
+                    polyline.addEventListener("click", eventAddTriggerPoint);
+                    stationMarkers[parseInt(e.target.value - 1)].setAnimation(BMAP_ANIMATION_BOUNCE);
+                }
+            };
+        
+        var eventAddTriggerPoint =
+            function(e)
+            {
+                alert("trigger point");
+            };
+        
         map.addEventListener("click", eventAddingPoints);
         polyline.addEventListener("lineupdate", lineUpdate);
         
@@ -383,5 +432,6 @@
         $("#btnBackToSecondStep").click(eventBackToSecondStep);
         $("#btnResetStationPoints").click(eventResetStationPoints);
         $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
+        $("#selectStationPoint").change(eventStationPointChange);
     </script>
 </div>
