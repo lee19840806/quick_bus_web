@@ -76,7 +76,7 @@
             </div>
             <div id="divThirdStep" style="display: none">
                 <div class="form-group">
-                    <label class="control-label">选择站点，然后添加触发点</label>
+                    <label class="control-label">依次选择站点，然后添加触发点</label>
                     <div>
                         <select class="form-control input-sm" id="selectStationPoint">
                         </select>
@@ -112,6 +112,7 @@
         map.addOverlay(polyline);
         
         var stationMarkers = [];
+        var triggerMarkers = [];
         
         var disableEventAddingPoints = 0;
         var justRemovedPoint = 0;
@@ -316,14 +317,23 @@
                 {
                     stationMarkers[i].setAnimation(null);
                 }
+                
+                var triggerMarkersLength = triggerMarkers.length;
+                
+                for (var i = 0; i < triggerMarkersLength; i++)
+                {
+                    map.removeOverlay(triggerMarkers[i]);
+                }
+                
+                triggerMarkers = [];
             };
         
         var eventAddStationPoint =
             function(e)
             {
                 var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
-                var label = new BMap.Label((stationMarkers.length + 1).toString());
-                label.setOffset(new BMap.Size(-13, 2));
+                var label = new BMap.Label("站" + (stationMarkers.length + 1).toString());
+                label.setOffset(new BMap.Size(-25, 2));
                 marker.setLabel(label);
                 map.addOverlay(marker);
                 
@@ -418,7 +428,27 @@
         var eventAddTriggerPoint =
             function(e)
             {
-                alert("trigger point");
+                var stationPointIndex = $("#selectStationPoint").val();
+                
+                if (stationPointIndex > 0)
+                {
+                    var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
+                    var label = new BMap.Label("触" + stationPointIndex);
+                    label.setOffset(new BMap.Size(-25, 2));
+                    marker.setLabel(label);
+
+                    if (triggerMarkers[stationPointIndex - 1] === undefined)
+                    {
+                        triggerMarkers[stationPointIndex - 1] = marker;
+                        map.addOverlay(marker);
+                    }
+                    else
+                    {
+                        map.removeOverlay(triggerMarkers[stationPointIndex - 1]);
+                        triggerMarkers[stationPointIndex - 1] = marker;
+                        map.addOverlay(marker);
+                    }
+                }
             };
         
         map.addEventListener("click", eventAddingPoints);

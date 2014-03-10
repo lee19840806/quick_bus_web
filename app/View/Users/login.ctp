@@ -2,9 +2,6 @@
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
         <div class="col-sm-12">
-            <div class="bg-warning">
-                <?php echo $this->Session->flash(); ?>
-            </div>
             <form class="form-horizontal" action="/Users/login" method="post">
                 <div style="display:none;">
                     <input type="hidden" name="_method" value="POST"/>
@@ -29,6 +26,11 @@
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-9">
                         <button type="submit" class="btn btn-info">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <div class="col-md-offset-3">
+                        <label class="control-label" style="margin-left: 15px"><?php echo $this->Session->flash(); ?></label>
                     </div>
                 </div>
             </form>
