@@ -117,6 +117,58 @@
         var disableEventAddingPoints = 0;
         var justRemovedPoint = 0;
         
+        function getTriggerPonitHeading(lng, lat, path)
+        {
+            var distances = [];
+            var distancesTemp = [];
+            var x0 = lng;
+            var y0 = lat;
+            
+            var pathLength = path.length;
+
+            for (var i = 0; i < pathLength - 1; i++)
+            {
+                var x1 = path[i].lng;
+                var y1 = path[i].lat;
+                var x2 = path[i + 1].lng;
+                var y2 = path[i + 1].lat;
+                var dx = x1 - x2;
+                var dy = y1 - y2;
+                
+                var xInTheRange = (x0 >= x1 && x0 < x2) || (x0 > x2 && x0 <= x1);
+                var yInTheRange = (y0 >= y1 && y0 < y2) || (y0 > y2 && y0 <= y1);
+
+                if (xInTheRange && yInTheRange)
+                {
+                    var dist = Math.abs((dy * x0) - (dx * y0) + (x1 * y2) - (x2 * y1)) / Math.sqrt((dx * dx) + (dy * dy));
+                    distances.push({index: i, distance: dist});
+                    distancesTemp.push(dist);
+                }
+            }
+            
+            var minDistance = Math.min.apply(null, distancesTemp);
+            var endingPointIndex = 0;
+            
+            for (var i = 0; i < distances.length; i++)
+            {
+                var d = distances[i].distance;
+                if (distances[i].distance === minDistance)
+                {
+                    endingPointIndex = distances[i].index + 1;
+                }
+            }
+            
+            var endingPoint = path[endingPointIndex];
+            
+            var headingY = Math.sin(endingPoint.lng - x0) * Math.cos(endingPoint.lat);
+            var headingX = Math.cos(y0) * Math.sin(endingPoint.lat) -
+                Math.sin(y0) * Math.cos(endingPoint.lat) * Math.cos(endingPoint.lng - x0);
+            var headingInDegrees = (Math.atan2(headingY, headingX) * 180) / Math.PI;
+            var headingInDegreesNormalized = (headingInDegrees + 360) % 360;
+            
+            return headingInDegreesNormalized;
+        }
+        
         var eventReset =
             function(e)
             {
@@ -440,12 +492,14 @@
                     if (triggerMarkers[stationPointIndex - 1] === undefined)
                     {
                         triggerMarkers[stationPointIndex - 1] = marker;
+                        var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
                         map.addOverlay(marker);
                     }
                     else
                     {
                         map.removeOverlay(triggerMarkers[stationPointIndex - 1]);
                         triggerMarkers[stationPointIndex - 1] = marker;
+                        var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
                         map.addOverlay(marker);
                     }
                 }
