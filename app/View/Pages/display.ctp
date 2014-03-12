@@ -35,7 +35,7 @@
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
-                    <label class="control-label">路线名</label>
+                    <label class="control-label" id="labelRouteName">路线名</label>
                     <div>
                         <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"/>
                     </div>
@@ -76,7 +76,7 @@
             </div>
             <div id="divThirdStep" style="display: none">
                 <div class="form-group">
-                    <label class="control-label">依次选择站点，然后添加触发点</label>
+                    <label class="control-label" id="labelTriggerPoint">依次选择站点，然后添加触发点</label>
                     <div>
                         <select class="form-control input-sm" id="selectStationPoint">
                         </select>
@@ -243,6 +243,7 @@
                 if ($("#inputRouteName").val() === "")
                 {
                     alert("请填写一个有效的路线名");
+                    $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
                     $("#inputRouteName").fadeOut(
                         function(){$("#inputRouteName").fadeIn(
                             function(){$("#inputRouteName").focus();
@@ -280,6 +281,7 @@
                             else
                             {
                                 alert("已存在相同的路线名，请输入一个新的路线名");
+                                $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
                                 $("#inputRouteName").fadeOut(
                                     function(){$("#inputRouteName").fadeIn(
                                         function(){$("#inputRouteName").focus();
@@ -337,6 +339,7 @@
                 }
                 
                 polyline.removeEventListener("click", eventAddStationPoint);
+                polyline.addEventListener("click", eventAddTriggerPoint);
                 
                 $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
                 $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
@@ -465,14 +468,8 @@
                     stationMarkers[i].setAnimation(null);
                 }
                 
-                if (parseInt(e.target.value) === 0)
+                if (parseInt(e.target.value) > 0)
                 {
-                    polyline.removeEventListener("click", eventAddTriggerPoint);
-                }
-                else if (parseInt(e.target.value) > 0)
-                {
-                    polyline.removeEventListener("click", eventAddTriggerPoint);
-                    polyline.addEventListener("click", eventAddTriggerPoint);
                     stationMarkers[parseInt(e.target.value - 1)].setAnimation(BMAP_ANIMATION_BOUNCE);
                 }
             };
@@ -492,16 +489,23 @@
                     if (triggerMarkers[stationPointIndex - 1] === undefined)
                     {
                         triggerMarkers[stationPointIndex - 1] = marker;
-                        var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
                         map.addOverlay(marker);
                     }
                     else
                     {
                         map.removeOverlay(triggerMarkers[stationPointIndex - 1]);
                         triggerMarkers[stationPointIndex - 1] = marker;
-                        var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
                         map.addOverlay(marker);
                     }
+                    
+                    var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
+                }
+                else
+                {
+                    alert("请在左侧下拉菜单选择站点");
+                    $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                    $("#selectStationPoint").fadeOut(
+                        function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
                 }
             };
         
