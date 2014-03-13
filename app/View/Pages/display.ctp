@@ -31,7 +31,7 @@
                 <input type="hidden" name="_method" value="POST"/>
                 <input type="hidden" name="navPoints" id="hiddenNavPoints"/>
                 <input type="hidden" name="stationPoints" id="hiddenStationPoints"/>
-                <input type="hidden" name="TriggerPoints" id="hiddenTriggerPoints"/>
+                <input type="hidden" name="triggerPoints" id="hiddenTriggerPoints"/>
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
@@ -380,6 +380,7 @@
                     map.removeOverlay(triggerMarkers[i]);
                 }
                 
+                $("#inputTriggerPoints").html("");
                 triggerMarkers = [];
             };
         
@@ -498,7 +499,47 @@
                         map.addOverlay(marker);
                     }
                     
-                    var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
+                    $("#inputTriggerPoints").html("");
+                    var eachStationTriggerReady = true;
+                    var stationMarkersLength = stationMarkers.length;
+                    
+                    for (var i = 0; i < stationMarkersLength; i++)
+                    {
+                        if (triggerMarkers[i] === undefined)
+                        {
+                            eachStationTriggerReady = false;
+                        }
+                        else
+                        {
+                            var heading = Math.round(getTriggerPonitHeading(
+                            triggerMarkers[i].getPosition().lng, triggerMarkers[i].getPosition().lat, polyline.getPath()));
+                            
+                            $("#inputTriggerPoints").html($("#inputTriggerPoints").html() + 
+                                "站" + (i + 1) + ". " +
+                                stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat + ";\n" + 
+                                "触" + (i + 1) + ". " +
+                                triggerMarkers[i].getPosition().lng + ", " + triggerMarkers[i].getPosition().lat + ", " +
+                                "方向" + heading + "°;\n\n");
+                        }
+                    }
+                    
+                    if (eachStationTriggerReady === true)
+                    {
+                        var stationMarkersLength = stationMarkers.length;
+                        var triggerPoints = [];
+                
+                        for (var i = 0; i < stationMarkersLength; i++)
+                        {
+                            var heading = Math.round(getTriggerPonitHeading(
+                                triggerMarkers[i].getPosition().lng, triggerMarkers[i].getPosition().lat, polyline.getPath()));
+                            var triggerPoint = {sequence: i + 1, longitude: triggerMarkers[i].getPosition().lng, 
+                                latitude: triggerMarkers[i].getPosition().lat, heading: heading};
+                            triggerPoints.push(triggerPoint);
+                        }
+
+                        $("#hiddenTriggerPoints").val("");
+                        $("#hiddenTriggerPoints").val(JSON.stringify(triggerPoints));
+                    }
                 }
                 else
                 {
@@ -507,6 +548,32 @@
                     $("#selectStationPoint").fadeOut(
                         function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
                 }
+            };
+        
+        var eventGoToSubmit =
+            function(e)
+            {
+                var eachStationTriggerReady = true;
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    if (triggerMarkers[i] === undefined)
+                    {
+                        eachStationTriggerReady = false;
+                    }
+                }
+                
+                if (eachStationTriggerReady === false)
+                {
+                    alert("还有未设置触发点的站点。请完成设置，然后再提交线路");
+                    $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                    $("#selectStationPoint").fadeOut(
+                        function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                    return;
+                }
+                
+                $("#formRouteInfo").submit();
             };
         
         map.addEventListener("click", eventAddingPoints);
@@ -521,5 +588,6 @@
         $("#btnResetStationPoints").click(eventResetStationPoints);
         $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
         $("#selectStationPoint").change(eventStationPointChange);
+        $("#btnGoToSubmit").click(eventGoToSubmit);
     </script>
 </div>
