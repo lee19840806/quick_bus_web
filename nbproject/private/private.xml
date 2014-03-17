@@ -5,13 +5,9 @@
         <group>
             <file>file:/C:/wamp/www/quick_bus_web/app/View/Pages/display.ctp</file>
 <<<<<<< HEAD
-<<<<<<< HEAD
             <file>file:/C:/wamp/www/quick_bus_web/app/View/Pages/display_baidu.ctp</file>
 =======
 >>>>>>> parent of 32c0236... 前端设计已基本完成
-=======
-            <file>file:/C:/wamp/www/quick_bus_web/app/Controller/UserRoutesController.php</file>
->>>>>>> parent of 0355598... 为了解决百度地图的坐标偏移问题，换用OpenStreetMap和leafletJS
         </group>
     </open-files>
 </project-private>

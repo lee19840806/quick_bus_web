@@ -1,10 +1,4 @@
-<?php
-    echo $this->Html->script('leaflet-src');
-    echo $this->Html->script('Edit.Poly');
-    echo $this->fetch('script');
-?>
-<!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jENePgN7TufGt711E1uIb7BA"></script>
 <div class="row">
     <div class="col-md-3">
         <div id="divHelpFirstStep">
@@ -37,7 +31,7 @@
                 <input type="hidden" name="_method" value="POST"/>
                 <input type="hidden" name="navPoints" id="hiddenNavPoints"/>
                 <input type="hidden" name="stationPoints" id="hiddenStationPoints"/>
-                <input type="hidden" name="TriggerPoints" id="hiddenTriggerPoints"/>
+                <input type="hidden" name="triggerPoints" id="hiddenTriggerPoints"/>
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
@@ -103,32 +97,19 @@
             </div>
         </form>
     </div>
-    <div class="col-md-9" id="Leaflet_map" style="height: 520px">
+    <div class="col-md-9" id="baidu_map" style="height: 520px">
     </div>
     
     <script type="text/javascript">
-        var map = L.map('Leaflet_map').setView([31.23, 121.5], 13);
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'}).addTo(map);
-            
-        var myIcon = L.icon({
-            iconUrl: '/img/marker-icon.png',
-            iconRetinaUrl: '/img/marker-icon-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [15, 40],
-            popupAnchor: [-3, -35],
-            shadowUrl: '/img/marker-shadow.png',
-            shadowRetinaUrl: '/img/marker-shadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [15, 40]
-        });
-
-        L.marker([31.23, 121.5], {icon: myIcon}).addTo(map);
+        var map = new BMap.Map("baidu_map");
+        map.centerAndZoom("上海", 13);
+        map.enableScrollWheelZoom();
+        map.addControl(new BMap.NavigationControl());
+        map.addControl(new BMap.ScaleControl());
+        map.disableDoubleClickZoom();
         
-        var latlngs = [L.latLng(31.23, 121.5), L.latLng(31.23, 121.6)];
-        var polyline = L.polyline(latlngs, {color: 'blue', opacity: 0.6});
-        polyline.addTo(map);
-        polyline.editing.enable();
+        var polyline = new BMap.Polyline([], {strokeColor: "blue", strokeWeight: 5, strokeOpacity: 0.5});
+        map.addOverlay(polyline);
         
         var stationMarkers = [];
         var triggerMarkers = [];
@@ -187,8 +168,6 @@
             
             return headingInDegreesNormalized;
         }
-<<<<<<< HEAD
-=======
         
         var eventReset =
             function(e)
@@ -401,6 +380,7 @@
                     map.removeOverlay(triggerMarkers[i]);
                 }
                 
+                $("#inputTriggerPoints").html("");
                 triggerMarkers = [];
             };
         
@@ -519,7 +499,47 @@
                         map.addOverlay(marker);
                     }
                     
-                    var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
+                    $("#inputTriggerPoints").html("");
+                    var eachStationTriggerReady = true;
+                    var stationMarkersLength = stationMarkers.length;
+                    
+                    for (var i = 0; i < stationMarkersLength; i++)
+                    {
+                        if (triggerMarkers[i] === undefined)
+                        {
+                            eachStationTriggerReady = false;
+                        }
+                        else
+                        {
+                            var heading = Math.round(getTriggerPonitHeading(
+                            triggerMarkers[i].getPosition().lng, triggerMarkers[i].getPosition().lat, polyline.getPath()));
+                            
+                            $("#inputTriggerPoints").html($("#inputTriggerPoints").html() + 
+                                "站" + (i + 1) + ". " +
+                                stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat + ";\n" + 
+                                "触" + (i + 1) + ". " +
+                                triggerMarkers[i].getPosition().lng + ", " + triggerMarkers[i].getPosition().lat + ", " +
+                                "方向" + heading + "°;\n\n");
+                        }
+                    }
+                    
+                    if (eachStationTriggerReady === true)
+                    {
+                        var stationMarkersLength = stationMarkers.length;
+                        var triggerPoints = [];
+                
+                        for (var i = 0; i < stationMarkersLength; i++)
+                        {
+                            var heading = Math.round(getTriggerPonitHeading(
+                                triggerMarkers[i].getPosition().lng, triggerMarkers[i].getPosition().lat, polyline.getPath()));
+                            var triggerPoint = {sequence: i + 1, longitude: triggerMarkers[i].getPosition().lng, 
+                                latitude: triggerMarkers[i].getPosition().lat, heading: heading};
+                            triggerPoints.push(triggerPoint);
+                        }
+
+                        $("#hiddenTriggerPoints").val("");
+                        $("#hiddenTriggerPoints").val(JSON.stringify(triggerPoints));
+                    }
                 }
                 else
                 {
@@ -528,6 +548,32 @@
                     $("#selectStationPoint").fadeOut(
                         function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
                 }
+            };
+        
+        var eventGoToSubmit =
+            function(e)
+            {
+                var eachStationTriggerReady = true;
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    if (triggerMarkers[i] === undefined)
+                    {
+                        eachStationTriggerReady = false;
+                    }
+                }
+                
+                if (eachStationTriggerReady === false)
+                {
+                    alert("还有未设置触发点的站点。请完成设置，然后再提交线路");
+                    $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                    $("#selectStationPoint").fadeOut(
+                        function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                    return;
+                }
+                
+                $("#formRouteInfo").submit();
             };
         
         map.addEventListener("click", eventAddingPoints);
@@ -542,6 +588,6 @@
         $("#btnResetStationPoints").click(eventResetStationPoints);
         $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
         $("#selectStationPoint").change(eventStationPointChange);
->>>>>>> parent of 32c0236... 前端设计已基本完成
+        $("#btnGoToSubmit").click(eventGoToSubmit);
     </script>
 </div>
