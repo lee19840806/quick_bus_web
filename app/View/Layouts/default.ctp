@@ -31,7 +31,6 @@
 
 //		echo $this->Html->css('cake.generic');
         echo $this->Html->css('bootstrap');
-        echo $this->Html->css('leaflet');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
