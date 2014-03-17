@@ -116,9 +116,6 @@ class UserRoutesController extends AppController {
     {
         if ($this->request->is('post'))
         {
-            $aaa = $this->request->data;
-            
-            /*
             $this->loadModel('User');
             $user_array = $this->User->find('first', array(
                 'conditions' => array('username' => $this->Auth->user('username')),
@@ -152,7 +149,8 @@ class UserRoutesController extends AppController {
             $this->loadModel('UserRoutePoint');
             $this->UserRoutePoint->create();
             $this->UserRoutePoint->saveMany($navPoints);
-            */
+            
+            $this->set('navPoints', $navPoints);
         }
     }
     

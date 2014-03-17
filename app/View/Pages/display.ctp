@@ -37,7 +37,7 @@
                 <input type="hidden" name="_method" value="POST"/>
                 <input type="hidden" name="navPoints" id="hiddenNavPoints"/>
                 <input type="hidden" name="stationPoints" id="hiddenStationPoints"/>
-                <input type="hidden" name="triggerPoints" id="hiddenTriggerPoints"/>
+                <input type="hidden" name="TriggerPoints" id="hiddenTriggerPoints"/>
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
@@ -187,5 +187,361 @@
             
             return headingInDegreesNormalized;
         }
+<<<<<<< HEAD
+=======
+        
+        var eventReset =
+            function(e)
+            {
+                $("#hiddenNavPoints").val("");
+                $("#inputNavPoints").html("");
+                polyline.setPath([]);
+                
+                disableEventAddingPoints = 0;
+                justRemovedPoint = 0;
+            };
+            
+        var eventRemovePoint =
+            function(e)
+            {
+                justRemovedPoint = 1;
+                disableEventAddingPoints = 0;
+                
+                var path = polyline.getPath();
+                path.pop();
+                polyline.setPath(path);
+            };
+            
+        var eventAddingPoints =
+            function(e)
+            {
+                if (disableEventAddingPoints === 0)
+                {
+                    var path = polyline.getPath();
+                    path.push(new BMap.Point(e.point.lng, e.point.lat));
+                    polyline.setPath(path);
+                    polyline.enableEditing();
+                }
+                
+                disableEventAddingPoints = 0;
+            };
+        
+        var lineUpdate =
+            function(e)
+            {
+                var path = polyline.getPath();
+                pathLength = path.length;
+                
+                if (pathLength !== 0)
+                {
+                    if (justRemovedPoint !== 1)
+                    {
+                        disableEventAddingPoints = 1;
+                    }
+                }
+                
+                justRemovedPoint = 0;
+
+                $("#inputNavPoints").html("");
+                
+                var navPoints = [];
+                
+                for (var i = 0; i < pathLength; i++)
+                {
+                    var myPoint = {sequence: i + 1, longitude: path[i].lng, latitude: path[i].lat};
+                    navPoints.push(myPoint);
+                    var num = i + 1;
+                    $("#inputNavPoints").html($("#inputNavPoints").html() + num + ". " + path[i].lng + ", " + path[i].lat + ";\n");
+                }
+                
+                $("#hiddenNavPoints").val("");
+                $("#hiddenNavPoints").val(JSON.stringify(navPoints));
+            };
+            
+        var eventGoToSecondStep =
+            function(e)
+            {
+                if ($("#inputRouteName").val() === "")
+                {
+                    alert("请填写一个有效的路线名");
+                    $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
+                    $("#inputRouteName").fadeOut(
+                        function(){$("#inputRouteName").fadeIn(
+                            function(){$("#inputRouteName").focus();
+                        });
+                    });
+                    return;
+                }
+                
+                if (polyline.getPath().length < 2)
+                {
+                    alert("请至少在地图上点取2个导航点，组成有效的线路");
+                    $("#baidu_map").fadeOut(function(){$("#baidu_map").fadeIn();});
+                    return;
+                }
+                
+                $("#btnGoToSecondStep").attr("disabled", true);
+                
+                $.ajax(
+                    {
+                        url: "/UserRoutes/ajaxCheckRouteName",
+                        type: "POST",
+                        data: {routeName: $("#inputRouteName").val()},
+                        timeout: 5000,
+                        success: function(result) {
+                            if (result === "yes")
+                            {
+                                $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                                $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                                
+                                polyline.disableEditing();
+                                map.removeEventListener("click", eventAddingPoints);
+                                polyline.removeEventListener("lineupdate", lineUpdate);
+                                polyline.addEventListener("click", eventAddStationPoint);
+                            }
+                            else
+                            {
+                                alert("已存在相同的路线名，请输入一个新的路线名");
+                                $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
+                                $("#inputRouteName").fadeOut(
+                                    function(){$("#inputRouteName").fadeIn(
+                                        function(){$("#inputRouteName").focus();
+                                    });
+                                });
+                            }
+                        },
+                        error: function(xhr, status) {
+                            alert("无法提交线路，请稍后再试");
+                        },
+                        complete: function()
+                        {
+                            $("#btnGoToSecondStep").attr("disabled", false);
+                        }
+                    }
+                );
+            };
+        
+        var eventBackToFirstStep =
+            function(e)
+            {
+                $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
+                $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
+                
+                map.addEventListener("click", eventAddingPoints);
+                polyline.removeEventListener("click", eventAddStationPoint);
+                polyline.addEventListener("lineupdate", lineUpdate);
+                
+                polyline.enableEditing();
+                
+                disableEventAddingPoints = 0;
+                justRemovedPoint = 0;
+                
+                $("#hiddenStationPoints").val("");
+                $("#inputStationPoints").html("");
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    map.removeOverlay(stationMarkers[i]);
+                }
+                
+                stationMarkers = [];
+            };
+        
+        var eventGoToThirdStep =
+            function(e)
+            {
+                if (stationMarkers.length === 0)
+                {
+                    alert("请在路线上至少设置1个站点（点击地图中的蓝线）");
+                    $("#baidu_map").fadeOut(function(){$("#baidu_map").fadeIn();});
+                    return;
+                }
+                
+                polyline.removeEventListener("click", eventAddStationPoint);
+                polyline.addEventListener("click", eventAddTriggerPoint);
+                
+                $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
+                $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
+                
+                $("#selectStationPoint").empty();
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                $("#selectStationPoint").append($("<option>", {value: 0, text: "选择1个站点"}));
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    $("#selectStationPoint").append($("<option>", {value: i + 1,
+                        text: i + 1 + ". " + stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat}));
+                }
+            };
+        
+        var eventBackToSecondStep =
+            function(e)
+            {
+                polyline.removeEventListener("click", eventAddTriggerPoint);
+                polyline.addEventListener("click", eventAddStationPoint);
+                
+                $("#divThirdStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    stationMarkers[i].setAnimation(null);
+                }
+                
+                var triggerMarkersLength = triggerMarkers.length;
+                
+                for (var i = 0; i < triggerMarkersLength; i++)
+                {
+                    map.removeOverlay(triggerMarkers[i]);
+                }
+                
+                triggerMarkers = [];
+            };
+        
+        var eventAddStationPoint =
+            function(e)
+            {
+                var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
+                var label = new BMap.Label("站" + (stationMarkers.length + 1).toString());
+                label.setOffset(new BMap.Size(-25, 2));
+                marker.setLabel(label);
+                map.addOverlay(marker);
+                
+                stationMarkers.push(marker);
+                var stationMarkersLength = stationMarkers.length;
+                
+                $("#inputStationPoints").html("");
+                
+                var stationPoints = [];
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    var stationPoint = {sequence: i + 1, 
+                        longitude: stationMarkers[i].getPosition().lng, latitude: stationMarkers[i].getPosition().lat};
+                    stationPoints.push(stationPoint);
+                    var num = i + 1;
+                    $("#inputStationPoints").html($("#inputStationPoints").html() + 
+                        num + ". " + stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat + ";\n");
+                }
+                
+                $("#hiddenStationPoints").val("");
+                $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+            };
+        
+        var eventResetStationPoints =
+            function(e)
+            {
+                $("#hiddenStationPoints").val("");
+                $("#inputStationPoints").html("");
+                
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    map.removeOverlay(stationMarkers[i]);
+                }
+                
+                stationMarkers = [];
+            };
+        
+        var eventRemoveStationPoint =
+            function(e)
+            {
+                if (stationMarkers.length > 0)
+                {
+                    map.removeOverlay(stationMarkers[stationMarkers.length - 1]);
+                    stationMarkers.pop();
+                    
+                    var stationMarkersLength = stationMarkers.length;
+                    
+                    $("#inputStationPoints").html("");
+                    
+                    var stationPoints = [];
+                
+                    for (var i = 0; i < stationMarkersLength; i++)
+                    {
+                        var stationPoint = {sequence: i + 1, 
+                            longitude: stationMarkers[i].getPosition().lng, latitude: stationMarkers[i].getPosition().lat};
+                        stationPoints.push(stationPoint);
+                        var num = i + 1;
+                        $("#inputStationPoints").html($("#inputStationPoints").html() + 
+                            num + ". " + stationMarkers[i].getPosition().lng + ", " + stationMarkers[i].getPosition().lat + ";\n");
+                    }
+
+                    $("#hiddenStationPoints").val("");
+                    $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+                }
+            };
+        
+        var eventStationPointChange =
+            function(e)
+            {
+                var stationMarkersLength = stationMarkers.length;
+                
+                for (var i = 0; i < stationMarkersLength; i++)
+                {
+                    stationMarkers[i].setAnimation(null);
+                }
+                
+                if (parseInt(e.target.value) > 0)
+                {
+                    stationMarkers[parseInt(e.target.value - 1)].setAnimation(BMAP_ANIMATION_BOUNCE);
+                }
+            };
+        
+        var eventAddTriggerPoint =
+            function(e)
+            {
+                var stationPointIndex = $("#selectStationPoint").val();
+                
+                if (stationPointIndex > 0)
+                {
+                    var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat));
+                    var label = new BMap.Label("触" + stationPointIndex);
+                    label.setOffset(new BMap.Size(-25, 2));
+                    marker.setLabel(label);
+
+                    if (triggerMarkers[stationPointIndex - 1] === undefined)
+                    {
+                        triggerMarkers[stationPointIndex - 1] = marker;
+                        map.addOverlay(marker);
+                    }
+                    else
+                    {
+                        map.removeOverlay(triggerMarkers[stationPointIndex - 1]);
+                        triggerMarkers[stationPointIndex - 1] = marker;
+                        map.addOverlay(marker);
+                    }
+                    
+                    var heading = getTriggerPonitHeading(marker.getPosition().lng, marker.getPosition().lat, polyline.getPath());
+                }
+                else
+                {
+                    alert("请在左侧下拉菜单选择站点");
+                    $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                    $("#selectStationPoint").fadeOut(
+                        function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                }
+            };
+        
+        map.addEventListener("click", eventAddingPoints);
+        polyline.addEventListener("lineupdate", lineUpdate);
+        
+        $("#btnReset").click(eventReset);
+        $("#btnRemovePoint").click(eventRemovePoint);
+        $("#btnGoToSecondStep").click(eventGoToSecondStep);
+        $("#btnBackToFirstStep").click(eventBackToFirstStep);
+        $("#btnGoToThirdStep").click(eventGoToThirdStep);
+        $("#btnBackToSecondStep").click(eventBackToSecondStep);
+        $("#btnResetStationPoints").click(eventResetStationPoints);
+        $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
+        $("#selectStationPoint").change(eventStationPointChange);
+>>>>>>> parent of 32c0236... 前端设计已基本完成
     </script>
 </div>
