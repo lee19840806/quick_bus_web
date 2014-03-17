@@ -1,10 +1,3 @@
-<?php
-    echo $this->Html->script('leaflet-src');
-    echo $this->Html->script('Edit.Poly');
-    echo $this->fetch('script');
-?>
-<!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />-->
 <div class="row">
     <div class="col-md-3">
         <div id="divHelpFirstStep">
@@ -103,89 +96,19 @@
             </div>
         </form>
     </div>
-    <div class="col-md-9" id="Leaflet_map" style="height: 520px">
+    <div class="col-md-9" id="baidu_map" style="height: 520px">
     </div>
     
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBF3ULx-evRPfmbZnXWQ5wGVoRYZnAjjfc&sensor=false"></script>
     <script type="text/javascript">
-        var map = L.map('Leaflet_map').setView([31.23, 121.5], 13);
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'}).addTo(map);
-            
-        var myIcon = L.icon({
-            iconUrl: '/img/marker-icon.png',
-            iconRetinaUrl: '/img/marker-icon-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [15, 40],
-            popupAnchor: [-3, -35],
-            shadowUrl: '/img/marker-shadow.png',
-            shadowRetinaUrl: '/img/marker-shadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [15, 40]
-        });
-
-        L.marker([31.23, 121.5], {icon: myIcon}).addTo(map);
-        
-        var latlngs = [L.latLng(31.23, 121.5), L.latLng(31.23, 121.6)];
-        var polyline = L.polyline(latlngs, {color: 'blue', opacity: 0.6});
-        polyline.addTo(map);
-        polyline.editing.enable();
-        
-        var stationMarkers = [];
-        var triggerMarkers = [];
-        
-        var disableEventAddingPoints = 0;
-        var justRemovedPoint = 0;
-        
-        function getTriggerPonitHeading(lng, lat, path)
-        {
-            var distances = [];
-            var distancesTemp = [];
-            var x0 = lng;
-            var y0 = lat;
-            
-            var pathLength = path.length;
-
-            for (var i = 0; i < pathLength - 1; i++)
-            {
-                var x1 = path[i].lng;
-                var y1 = path[i].lat;
-                var x2 = path[i + 1].lng;
-                var y2 = path[i + 1].lat;
-                var dx = x1 - x2;
-                var dy = y1 - y2;
-                
-                var xInTheRange = (x0 >= x1 && x0 < x2) || (x0 > x2 && x0 <= x1);
-                var yInTheRange = (y0 >= y1 && y0 < y2) || (y0 > y2 && y0 <= y1);
-
-                if (xInTheRange && yInTheRange)
-                {
-                    var dist = Math.abs((dy * x0) - (dx * y0) + (x1 * y2) - (x2 * y1)) / Math.sqrt((dx * dx) + (dy * dy));
-                    distances.push({index: i, distance: dist});
-                    distancesTemp.push(dist);
-                }
-            }
-            
-            var minDistance = Math.min.apply(null, distancesTemp);
-            var endingPointIndex = 0;
-            
-            for (var i = 0; i < distances.length; i++)
-            {
-                var d = distances[i].distance;
-                if (distances[i].distance === minDistance)
-                {
-                    endingPointIndex = distances[i].index + 1;
-                }
-            }
-            
-            var endingPoint = path[endingPointIndex];
-            
-            var headingY = Math.sin(endingPoint.lng - x0) * Math.cos(endingPoint.lat);
-            var headingX = Math.cos(y0) * Math.sin(endingPoint.lat) -
-                Math.sin(y0) * Math.cos(endingPoint.lat) * Math.cos(endingPoint.lng - x0);
-            var headingInDegrees = (Math.atan2(headingY, headingX) * 180) / Math.PI;
-            var headingInDegreesNormalized = (headingInDegrees + 360) % 360;
-            
-            return headingInDegreesNormalized;
-        }
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById("baidu_map"), mapOptions);
+      }
+      
+      google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 </div>

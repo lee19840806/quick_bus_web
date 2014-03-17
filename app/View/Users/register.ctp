@@ -1,8 +1,8 @@
 <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-        <div class="col-sm-12">
-            <form class="form-horizontal" action="/Users/login" method="post">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <form class="form-horizontal" action="/Users/add" method="post">
                 <div style="display:none;">
                     <input type="hidden" name="_method" value="POST"/>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-9">
                         <button type="submit" class="btn btn-info">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
-                        <a href="/Users/register" class="btn btn-info" role="button">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>
+                        <a href="/users/register" class="btn btn-info" role="button">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>
                     </div>
                 </div>
                 <div class="form-group has-error">
@@ -37,5 +37,5 @@
             </form>
         </div>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-md-3"></div>
 </div>
