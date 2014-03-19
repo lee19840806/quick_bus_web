@@ -107,48 +107,95 @@
     <script type="text/javascript">
         var map = L.map('Leaflet_map').setView([31.23, 121.5], 13);
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'}).addTo(map);
+            {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' + ' | ' +
+                '&copy; <a href="http://www.glyphicons.com">GLYPHICONS</a>'}).addTo(map);
             
-        var myIcon = L.icon({
-            iconUrl: '/img/marker-icon.png',
-            iconRetinaUrl: '/img/marker-icon-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [15, 40],
-            popupAnchor: [-3, -35],
-            shadowUrl: '/img/marker-shadow.png',
-            shadowRetinaUrl: '/img/marker-shadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [15, 40]
-        });
-
-        L.marker([31.23, 121.5], {icon: myIcon}).addTo(map);
+        var stationIcon = L.icon({
+            iconUrl: '/img/station.png', 
+            iconSize: [32, 32], 
+            iconAnchor: [16, 31], 
+            popupAnchor: [0, -30]});
         
-        var latlngs = [L.latLng(31.23, 121.5), L.latLng(31.23, 121.6)];
-        var polyline = L.polyline(latlngs, {color: 'blue', opacity: 0.6});
+        var stationEditingIcon = L.icon({
+            iconUrl: '/img/station_editing.png', 
+            iconSize: [32, 32], 
+            iconAnchor: [16, 31], 
+            popupAnchor: [0, -30]});
+        
+        var triggerIcon = L.icon({
+            iconUrl: '/img/trigger.png', 
+            iconSize: [32, 32], 
+            iconAnchor: [16, 31], 
+            popupAnchor: [0, -30]});
+
+//        L.marker([31.23, 121.5], {icon: stationIcon}).addTo(map);
+        
+//        var latlngs = [L.latLng(31.23, 121.5), L.latLng(31.23, 121.6)];
+        var polyline = L.polyline([], {color: 'blue', opacity: 0.6});
         polyline.addTo(map);
-        polyline.editing.enable();
         
         var stationMarkers = [];
         var triggerMarkers = [];
         
-        var disableEventAddingPoints = 0;
-        var justRemovedPoint = 0;
+        function updateNavPointBox()
+        {
+            $("#inputNavPoints").html("");
+
+            var navPoints = [];
+            latLngs = polyline.getLatLngs();
+            numberOfPoints = latLngs.length;
+
+            for (var i = 0; i < numberOfPoints; i++)
+            {
+                var navPoint = {sequence: i + 1, longitude: latLngs[i].lng, latitude: latLngs[i].lat};
+                navPoints.push(navPoint);
+                var num = i + 1;
+                $("#inputNavPoints").html($("#inputNavPoints").html() + num + ". " + 
+                    Math.round(latLngs[i].lng * 100000) / 100000 + ", " + Math.round(latLngs[i].lat * 100000) / 100000 + ";\n");
+            }
+
+            $("#hiddenNavPoints").val("");
+            $("#hiddenNavPoints").val(JSON.stringify(navPoints));
+        }
         
-        function getTriggerPonitHeading(lng, lat, path)
+        function updateStationPointBox()
+        {
+            $("#inputStationPoints").html("");
+            
+            var stationPoints = [];
+            
+            var numberOfStations = stationMarkers.length;
+
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                var stationPoint = {sequence: i + 1, 
+                    longitude: stationMarkers[i].getLatLng().lng, latitude: stationMarkers[i].getLatLng().lat};
+                stationPoints.push(stationPoint);
+                var num = i + 1;
+                $("#inputStationPoints").html($("#inputStationPoints").html() + num + ". " + 
+                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
+                    Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000 + ";\n");
+            }
+
+            $("#hiddenStationPoints").val("");
+            $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+        }
+        
+        function getTriggerPonitHeading(lng, lat, latLngs)
         {
             var distances = [];
             var distancesTemp = [];
             var x0 = lng;
             var y0 = lat;
             
-            var pathLength = path.length;
+            var pathLength = latLngs.length;
 
             for (var i = 0; i < pathLength - 1; i++)
             {
-                var x1 = path[i].lng;
-                var y1 = path[i].lat;
-                var x2 = path[i + 1].lng;
-                var y2 = path[i + 1].lat;
+                var x1 = latLngs[i].lng;
+                var y1 = latLngs[i].lat;
+                var x2 = latLngs[i + 1].lng;
+                var y2 = latLngs[i + 1].lat;
                 var dx = x1 - x2;
                 var dy = y1 - y2;
                 
@@ -175,7 +222,7 @@
                 }
             }
             
-            var endingPoint = path[endingPointIndex];
+            var endingPoint = latLngs[endingPointIndex];
             
             var headingY = Math.sin(endingPoint.lng - x0) * Math.cos(endingPoint.lat);
             var headingX = Math.cos(y0) * Math.sin(endingPoint.lat) -
@@ -185,5 +232,352 @@
             
             return headingInDegreesNormalized;
         }
+        
+        var eventAddingPoints =
+            function(e)
+            {
+                polyline.addLatLng(e.latlng);
+                polyline.editing.disable();
+                polyline.editing.enable();
+
+                updateNavPointBox();
+            };
+            
+        var eventLineUpdate =
+            function(e)
+            {
+                updateNavPointBox();
+            };
+            
+        var eventPolylineReset =
+            function(e)
+            {
+                polyline.spliceLatLngs(0, polyline.getLatLngs().length);
+                polyline.editing.disable();
+                polyline.editing.enable();
+                
+                updateNavPointBox();
+            };
+            
+        var eventPolylineRemoveOnePoint =
+            function(e)
+            {
+                polyline.spliceLatLngs(polyline.getLatLngs().length - 1, 1);
+                polyline.editing.disable();
+                polyline.editing.enable();
+                
+                updateNavPointBox();
+            };
+            
+        var eventGoToSecondStep =
+            function(e)
+            {
+                if ($("#inputRouteName").val() === "")
+                {
+                    alert("请填写一个有效的路线名");
+                    $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
+                    $("#inputRouteName").fadeOut(
+                        function(){$("#inputRouteName").fadeIn(
+                            function(){$("#inputRouteName").focus();
+                        });
+                    });
+                    return;
+                }
+                
+                if (polyline.getLatLngs().length < 2)
+                {
+                    alert("请至少在地图上点取2个导航点，组成有效的线路");
+                    $("#Leaflet_map").fadeOut(function(){$("#Leaflet_map").fadeIn();});
+                    return;
+                }
+                
+                $("#btnGoToSecondStep").attr("disabled", true);
+                
+                $.ajax(
+                    {
+                        url: "/UserRoutes/ajaxCheckRouteName",
+                        type: "POST",
+                        data: {routeName: $("#inputRouteName").val()},
+                        timeout: 5000,
+                        success: function(result) {
+                            if (result === "yes")
+                            {
+                                $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                                $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                                
+                                polyline.editing.disable();
+                                map.removeEventListener("click", eventAddingPoints);
+                                polyline.addEventListener("click", eventAddStationPoint);
+                            }
+                            else
+                            {
+                                alert("已存在相同的路线名，请输入一个新的路线名");
+                                $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
+                                $("#inputRouteName").fadeOut(
+                                    function(){$("#inputRouteName").fadeIn(
+                                        function(){$("#inputRouteName").focus();
+                                    });
+                                });
+                            }
+                        },
+                        error: function(xhr, status) {
+                            alert("无法提交线路，请稍后再试");
+                        },
+                        complete: function()
+                        {
+                            $("#btnGoToSecondStep").attr("disabled", false);
+                        }
+                    }
+                );
+            };
+            
+        var eventAddStationPoint =
+            function(e)
+            {
+                var marker = L.marker(e.latlng, {icon: stationIcon}).addTo(map);
+                stationMarkers.push(marker);
+                
+                marker.bindPopup("站点" + stationMarkers.length).openPopup();
+                
+                updateStationPointBox();
+            };
+            
+        var eventResetStationPoints =
+            function(e)
+            {
+                var numberOfStations = stationMarkers.length;
+                
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    map.removeLayer(stationMarkers[i]);
+                }
+                
+                stationMarkers = [];
+                
+                updateStationPointBox();
+            };
+            
+        var eventRemoveStationPoint =
+            function(e)
+            {
+                if (stationMarkers.length > 0)
+                {
+                    map.removeLayer(stationMarkers[stationMarkers.length - 1]);
+                    stationMarkers.pop();
+                    
+                    updateStationPointBox();
+                }
+            };
+            
+        var eventBackToFirstStep =
+            function(e)
+            {
+                $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
+                $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
+                
+                map.addEventListener("click", eventAddingPoints);
+                polyline.removeEventListener("click", eventAddStationPoint);
+                
+                polyline.editing.enable();
+                
+                var numberOfStations = stationMarkers.length;
+                
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    map.removeLayer(stationMarkers[i]);
+                }
+                
+                stationMarkers = [];
+                
+                updateStationPointBox();
+            };
+            
+        var eventAddTriggerPoint =
+            function(e)
+            {
+                var stationPointIndex = $("#selectStationPoint").val();
+                
+                if (stationPointIndex <= 0)
+                {
+                    alert("请在左侧下拉菜单选择站点");
+                    $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                    $("#selectStationPoint").fadeOut(
+                        function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                    return;
+                }
+                
+                var marker = L.marker(e.latlng, {icon: triggerIcon});
+
+                if (triggerMarkers[stationPointIndex - 1] === undefined)
+                {
+                    triggerMarkers[stationPointIndex - 1] = marker;
+                    marker.addTo(map);
+                    marker.bindPopup("触发点" + stationPointIndex).openPopup();
+                }
+                else
+                {
+                    map.removeLayer(triggerMarkers[stationPointIndex - 1]);
+                    triggerMarkers[stationPointIndex - 1] = marker;
+                    marker.addTo(map);
+                    marker.bindPopup("触发点" + stationPointIndex).openPopup();
+                }
+
+                $("#inputTriggerPoints").html("");
+                var eachStationTriggerReady = true;
+                var numberOfStations = stationMarkers.length;
+
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    if (triggerMarkers[i] === undefined)
+                    {
+                        eachStationTriggerReady = false;
+                    }
+                    else
+                    {
+                        var heading = Math.round(getTriggerPonitHeading(
+                        triggerMarkers[i].getLatLng().lng, triggerMarkers[i].getLatLng().lat, polyline.getLatLngs()));
+
+                        $("#inputTriggerPoints").html($("#inputTriggerPoints").html() + 
+                            "站" + (i + 1) + ". " +
+                            Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
+                            Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000 + ";\n" + 
+                            "触" + (i + 1) + ". " +
+                            Math.round(triggerMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
+                            Math.round(triggerMarkers[i].getLatLng().lat * 100000) / 100000 + ", " +
+                            "方向" + heading + "°;\n\n");
+                    }
+                }
+
+                if (eachStationTriggerReady === true)
+                {
+                    var numberOfStations = stationMarkers.length;
+                    var triggerPoints = [];
+
+                    for (var i = 0; i < numberOfStations; i++)
+                    {
+                        var heading = Math.round(getTriggerPonitHeading(
+                            triggerMarkers[i].getLatLng().lng, triggerMarkers[i].getLatLng().lat, polyline.getLatLngs()));
+                        var triggerPoint = {sequence: i + 1, longitude: triggerMarkers[i].getLatLng().lng, 
+                            latitude: triggerMarkers[i].getLatLng().lat, heading: heading};
+                        triggerPoints.push(triggerPoint);
+                    }
+
+                    $("#hiddenTriggerPoints").val("");
+                    $("#hiddenTriggerPoints").val(JSON.stringify(triggerPoints));
+                }
+            };
+            
+        var eventGoToThirdStep =
+            function(e)
+            {
+                if (stationMarkers.length === 0)
+                {
+                    alert("请在路线上至少设置1个站点（点击地图中的蓝线）");
+                    $("#Leaflet_map").fadeOut(function(){$("#Leaflet_map").fadeIn();});
+                    return;
+                }
+                
+                $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
+                $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
+                
+                polyline.removeEventListener("click", eventAddStationPoint);
+                polyline.addEventListener("click", eventAddTriggerPoint);
+                
+                $("#selectStationPoint").empty();
+                
+                var numberOfStations = stationMarkers.length;
+                
+                $("#selectStationPoint").append($("<option>", {value: 0, text: "选择1个站点"}));
+                
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    $("#selectStationPoint").append($("<option>", {value: i + 1, text: i + 1 + ". " + 
+                        Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
+                        Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000}));
+                }
+            };
+            
+        var eventStationPointChange =
+            function(e)
+            {
+                var numberOfStations = stationMarkers.length;
+                
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    stationMarkers[i].setIcon(stationIcon);
+                }
+                
+                if (parseInt(e.target.value) > 0)
+                {
+                    stationMarkers[parseInt(e.target.value - 1)].setIcon(stationEditingIcon);
+                }
+            };
+            
+        var eventGoToSubmit =
+            function(e)
+            {
+                var eachStationTriggerReady = true;
+                var numberOfStations = stationMarkers.length;
+                
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    if (triggerMarkers[i] === undefined)
+                    {
+                        eachStationTriggerReady = false;
+                    }
+                }
+                
+                if (eachStationTriggerReady === false)
+                {
+                    alert("还有未设置触发点的站点。请完成设置，然后再提交线路");
+                    $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                    $("#selectStationPoint").fadeOut(
+                        function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                    return;
+                }
+                
+                $("#formRouteInfo").submit();
+            };
+            
+        var eventBackToSecondStep =
+            function(e)
+            {
+                polyline.removeEventListener("click", eventAddTriggerPoint);
+                polyline.addEventListener("click", eventAddStationPoint);
+                
+                $("#divThirdStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                
+                var numberOfStations = stationMarkers.length;
+                
+                for (var i = 0; i < numberOfStations; i++)
+                {
+                    stationMarkers[i].setIcon(stationIcon);
+                }
+                
+                var numberOfTriggers = triggerMarkers.length;
+                
+                for (var i = 0; i < numberOfTriggers; i++)
+                {
+                    map.removeLayer(triggerMarkers[i]);
+                }
+                
+                $("#inputTriggerPoints").html("");
+                $("#hiddenTriggerPoints").val("");
+                triggerMarkers = [];
+            };
+            
+        map.addEventListener('click', eventAddingPoints);
+        polyline.addEventListener('edit', eventLineUpdate);
+        $("#btnReset").click(eventPolylineReset);
+        $("#btnRemovePoint").click(eventPolylineRemoveOnePoint);
+        $("#btnGoToSecondStep").click(eventGoToSecondStep);
+        $("#btnResetStationPoints").click(eventResetStationPoints);
+        $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
+        $("#btnBackToFirstStep").click(eventBackToFirstStep);
+        $("#btnGoToThirdStep").click(eventGoToThirdStep);
+        $("#selectStationPoint").change(eventStationPointChange);
+        $("#btnBackToSecondStep").click(eventBackToSecondStep);
+        $("#btnGoToSubmit").click(eventGoToSubmit);
     </script>
 </div>
