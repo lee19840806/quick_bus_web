@@ -128,9 +128,6 @@
             iconAnchor: [16, 31], 
             popupAnchor: [0, -30]});
 
-//        L.marker([31.23, 121.5], {icon: stationIcon}).addTo(map);
-        
-//        var latlngs = [L.latLng(31.23, 121.5), L.latLng(31.23, 121.6)];
         var polyline = L.polyline([], {color: 'blue', opacity: 0.6});
         polyline.addTo(map);
         
@@ -202,7 +199,7 @@
                 var xInTheRange = (x0 >= x1 && x0 < x2) || (x0 > x2 && x0 <= x1);
                 var yInTheRange = (y0 >= y1 && y0 < y2) || (y0 > y2 && y0 <= y1);
 
-                if (xInTheRange && yInTheRange)
+                if (xInTheRange || yInTheRange)
                 {
                     var dist = Math.abs((dy * x0) - (dx * y0) + (x1 * y2) - (x2 * y1)) / Math.sqrt((dx * dx) + (dy * dy));
                     distances.push({index: i, distance: dist});
@@ -223,10 +220,11 @@
             }
             
             var endingPoint = latLngs[endingPointIndex];
+            var startingPoint = latLngs[endingPointIndex - 1];
             
-            var headingY = Math.sin(endingPoint.lng - x0) * Math.cos(endingPoint.lat);
-            var headingX = Math.cos(y0) * Math.sin(endingPoint.lat) -
-                Math.sin(y0) * Math.cos(endingPoint.lat) * Math.cos(endingPoint.lng - x0);
+            var headingY = Math.sin(endingPoint.lng - startingPoint.lng) * Math.cos(endingPoint.lat);
+            var headingX = Math.cos(startingPoint.lat) * Math.sin(endingPoint.lat) -
+                Math.sin(startingPoint.lat) * Math.cos(endingPoint.lat) * Math.cos(endingPoint.lng - startingPoint.lng);
             var headingInDegrees = (Math.atan2(headingY, headingX) * 180) / Math.PI;
             var headingInDegreesNormalized = (headingInDegrees + 360) % 360;
             
