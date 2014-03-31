@@ -8,6 +8,8 @@ App::uses('AppController', 'Controller');
  * @property SessionComponent $Session
  */
 class UserRoutesController extends AppController {
+    
+    public $uses = array('UserRoute', 'ViewUserRouteSummary');
 
 /**
  * Components
@@ -23,7 +25,8 @@ class UserRoutesController extends AppController {
  */
 	public function index() {
 		$this->UserRoute->recursive = 0;
-		$this->set('userRoutes', $this->Paginator->paginate());
+        $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.username' => $this->Auth->user('username')));
+		$this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
 	}
 
 /**
