@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+
 /**
  * User Model
  *
  * @property Group $Group
- * @property UserRoute $UserRoute
  */
 class User extends AppModel {
 
@@ -17,9 +17,9 @@ class User extends AppModel {
 	public $validate = array(
 		'username' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'rule' => array('alphaNumeric'),
+				'message' => '请使用（字母+数字）的组合作为用户名',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -27,9 +27,9 @@ class User extends AppModel {
 		),
 		'password' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'rule' => array('minLength', '6'),
+				'message' => '密码至少要有6位字符或数字',
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -39,7 +39,7 @@ class User extends AppModel {
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -63,35 +63,38 @@ class User extends AppModel {
 			'order' => ''
 		)
 	);
-
+    
 /**
  * hasMany associations
  *
  * @var array
  */
-//	public $hasMany = array(
-//		'UserRoute' => array(
-//			'className' => 'UserRoute',
-//			'foreignKey' => 'user_id',
-//			'dependent' => false,
-//			'conditions' => '',
-//			'fields' => '',
-//			'order' => '',
-//			'limit' => '',
-//			'offset' => '',
-//			'exclusive' => '',
-//			'finderQuery' => '',
-//			'counterQuery' => ''
-//		)
-//	);
-
+	public $hasMany = array(
+		'UserRoute' => array(
+			'className' => 'UserRoute',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+    
     public function beforeSave($options = array())
     {
+        parent::beforeSave($options);
+        
         if (isset($this->data[$this->alias]['password']))
         {
             $passwordHasher = new SimplePasswordHasher();
             $this->data[$this->alias]['password'] = $passwordHasher->hash($this->data[$this->alias]['password']);
         }
+        
         return true;
     }
 }

@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-9">
                         <button type="submit" class="btn btn-info">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
-                        <!--<a href="/Users/register" class="btn btn-info" role="button">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>-->
+                        <!--<a href="/UserAccounts/register" class="btn btn-info" role="button">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>-->
                     </div>
                 </div>
                 <div class="form-group has-error">

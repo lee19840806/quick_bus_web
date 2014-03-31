@@ -1,42 +1,19 @@
-<div class="userRoutes index">
-	<h2><?php echo __('User Routes'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($userRoutes as $userRoute): ?>
-	<tr>
-		<td><?php echo h($userRoute['UserRoute']['id']); ?>&nbsp;</td>
-		<td><?php echo h($userRoute['UserRoute']['user_id']); ?>&nbsp;</td>
-		<td><?php echo h($userRoute['UserRoute']['name']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $userRoute['UserRoute']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $userRoute['UserRoute']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $userRoute['UserRoute']['id']), null, __('Are you sure you want to delete # %s?', $userRoute['UserRoute']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New User Route'), array('action' => 'add')); ?></li>
-	</ul>
+<div class="row">
+    <div class="col-md-3">
+        <div id="welcome">
+            <strong>Quick Bus，线路管理面板</strong>
+            <ul style="padding-left: 20px">
+                <li>编辑线路</li>
+                <li>删除线路</li>
+                <li>创建一条新的线路</li>
+            </ul>
+        </div>
+        <div><hr/></div>
+        <p><a class="btn btn-primary btn-block" href="/UserRoutes/create" role="button">创建一条新的线路</a></p>
+    </div>
+    <div class="col-md-9" id="showRoutes" style="height: 520px">
+        <div>
+            <strong>已有的线路列表</strong>
+        </div>
+    </div>
 </div>

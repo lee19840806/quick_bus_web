@@ -17,7 +17,7 @@
             <strong>第2步，设置报站点</strong>
             <ol style="padding-left: 20px">
                 <li>按途经站点的先后顺序，点击蓝线</li>
-                <li>红色标记为报站点</li>
+                <li>绿色标记为报站点</li>
                 <li>点击“下一步，设置触发点”</li>
             </ol>
         </div>
@@ -33,9 +33,9 @@
         <form class="col-md-12 form-horizontal" id="formRouteInfo" action="/UserRoutes/submit" method="post">
             <div style="display: none">
                 <input type="hidden" name="_method" value="POST"/>
-                <input type="hidden" name="navPoints" id="hiddenNavPoints"/>
-                <input type="hidden" name="stationPoints" id="hiddenStationPoints"/>
-                <input type="hidden" name="TriggerPoints" id="hiddenTriggerPoints"/>
+                <input type="hidden" name="data[UserRoute][navPoints]" id="hiddenNavPoints"/>
+                <input type="hidden" name="data[UserRoute][stationPoints]" id="hiddenStationPoints"/>
+                <input type="hidden" name="data[UserRoute][triggerPoints]" id="hiddenTriggerPoints"/>
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <label class="control-label">已添加以下导航点</label>
                     <div>
-                        <textarea class="form-control input-sm" id="inputNavPoints" name="data[UserRoute][navPoints]" rows="6" readonly></textarea>
+                        <textarea class="form-control input-sm" id="inputNavPoints" rows="6" readonly></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -64,7 +64,7 @@
                 <div class="form-group">
                     <label class="control-label">已添加以下报站点</label>
                     <div>
-                        <textarea class="form-control input-sm" id="inputStationPoints" name="data[UserRoute][stationPoints]" rows="6" readonly></textarea>
+                        <textarea class="form-control input-sm" id="inputStationPoints" rows="6" readonly></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -89,7 +89,7 @@
                 <div class="form-group">
                     <label class="control-label">已设置的“站点-触发点”</label>
                     <div>
-                        <textarea class="form-control input-sm" id="inputTriggerPoints" name="data[UserRoute][triggerPoints]" rows="6" readonly></textarea>
+                        <textarea class="form-control input-sm" id="inputTriggerPoints" rows="6" readonly></textarea>
                     </div>
                 </div>
                 <div class="form-group">

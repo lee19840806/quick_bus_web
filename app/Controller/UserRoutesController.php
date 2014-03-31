@@ -6,17 +6,8 @@ App::uses('AppController', 'Controller');
  * @property UserRoute $UserRoute
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
- * @property User $User
- * @property UserRoutePoint $UserRoutePoint
  */
 class UserRoutesController extends AppController {
-
-/**
- * Helpers
- *
- * @var array
- */
-	public $helpers = array('Session');
 
 /**
  * Components
@@ -25,7 +16,7 @@ class UserRoutesController extends AppController {
  */
 	public $components = array('Paginator', 'Session');
     
-    /**
+/**
  * index method
  *
  * @return void
@@ -65,6 +56,8 @@ class UserRoutesController extends AppController {
 				$this->Session->setFlash(__('The user route could not be saved. Please, try again.'));
 			}
 		}
+		$users = $this->UserRoute->User->find('list');
+		$this->set(compact('users'));
 	}
 
 /**
@@ -89,6 +82,8 @@ class UserRoutesController extends AppController {
 			$options = array('conditions' => array('UserRoute.' . $this->UserRoute->primaryKey => $id));
 			$this->request->data = $this->UserRoute->find('first', $options);
 		}
+		$users = $this->UserRoute->User->find('list');
+		$this->set(compact('users'));
 	}
 
 /**
@@ -112,49 +107,9 @@ class UserRoutesController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
     
-    public function submit()
+    public function create()
     {
-        $aaa = $this->request->data;
-        $bbb = $this->request->data;
         
-//        if ($this->request->is('post'))
-//        {
-//            $this->loadModel('User');
-//            $user_array = $this->User->find('first', array(
-//                'conditions' => array('username' => $this->Auth->user('username')),
-//                'fields' => array('id', 'username')
-//            ));
-//            
-//            $user_route_to_be_saved = array(
-//                'user_id' => $user_array['User']['id'],
-//                'name' => $this->request->data('UserRoute.name'));
-//            
-//            $this->UserRoute->create();
-//            $this->UserRoute->save($user_route_to_be_saved);
-//            
-//            $user_route_array = $this->UserRoute->find('first', array(
-//                'conditions' => array(
-//                    'user_id' => $user_array['User']['id'],
-//                    'name' => $this->request->data('UserRoute.name'))
-//                )
-//            );
-//            
-//            $navPointsObj = json_decode($this->request->data['navPoints']);
-//            $navPoints = array();
-//            
-//            foreach ($navPointsObj as $obj)
-//            {
-//                array_push($navPoints, array(
-//                    'UserRoutePoint' => array_merge(array('route_id' => $user_route_array['UserRoute']['id']), (array)$obj)
-//                    ));
-//            }
-//            
-//            $this->loadModel('UserRoutePoint');
-//            $this->UserRoutePoint->create();
-//            $this->UserRoutePoint->saveMany($navPoints);
-//            
-//            $this->set('navPoints', $navPoints);
-//        }
     }
     
     public function ajaxCheckRouteName()
@@ -179,6 +134,18 @@ class UserRoutesController extends AppController {
             }
 
             $this->render('/UserRoutes/ajaxReturn', 'ajax');
+        }
+    }
+    
+    public function submit()
+    {
+        if ($this->request->is('post'))
+        {
+            $this->UserRoute->saveRoute($this->request->data, $this->Auth->user('id'));
+        }
+        else
+        {
+            $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
         }
     }
 }

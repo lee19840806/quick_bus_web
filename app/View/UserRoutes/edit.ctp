@@ -16,5 +16,7 @@
 
 		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('UserRoute.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('UserRoute.id'))); ?></li>
 		<li><?php echo $this->Html->link(__('List User Routes'), array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
