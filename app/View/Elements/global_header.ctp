@@ -10,12 +10,11 @@
                 {
                     echo '<li style="margin-top: 20px"><a href="/Users/logout"><strong>'
                         . $this->Session->read('Users.username')
-                        . ', Log Out</strong></a></li>';
+                        . ', 退出</strong></a></li>';
                 }
             ?>
         </li>
-        <li style="margin-top: 20px"><a href="#"><strong>About</strong></a></li>
-        <li style="margin-top: 20px"><a href="#"><strong>Contact Us</strong></a></li>
+        <li style="margin-top: 20px"><a href="#"><strong>联系我们</strong></a></li>
     </ul>
     <h2><strong>Quick Bus</strong></h2>
 </div>

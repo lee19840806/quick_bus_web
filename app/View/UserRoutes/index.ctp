@@ -14,12 +14,13 @@
     <div class="col-md-9" id="showRoutes" style="height: 520px">
         <div>
             <strong>已有的线路列表</strong>
-            <p><hr/></p>
         </div>
+        <div><br/></div>
         <div class="table-responsive">
             <table class="table table-hover">
                 <tr>
                     <th><?php echo $this->Paginator->sort('name', '路线名称'); ?></th>
+                    <th><?php echo $this->Paginator->sort('modified', '上次修改时间'); ?></th>
                     <th><?php echo $this->Paginator->sort('route_point_cnt', '导航点数'); ?></th>
                     <th><?php echo $this->Paginator->sort('station_cnt', '站点数'); ?></th>
                     <th><?php echo $this->Paginator->sort('trigger_cnt', '触发点数'); ?></th>
@@ -28,11 +29,11 @@
                 <?php foreach ($userRoutesSummary as $route): ?>
                 <tr>
                     <td><?php echo $route['ViewUserRouteSummary']['name']; ?></td>
+                    <td><?php echo $route['ViewUserRouteSummary']['modified']; ?></td>
                     <td><?php echo $route['ViewUserRouteSummary']['route_point_cnt']; ?></td>
                     <td><?php echo $route['ViewUserRouteSummary']['station_cnt']; ?></td>
                     <td><?php echo $route['ViewUserRouteSummary']['trigger_cnt']; ?></td>
                     <td>
-                        <?php echo $this->Html->link('修改', array('action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])) ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']), null,
                             '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>

@@ -53,8 +53,8 @@ class UserTriggerPoint extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'UserStation' => array(
-			'className' => 'UserStation',
+		'UserStationPoint' => array(
+			'className' => 'UserStationPoint',
 			'foreignKey' => 'user_station_id',
 			'conditions' => '',
 			'fields' => '',
