@@ -4,7 +4,7 @@
             <?php
                 if (!$this->Session->read('Users.username'))
                 {
-                    echo '<li style="margin-top: 20px"><a href="/Users/login"><strong>Log&nbsp;In</strong></a></li>';
+                    echo '<li style="margin-top: 20px"><a href="/Users/login"><strong>登录系统</strong></a></li>';
                 }
                 else
                 {

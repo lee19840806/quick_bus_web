@@ -19,6 +19,7 @@
 
         echo $this->Html->css('bootstrap');
         echo $this->Html->css('leaflet');
+        echo $this->Html->css('cake.paginator');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
