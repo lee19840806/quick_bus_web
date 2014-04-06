@@ -43,14 +43,14 @@
             <div><br/></div>
             <p>
                 <?php echo $this->Paginator->counter(array(
-                    'format' => __('共 {:pages} 页，目前位于第 {:page} 页，正在显示第 {:start} - {:end} 条记录')));
+                    'format' => '共 {:pages} 页，目前位于第 {:page} 页，正在显示第 {:start} - {:end} 条记录'));
                 ?>
             </p>
             <div class="paging">
                 <?php
-                    echo $this->Paginator->prev('< ' . __('前一页'), array(), null, array('class' => 'prev disabled'));
+                    echo $this->Paginator->prev('< 前一页', array(), null, array('class' => 'prev disabled'));
                     echo $this->Paginator->numbers(array('separator' => ''));
-                    echo $this->Paginator->next(__('后一页') . ' >', array(), null, array('class' => 'next disabled'));
+                    echo $this->Paginator->next('后一页 >', array(), null, array('class' => 'next disabled'));
                 ?>
             </div>
         </div>

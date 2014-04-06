@@ -16,14 +16,22 @@ class User extends AppModel {
  */
 	public $validate = array(
 		'username' => array(
-			'notEmpty' => array(
-				'rule' => array('alphaNumeric'),
-				'message' => '请使用（字母+数字）的组合作为用户名',
+			'lettersNumbers' => array(
+				'rule' => '/^[a-z0-9_]{3,16}$/',
+				'message' => '用户名必须为3位至16位的字母和数字组合',
 				'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+            'uniqueness' => array(
+				'rule' => 'isUnique',
+				'message' => '已有相同的账号，请另选一个',
+				'allowEmpty' => false,
+				'required' => 'create',
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			)
 		),
 		'password' => array(
 			'notEmpty' => array(
