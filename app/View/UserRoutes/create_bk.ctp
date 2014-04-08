@@ -8,7 +8,7 @@
         <div id="divHelpFirstStep">
             <strong>第1步，设置线路</strong>
             <ol style="padding-left: 20px">
-                <li>输入唯一的路线名</li>
+                <li>输入一个唯一的路线名（字母+数字）</li>
                 <li>点击地图，添加或修改路线</li>
                 <li>点击“下一步，设置报站点”</li>
             </ol>
@@ -17,7 +17,7 @@
             <strong>第2步，设置报站点</strong>
             <ol style="padding-left: 20px">
                 <li>按途经站点的先后顺序，点击蓝线</li>
-                <li>为每个站点设置一个名称</li>
+                <li>绿色标记为报站点</li>
                 <li>点击“下一步，设置触发点”</li>
             </ol>
         </div>
@@ -63,13 +63,8 @@
             <div id="divSecondStep" style="display: none">
                 <div class="form-group">
                     <label class="control-label">已添加以下报站点</label>
-                    <div style="height: 200px; overflow-y: scroll">
-                        <table class="table small" id="tblStationName">
-                            <tr>
-                                <th>站点</th>
-                                <th>名称</th>
-                            </tr>
-                        </table>
+                    <div>
+                        <textarea class="form-control input-sm" id="inputStationPoints" rows="6" readonly></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -162,22 +157,21 @@
         
         function updateStationPointBox()
         {
+            $("#inputStationPoints").html("");
+            
             var stationPoints = [];
             
             var numberOfStations = stationMarkers.length;
-            
-            $("#tblStationName tr.values").remove();
 
             for (var i = 0; i < numberOfStations; i++)
             {
                 var stationPoint = {sequence: i + 1, 
-                    longitude: stationMarkers[i].getLatLng().lng, latitude: stationMarkers[i].getLatLng().lat, name: null};
+                    longitude: stationMarkers[i].getLatLng().lng, latitude: stationMarkers[i].getLatLng().lat};
                 stationPoints.push(stationPoint);
                 var num = i + 1;
-                var pointString = num + ".&nbsp;" +
-                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ",&nbsp;"+
-                    Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000;
-                $("#tblStationName").append("<tr class=\"values\"><td>" + pointString + "</td><td><input type=\"text\" style=\"width: 70px\" /></td></tr>");
+                $("#inputStationPoints").html($("#inputStationPoints").html() + num + ". " + 
+                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
+                    Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000 + ";\n");
             }
 
             $("#hiddenStationPoints").val("");
@@ -440,13 +434,11 @@
                     {
                         var heading = Math.round(getTriggerPonitHeading(
                         triggerMarkers[i].getLatLng().lng, triggerMarkers[i].getLatLng().lat, polyline.getLatLngs()));
-                    
-                        var stationPoints = JSON.parse($("#hiddenStationPoints").val());
 
                         $("#inputTriggerPoints").html($("#inputTriggerPoints").html() + 
                             "站" + (i + 1) + ". " +
                             Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
-                            Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000 + ", " +  stationPoints[i]["name"] + ";\n" + 
+                            Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000 + ";\n" + 
                             "触" + (i + 1) + ". " +
                             Math.round(triggerMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
                             Math.round(triggerMarkers[i].getLatLng().lat * 100000) / 100000 + ", " +
@@ -483,26 +475,6 @@
                     return;
                 }
                 
-                for (var i = 0; i < stationMarkers.length; i++)
-                {
-                    if ($("#tblStationName tr.values :input")[i].value.replace(/\s/g, "") === "")
-                    {
-                        alert("请为所有的站点设置一个名称，然后进入下一步");
-                        $("#tblStationName tr.values :input").fadeOut(function() {$("#tblStationName tr.values :input").fadeIn();} );
-                        return;
-                    }
-                }
-                
-                var stationPoints = JSON.parse($("#hiddenStationPoints").val());
-                
-                for (var i = 0; i < stationPoints.length; i++)
-                {
-                    stationPoints[i]["name"] = $("#tblStationName tr.values :input")[i].value.replace(/\s/g, "");
-                }
-                
-                $("#hiddenStationPoints").val("");
-                $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
-                
                 $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
                 $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
                 
@@ -519,7 +491,7 @@
                 {
                     $("#selectStationPoint").append($("<option>", {value: i + 1, text: i + 1 + ". " + 
                         Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ", " + 
-                        Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000 + ", " + stationPoints[i]["name"]}));
+                        Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000}));
                 }
             };
             

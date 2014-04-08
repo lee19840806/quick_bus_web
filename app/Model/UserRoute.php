@@ -118,6 +118,13 @@ class UserRoute extends AppModel {
             array_push($routeAssociateRoutePoints['UserStationPoint'], $stationPoint);
         }
         
-        $this->saveAssociated($routeAssociateRoutePoints, array('deep' => TRUE));
+        if ($this->saveAssociated($routeAssociateRoutePoints, array('deep' => TRUE)))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 }

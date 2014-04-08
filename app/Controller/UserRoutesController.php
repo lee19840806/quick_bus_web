@@ -45,25 +45,6 @@ class UserRoutesController extends AppController {
 	}
 
 /**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->UserRoute->create();
-			if ($this->UserRoute->save($this->request->data)) {
-				$this->Session->setFlash(__('The user route has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user route could not be saved. Please, try again.'));
-			}
-		}
-		$users = $this->UserRoute->User->find('list');
-		$this->set(compact('users'));
-	}
-
-/**
  * edit method
  *
  * @throws NotFoundException
