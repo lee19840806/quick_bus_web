@@ -51,23 +51,23 @@ class UserRoutesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-		if (!$this->UserRoute->exists($id)) {
-			throw new NotFoundException(__('Invalid user route'));
+	public function edit($id = null)
+    {
+		if (!$this->UserRoute->exists($id))
+        {
+            $this->Session->setFlash('不存在此路线，请重选一条线路进行编辑');
+            $this->redirect(array('action' => 'index'));
 		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->UserRoute->save($this->request->data)) {
-				$this->Session->setFlash(__('The user route has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user route could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('UserRoute.' . $this->UserRoute->primaryKey => $id));
-			$this->request->data = $this->UserRoute->find('first', $options);
-		}
-		$users = $this->UserRoute->User->find('list');
-		$this->set(compact('users'));
+        elseif (!$this->UserRoute->isOwnedBy($id, $this->Auth->user('id')))
+        {
+            $this->Session->setFlash('选择有误，请重选一条线路进行编辑');
+            $this->redirect(array('action' => 'index'));
+        }
+        else
+        {
+            $route = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
+            $this->set('route', $route);
+        }
 	}
 
 /**

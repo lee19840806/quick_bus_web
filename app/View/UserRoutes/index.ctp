@@ -12,8 +12,11 @@
     </div>
     <div class="col-md-9" id="showRoutes" style="height: 520px">
         <div>
-            <strong>查看已有的线路，或者</strong>
-            <a class="btn btn-primary btn-sm" href="/UserRoutes/create" role="button">创建一条新的线路</a>
+            <p>
+                <strong>查看已有的线路，或者</strong>
+                <a class="btn btn-primary btn-sm" href="/UserRoutes/create" role="button">创建一条新的线路</a>
+                <strong class="text-danger"><?php echo $this->Session->flash(); ?></strong>
+            </p>
         </div>
         <div><br/></div>
         <div class="table-responsive">

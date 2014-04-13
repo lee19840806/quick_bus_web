@@ -54,7 +54,7 @@ class UserRoute extends AppModel {
 			'className' => 'User',
 			'foreignKey' => 'user_id',
 			'conditions' => '',
-			'fields' => '',
+			'fields' => array('id', 'username'),
 			'order' => ''
 		)
 	);
@@ -126,5 +126,10 @@ class UserRoute extends AppModel {
         {
             return FALSE;
         }
+    }
+    
+    public function isOwnedBy($routeID, $userID)
+    {
+        return $this->field('user_id', array('id' => $routeID, 'user_id' => $userID)) === $userID;
     }
 }
