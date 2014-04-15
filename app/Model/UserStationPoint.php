@@ -79,4 +79,26 @@ class UserStationPoint extends AppModel {
             'dependent' => true
         )
     );
+    
+	public $hasMany = array(
+		'PhoneNumber' => array(
+			'className' => 'PhoneNumber',
+			'foreignKey' => 'user_station_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+    
+    public function isOwnedBy($station_id, $user_id)
+    {
+        $routeID = $this->field('user_route_id', array('UserStationPoint.id' => $station_id));
+        return $this->UserRoute->field('user_id', array('UserRoute.id' => $routeID)) === $user_id;
+    }
 }

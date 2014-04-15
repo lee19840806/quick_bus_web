@@ -45,32 +45,6 @@ class UserRoutesController extends AppController {
 	}
 
 /**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null)
-    {
-		if (!$this->UserRoute->exists($id))
-        {
-            $this->Session->setFlash('不存在此路线，请重选一条线路进行编辑');
-            $this->redirect(array('action' => 'index'));
-		}
-        elseif (!$this->UserRoute->isOwnedBy($id, $this->Auth->user('id')))
-        {
-            $this->Session->setFlash('选择有误，请重选一条线路进行编辑');
-            $this->redirect(array('action' => 'index'));
-        }
-        else
-        {
-            $route = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
-            $this->set('route', $route);
-        }
-	}
-
-/**
  * delete method
  *
  * @throws NotFoundException
