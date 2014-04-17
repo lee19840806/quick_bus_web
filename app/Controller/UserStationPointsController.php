@@ -4,12 +4,15 @@ App::uses('AppController', 'Controller');
  * UserStationPoints Controller
  *
  * @property UserStationPoint $UserStationPoint
+ * @property PhoneNumber $PhoneNumber
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
 class UserStationPointsController extends AppController {
+    
+    public $uses = array('UserStationPoint', 'PhoneNumber');
 
-/**
+     /**
  * Components
  *
  * @var array
@@ -39,10 +42,23 @@ class UserStationPointsController extends AppController {
         {
             $route = $this->UserStationPoint->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
             $this->set('route', $route);
+            
+            $phoneNumberArray = array();
+            
+            foreach ($route['UserStationPoint'] as $station)
+            {
+                $phoneNumbers = $this->PhoneNumber->find('list', array(
+                    'fields' => array('PhoneNumber.phone_numbers'),
+                    'conditions' => array('PhoneNumber.user_station_id' => $station['id'])));
+                $phoneNumbersString = implode(', ', $phoneNumbers);
+                array_push($phoneNumberArray, $phoneNumbersString);
+            }
+            
+            $this->set('phoneNumberArray', $phoneNumberArray);
         }
 	}
     
-    public function submitPhoneNumbers()
+    public function submit()
     {
         if ($this->request->is('post'))
         {
@@ -55,9 +71,43 @@ class UserStationPointsController extends AppController {
                     $this->Session->setFlash('站点归属权有误，请重选一条线路进行编辑');
                     $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
                 }
+                
+                $phoneNumbersRemovedSpace = rtrim(str_replace(' ', '', $stationPhone['phoneNumbers']), ',');
+                
+                $phoneNumbers = array();
+                
+                if (strlen($phoneNumbersRemovedSpace) > 1)
+                {
+                    $phoneNumbers = str_getcsv(str_replace('，', ',', $phoneNumbersRemovedSpace));
+                }
+                
+                foreach ($phoneNumbers as $phoneNumber)
+                {
+                    $numberToBeSaved = array('user_station_id' => $stationPhone['stationID'], 'phone_numbers' => $phoneNumber);
+                    $this->UserStationPoint->PhoneNumber->set($numberToBeSaved);
+                    
+                    if (!$this->UserStationPoint->PhoneNumber->validates())
+                    {
+                        $firstError = array_values($this->UserStationPoint->PhoneNumber->validationErrors);
+                        $this->Session->setFlash($firstError[0][0] . '，请重新填写手机号码');
+                        $this->redirect(array('action' => 'edit', $this->UserStationPoint->field('user_route_id', array('id' => $stationPhone['stationID']))));
+                    }
+                }
+                
+                $this->UserStationPoint->PhoneNumber->deleteAll(array('PhoneNumber.user_station_id' => $stationPhone['stationID']));
+                
+                foreach ($phoneNumbers as $phoneNumber)
+                {
+                    $numberToBeSaved = array('user_station_id' => $stationPhone['stationID'], 'phone_numbers' => $phoneNumber);
+                    $this->UserStationPoint->PhoneNumber->create();
+                    
+                    if (!$this->UserStationPoint->PhoneNumber->save($numberToBeSaved))
+                    {
+                        $this->Session->setFlash('保存手机号码出错，请稍后再试');
+                        $this->redirect(array('action' => 'edit', $this->UserStationPoint->field('user_route_id', array('id' => $stationPhone['stationID']))));
+                    }
+                }
             }
-            
-            $bbb = $this->request->data;
         }
     }
 }

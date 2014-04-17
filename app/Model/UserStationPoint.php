@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * UserStationPoint Model
  *
  * @property UserRoute $UserRoute
+ * @property PhoneNumber $PhoneNumber
  */
 class UserStationPoint extends AppModel {
 

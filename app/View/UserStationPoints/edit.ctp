@@ -14,15 +14,17 @@
         <div>
             <strong><?php echo $route['UserRoute']['name']; ?>，编辑报站手机号码，或者</strong>
             <a class="btn btn-primary btn-sm" href="/UserRoutes/index" role="button">返回线路管理面板</a>
+            <strong class="text-danger"><?php echo $this->Session->flash(); ?></strong>
         </div>
         <div><hr/></div>
-        <form class="col-md-12" action="/UserStationPoints/submitPhoneNumbers" method="post">
+        <form class="col-md-12" action="/UserStationPoints/submit" method="post">
             <?php $i = 0; ?>
             <?php foreach ($route['UserStationPoint'] as $station): ?>
             <div class="form-group">
                 <input type="hidden" name="data[stationInfo][<?php echo $i; ?>][stationID]" value="<?php echo $station['id']; ?>">
                 <label><?php echo "站点" . $station['sequence'] . "：" . $station['name']; ?></label>
-                <input type="text" class="form-control input-sm" name="data[stationInfo][<?php echo $i; ?>][phoneNumbers]" placeholder="多个手机号码，使用逗号分隔">
+                <input type="text" class="form-control input-sm" name="data[stationInfo][<?php echo $i; ?>][phoneNumbers]" 
+                       placeholder="多个手机号码，使用逗号分隔" value="<?php echo $phoneNumberArray[$i]; ?>">
             </div>
             <div><hr/></div>
             <?php $i = $i + 1; ?>

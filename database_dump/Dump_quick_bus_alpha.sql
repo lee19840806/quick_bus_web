@@ -59,7 +59,7 @@ CREATE TABLE `phone_numbers` (
   UNIQUE KEY `UK_phone_numbers_id` (`id`),
   KEY `FK_phone_numbers_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_phone_numbers_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `phone_numbers` (
 
 LOCK TABLES `phone_numbers` WRITE;
 /*!40000 ALTER TABLE `phone_numbers` DISABLE KEYS */;
+INSERT INTO `phone_numbers` VALUES (15,41,'15216656707'),(16,41,'13918002736'),(17,42,'13918002736');
 /*!40000 ALTER TABLE `phone_numbers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,4 +418,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-13 22:07:18
+-- Dump completed on 2014-04-17 21:39:21
