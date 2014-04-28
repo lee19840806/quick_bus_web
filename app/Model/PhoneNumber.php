@@ -13,7 +13,7 @@ class PhoneNumber extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'phone_numbers' => array(
+		'phone_number' => array(
 			'rule1' => array(
 				'rule' => array('notEmpty'),
 				'message' => '手机号码不能为空',

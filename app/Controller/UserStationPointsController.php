@@ -48,7 +48,7 @@ class UserStationPointsController extends AppController {
             foreach ($route['UserStationPoint'] as $station)
             {
                 $phoneNumbers = $this->PhoneNumber->find('list', array(
-                    'fields' => array('PhoneNumber.phone_numbers'),
+                    'fields' => array('PhoneNumber.phone_number'),
                     'conditions' => array('PhoneNumber.user_station_id' => $station['id'])));
                 $phoneNumbersString = implode(', ', $phoneNumbers);
                 array_push($phoneNumberArray, $phoneNumbersString);
@@ -83,7 +83,7 @@ class UserStationPointsController extends AppController {
                 
                 foreach ($phoneNumbers as $phoneNumber)
                 {
-                    $numberToBeSaved = array('user_station_id' => $stationPhone['stationID'], 'phone_numbers' => $phoneNumber);
+                    $numberToBeSaved = array('user_station_id' => $stationPhone['stationID'], 'phone_number' => $phoneNumber);
                     $this->UserStationPoint->PhoneNumber->set($numberToBeSaved);
                     
                     if (!$this->UserStationPoint->PhoneNumber->validates())
@@ -98,7 +98,7 @@ class UserStationPointsController extends AppController {
                 
                 foreach ($phoneNumbers as $phoneNumber)
                 {
-                    $numberToBeSaved = array('user_station_id' => $stationPhone['stationID'], 'phone_numbers' => $phoneNumber);
+                    $numberToBeSaved = array('user_station_id' => $stationPhone['stationID'], 'phone_number' => $phoneNumber);
                     $this->UserStationPoint->PhoneNumber->create();
                     
                     if (!$this->UserStationPoint->PhoneNumber->save($numberToBeSaved))
