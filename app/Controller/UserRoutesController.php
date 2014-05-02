@@ -28,42 +28,6 @@ class UserRoutesController extends AppController {
         $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.username' => $this->Auth->user('username')), 'limit' => 10);
 		$this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
 	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->UserRoute->exists($id)) {
-			throw new NotFoundException(__('Invalid user route'));
-		}
-		$options = array('conditions' => array('UserRoute.' . $this->UserRoute->primaryKey => $id));
-		$this->set('userRoute', $this->UserRoute->find('first', $options));
-	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->UserRoute->id = $id;
-		if (!$this->UserRoute->exists()) {
-			throw new NotFoundException(__('Invalid user route'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->UserRoute->delete()) {
-			$this->Session->setFlash(__('The user route has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The user route could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}
     
     public function create()
     {
@@ -104,6 +68,21 @@ class UserRoutesController extends AppController {
         else
         {
             $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+        }
+    }
+    
+    public function inquiry()
+    {
+        if ($this->request->is('post'))
+        {
+            $routes = $this->UserRoute->find('list', array(
+                'fields' => array('name', 'created'),
+                'conditions' => array('user_id' => $this->Auth->user('id'))
+                )
+            );
+
+            $this->set('is_available', json_encode($routes));
+            $this->render('/UserRoutes/ajaxReturn', 'ajax');
         }
     }
 }

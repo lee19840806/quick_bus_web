@@ -73,31 +73,37 @@ INSERT INTO `phone_numbers` VALUES (18,41,'15216656707'),(19,41,'13918002736'),(
 UNLOCK TABLES;
 
 --
--- Table structure for table `upload_gps`
+-- Table structure for table `real_time_positions`
 --
 
-DROP TABLE IF EXISTS `upload_gps`;
+DROP TABLE IF EXISTS `real_time_positions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `upload_gps` (
+CREATE TABLE `real_time_positions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
   `user_route_id` int(10) unsigned NOT NULL,
   `latitude` decimal(12,8) NOT NULL,
   `longitude` decimal(12,8) NOT NULL,
+  `heading` int(10) unsigned NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_real_time_positions_id` (`id`),
+  KEY `FK_real_time_positions_users_id` (`user_id`),
+  KEY `FK_real_time_positions_user_routes_id` (`user_route_id`),
+  CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `upload_gps`
+-- Dumping data for table `real_time_positions`
 --
 
-LOCK TABLES `upload_gps` WRITE;
-/*!40000 ALTER TABLE `upload_gps` DISABLE KEYS */;
-/*!40000 ALTER TABLE `upload_gps` ENABLE KEYS */;
+LOCK TABLES `real_time_positions` WRITE;
+/*!40000 ALTER TABLE `real_time_positions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `real_time_positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -203,7 +209,7 @@ CREATE TABLE `user_trigger_points` (
   `user_station_id` int(10) unsigned NOT NULL,
   `latitude` decimal(12,8) NOT NULL,
   `longitude` decimal(12,8) NOT NULL,
-  `heading` int(11) NOT NULL,
+  `heading` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_user_trigger_points_id` (`id`),
   KEY `FK_user_trigger_points_user_station_points_id` (`user_station_id`),
@@ -490,4 +496,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-28 21:44:53
+-- Dump completed on 2014-05-02  8:31:09
