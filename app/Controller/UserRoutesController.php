@@ -34,6 +34,29 @@ class UserRoutesController extends AppController {
         
     }
     
+    public function delete($id = null)
+    {
+		$this->UserRoute->id = $id;
+        
+		if (!$this->UserRoute->exists())
+        {
+			throw new NotFoundException('此线路不存在');
+		}
+        
+		$this->request->onlyAllow('post', 'delete');
+        
+		if ($this->UserRoute->delete())
+        {
+			$this->Session->setFlash('线路删除成功');
+		}
+        else
+        {
+			$this->Session->setFlash('无法删除线路，请稍后再试');
+		}
+        
+		return $this->redirect(array('action' => 'index'));
+	}
+    
     public function ajaxCheckRouteName()
     {
         if ($this->request->is('ajax'))

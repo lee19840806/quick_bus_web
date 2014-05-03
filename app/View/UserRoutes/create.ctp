@@ -163,8 +163,15 @@
         function updateStationPointBox()
         {
             var stationPoints = [];
-            
             var numberOfStations = stationMarkers.length;
+            
+            var inputs = $("#tblStationName input");
+            var inputValues = [];
+            
+            for (var i = 0; i < inputs.length; i++)
+            {
+                inputValues.push($(inputs[i]).val());
+            }
             
             $("#tblStationName tr.values").remove();
 
@@ -175,9 +182,13 @@
                 stationPoints.push(stationPoint);
                 var num = i + 1;
                 var pointString = num + ".&nbsp;" +
-                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ",&nbsp;"+
+                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ",&nbsp;" +
                     Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000;
-                $("#tblStationName").append("<tr class=\"values\"><td>" + pointString + "</td><td><input type=\"text\" style=\"width: 70px\" /></td></tr>");
+                
+                var inputValue = (inputValues[i] === undefined) ? "" : inputValues[i];
+                
+                $("#tblStationName").append("<tr class=\"values\"><td>" + pointString + 
+                    "</td><td><input type=\"text\" value=\"" + inputValue + "\" style=\"width: 70px\" /></td></tr>");
             }
 
             $("#hiddenStationPoints").val("");

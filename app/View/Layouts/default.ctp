@@ -20,6 +20,8 @@
         echo $this->Html->css('bootstrap');
         echo $this->Html->css('leaflet');
         echo $this->Html->css('cake.paginator');
+        
+        echo $this->Html->script('jquery-1.11.0');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -27,10 +29,6 @@
 	?>
 </head>
 <body>
-    <?php
-        echo $this->Html->script('jquery-1.11.0');
-        echo $this->fetch('script');
-    ?>
     <div class="container" style="margin-top: 20px">
             <?php echo $this->element('global_header'); ?>
             <?php echo $this->fetch('content'); ?>
