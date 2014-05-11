@@ -93,8 +93,6 @@ class RealTimePosition extends AppModel {
         $latitude_error = ($latitude < -90 || $latitude > 90);
         $longitude_error = ($longitude < -180 || $longitude > 180);
         $heading_error = ($heading < 0 || $heading > 360);
-        
-        $aaa = $this->getAssociated();
 
         if ($user_route_id_error || $latitude_error || $longitude_error || $heading_error)
         {
