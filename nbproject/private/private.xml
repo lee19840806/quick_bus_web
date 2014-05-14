@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/wamp/www/quick_bus_web/app/Model/ViewUserNotifyPhone.php</file>
             <file>file:/C:/wamp/www/quick_bus_web/test/tests/api/UploadCept.php</file>
             <file>file:/C:/wamp/www/quick_bus_web/app/Controller/RealTimePositionsController.php</file>
             <file>file:/C:/wamp/www/quick_bus_web/app/View/RealTimePositions/test_upload.ctp</file>
-            <file>file:/C:/wamp/www/quick_bus_web/app/Controller/UserRoutesController.php</file>
             <file>file:/C:/wamp/www/quick_bus_web/app/Model/RealTimePosition.php</file>
         </group>
     </open-files>

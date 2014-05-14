@@ -9,7 +9,9 @@ App::uses('AppController', 'Controller');
  */
 class RealTimePositionsController extends AppController {
 
-/**
+    public $uses = array('RealTimePosition', 'ViewUserNotifyPhone');
+
+ /**
  * Components
  *
  * @var array

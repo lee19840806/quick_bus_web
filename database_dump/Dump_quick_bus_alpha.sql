@@ -58,7 +58,7 @@ CREATE TABLE `phone_numbers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_phone_numbers_id` (`id`),
   KEY `FK_phone_numbers_user_station_points_id` (`user_station_id`),
-  CONSTRAINT `FK_phone_numbers_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`)
+  CONSTRAINT `FK_phone_numbers_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -90,10 +90,10 @@ CREATE TABLE `real_time_positions` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_real_time_positions_id` (`id`),
-  KEY `FK_real_time_positions_users_id` (`user_id`),
   KEY `FK_real_time_positions_user_routes_id` (`user_route_id`),
-  CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`)
+  KEY `FK_real_time_positions_users_id` (`user_id`),
+  CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,8 +103,43 @@ CREATE TABLE `real_time_positions` (
 
 LOCK TABLES `real_time_positions` WRITE;
 /*!40000 ALTER TABLE `real_time_positions` DISABLE KEYS */;
-INSERT INTO `real_time_positions` VALUES (2,7,17,7.00000000,8.00000000,9,'2014-05-02 20:45:41','2014-05-02 20:27:41'),(7,7,28,31.21889000,121.54458000,201,'2014-05-11 23:29:38','2014-05-11 22:09:38'),(8,7,28,31.20889000,121.53549000,201,'2014-05-11 23:29:45','2014-05-11 22:09:45');
+INSERT INTO `real_time_positions` VALUES (2,7,17,7.00000000,8.00000000,9,'2014-05-02 20:45:41','2014-05-02 20:27:41'),(7,7,28,31.21889000,121.54458000,201,'2014-05-14 21:48:20','2014-05-11 22:09:38'),(8,7,28,31.20889000,121.53549000,201,'2014-05-14 21:48:24','2014-05-11 22:09:45');
 /*!40000 ALTER TABLE `real_time_positions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_notify_phone_history`
+--
+
+DROP TABLE IF EXISTS `user_notify_phone_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_notify_phone_history` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `real_time_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `user_route_id` int(10) unsigned NOT NULL,
+  `route_name` varchar(50) NOT NULL,
+  `station_sequence` int(10) unsigned NOT NULL,
+  `station_name` varchar(50) NOT NULL,
+  `phone_number` char(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_table1_id` (`id`),
+  KEY `FK_user_notify_phone_history_real_time_positions_id` (`real_time_id`),
+  CONSTRAINT `FK_user_notify_phone_history_real_time_positions_id` FOREIGN KEY (`real_time_id`) REFERENCES `real_time_positions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_notify_phone_history`
+--
+
+LOCK TABLES `user_notify_phone_history` WRITE;
+/*!40000 ALTER TABLE `user_notify_phone_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_notify_phone_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -260,30 +295,15 @@ INSERT INTO `users` VALUES (6,'admin','d4c8b97a3775741bac3b92c901f3e1a1094d442b'
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `view_subquery_eligible_stations`
+-- Temporary table structure for view `view_subquery_eligible_gps`
 --
 
-DROP TABLE IF EXISTS `view_subquery_eligible_stations`;
-/*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_stations`*/;
+DROP TABLE IF EXISTS `view_subquery_eligible_gps`;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_gps`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_eligible_stations` (
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `cnt` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary table structure for view `view_subquery_real_time_gps`
---
-
-DROP TABLE IF EXISTS `view_subquery_real_time_gps`;
-/*!50001 DROP VIEW IF EXISTS `view_subquery_real_time_gps`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_real_time_gps` (
+/*!50001 CREATE TABLE `view_subquery_eligible_gps` (
+  `id` tinyint NOT NULL,
   `user_id` tinyint NOT NULL,
   `user_route_id` tinyint NOT NULL,
   `latitude` tinyint NOT NULL,
@@ -298,6 +318,23 @@ SET character_set_client = utf8;
   `time_diff` tinyint NOT NULL,
   `gps_diff` tinyint NOT NULL,
   `heading_diff` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_subquery_eligible_stations`
+--
+
+DROP TABLE IF EXISTS `view_subquery_eligible_stations`;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_stations`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_subquery_eligible_stations` (
+  `real_time_id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL,
+  `user_route_id` tinyint NOT NULL,
+  `station_sequence` tinyint NOT NULL,
+  `cnt` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -352,6 +389,7 @@ DROP TABLE IF EXISTS `view_user_notify_phone`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_user_notify_phone` (
+  `real_time_id` tinyint NOT NULL,
   `user_id` tinyint NOT NULL,
   `username` tinyint NOT NULL,
   `user_route_id` tinyint NOT NULL,
@@ -438,6 +476,25 @@ SET character_set_client = @saved_cs_client;
 --
 
 --
+-- Final view structure for view `view_subquery_eligible_gps`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_subquery_eligible_gps`*/;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_gps`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_subquery_eligible_gps` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`b`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`trigger_lat` AS `trigger_lat`,`b`.`trigger_lng` AS `trigger_lng`,`b`.`trigger_heading` AS `trigger_heading`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff`,(abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) AS `gps_diff`,abs(sin(radians(((`a`.`heading` - `b`.`trigger_heading`) / 2)))) AS `heading_diff` from (`real_time_positions` `a` left join `view_user_route_detail` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) where ((time_to_sec(timediff(now(),`a`.`created`)) >= 0) and (time_to_sec(timediff(now(),`a`.`created`)) <= 1800) and ((abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) <= 0.0008) and (abs(sin(radians(((`a`.`heading` - `b`.`trigger_heading`) / 2)))) <= 0.174)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_subquery_eligible_stations`
 --
 
@@ -451,26 +508,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_subquery_eligible_stations` AS select `view_subquery_real_time_gps`.`user_id` AS `user_id`,`view_subquery_real_time_gps`.`user_route_id` AS `user_route_id`,`view_subquery_real_time_gps`.`station_sequence` AS `station_sequence`,count(0) AS `cnt` from `view_subquery_real_time_gps` group by 1,2,3 having (`cnt` = 1) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_subquery_real_time_gps`
---
-
-/*!50001 DROP TABLE IF EXISTS `view_subquery_real_time_gps`*/;
-/*!50001 DROP VIEW IF EXISTS `view_subquery_real_time_gps`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_subquery_real_time_gps` AS select `a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`b`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`trigger_lat` AS `trigger_lat`,`b`.`trigger_lng` AS `trigger_lng`,`b`.`trigger_heading` AS `trigger_heading`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff`,(abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) AS `gps_diff`,abs(sin(radians(((`a`.`heading` - `b`.`trigger_heading`) / 2)))) AS `heading_diff` from (`real_time_positions` `a` left join `view_user_route_detail` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) where ((time_to_sec(timediff(now(),`a`.`created`)) >= 0) and (time_to_sec(timediff(now(),`a`.`created`)) <= 1800) and ((abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) <= 0.0008) and (abs(sin(radians(((`a`.`heading` - `b`.`trigger_heading`) / 2)))) <= 0.174)) */;
+/*!50001 VIEW `view_subquery_eligible_stations` AS select `view_subquery_eligible_gps`.`id` AS `real_time_id`,`view_subquery_eligible_gps`.`user_id` AS `user_id`,`view_subquery_eligible_gps`.`user_route_id` AS `user_route_id`,`view_subquery_eligible_gps`.`station_sequence` AS `station_sequence`,count(0) AS `cnt` from `view_subquery_eligible_gps` group by 1,2,3 having (`cnt` = 1) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -546,7 +584,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_user_notify_phone` AS select `a`.`user_id` AS `user_id`,`b`.`username` AS `username`,`a`.`user_route_id` AS `user_route_id`,`b`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`phone_number` AS `phone_number` from (`view_subquery_eligible_stations` `a` left join `view_user_route_phone_number` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`route_id`) and (`a`.`station_sequence` = `b`.`station_sequence`)))) */;
+/*!50001 VIEW `view_user_notify_phone` AS select `a`.`real_time_id` AS `real_time_id`,`a`.`user_id` AS `user_id`,`b`.`username` AS `username`,`a`.`user_route_id` AS `user_route_id`,`b`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`phone_number` AS `phone_number` from (`view_subquery_eligible_stations` `a` left join `view_user_route_phone_number` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`route_id`) and (`a`.`station_sequence` = `b`.`station_sequence`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -617,4 +655,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-11 23:51:52
+-- Dump completed on 2014-05-14 21:52:25
