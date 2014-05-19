@@ -3,8 +3,6 @@ App::uses('AppController', 'Controller');
 /**
  * RealTimePositions Controller
  *
- * @property ViewUserNotifyPhone $ViewUserNotifyPhone
- * @property UserNotifyPhoneHistory $UserNotifyPhoneHistory
  * @property RealTimePosition $RealTimePosition
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
@@ -35,7 +33,22 @@ class RealTimePositionsController extends AppController {
             'fields' => array('ViewUserNotifyPhone.*')
             ));
         
-        $aaa = count($notifyPhones);
+        if (count($notifyPhones) > 0)
+        {
+            $UserNotifyPhoneHistoryRecords = array();
+            
+            foreach ($notifyPhones as $phone)
+            {
+                array_push($UserNotifyPhoneHistoryRecords, $phone['ViewUserNotifyPhone']);
+            }
+            
+            $this->RealTimePosition->UserNotifyPhoneHistory->create();
+            
+            if (!$this->RealTimePosition->UserNotifyPhoneHistory->saveMany($UserNotifyPhoneHistoryRecords))
+            {
+                $this->set('returnValue', 4);
+            }
+        }
         
         $this->render('/RealTimePositions/upload', 'ajax');
     }

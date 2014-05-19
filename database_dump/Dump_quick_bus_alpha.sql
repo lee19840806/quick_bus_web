@@ -94,7 +94,7 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `real_time_positions` (
 
 LOCK TABLES `real_time_positions` WRITE;
 /*!40000 ALTER TABLE `real_time_positions` DISABLE KEYS */;
-INSERT INTO `real_time_positions` VALUES (2,7,17,7.00000000,8.00000000,9,'2014-05-02 20:45:41','2014-05-02 20:27:41'),(7,7,28,31.21889000,121.54458000,201,'2014-05-14 21:48:20','2014-05-11 22:09:38'),(8,7,28,31.20889000,121.53549000,201,'2014-05-14 21:48:24','2014-05-11 22:09:45');
+INSERT INTO `real_time_positions` VALUES (2,7,17,7.00000000,8.00000000,9,'2014-05-02 20:45:41','2014-05-02 20:27:41');
 /*!40000 ALTER TABLE `real_time_positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,8 +129,8 @@ CREATE TABLE `user_notify_phone_history` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_table1_id` (`id`),
   KEY `FK_user_notify_phone_history_real_time_positions_id` (`real_time_id`),
-  CONSTRAINT `FK_user_notify_phone_history_real_time_positions_id` FOREIGN KEY (`real_time_id`) REFERENCES `real_time_positions` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_user_notify_phone_history_real_time_positions_id` FOREIGN KEY (`real_time_id`) REFERENCES `real_time_positions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -655,4 +655,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-14 21:52:25
+-- Dump completed on 2014-05-19 20:59:28

@@ -5,6 +5,8 @@ App::uses('AppModel', 'Model');
  *
  * @property User $User
  * @property UserRoute $UserRoute
+ * @property ViewUserNotifyPhone $ViewUserNotifyPhone
+ * @property UserNotifyPhoneHistory $UserNotifyPhoneHistory
  */
 class RealTimePosition extends AppModel {
 
