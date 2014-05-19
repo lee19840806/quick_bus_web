@@ -10,7 +10,7 @@ $I->see('查看');
 $I->sendPOST('RealTimePositions', array('data[RealTimePosition][user_id]' => 7, 'data[RealTimePosition][user_route_id]' => 28,
     'data[RealTimePosition][latitude]' => 31.21889, 'data[RealTimePosition][longitude]' => 121.54458, 'data[RealTimePosition][heading]' => 201));
 
-sleep(5);
+sleep(4);
 
 $I->sendPOST('RealTimePositions', array('data[RealTimePosition][user_id]' => 7, 'data[RealTimePosition][user_route_id]' => 28,
     'data[RealTimePosition][latitude]' => 31.20889, 'data[RealTimePosition][longitude]' => 121.53549, 'data[RealTimePosition][heading]' => 201));

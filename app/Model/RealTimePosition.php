@@ -80,6 +80,40 @@ class RealTimePosition extends AppModel {
 		)
 	);
     
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'ViewUserNotifyPhone' => array(
+			'className' => 'ViewUserNotifyPhone',
+			'foreignKey' => 'real_time_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+        'UserNotifyPhoneHistory' => array(
+			'className' => 'UserNotifyPhoneHistory',
+			'foreignKey' => 'real_time_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+    
     public function saveRealTimePosition($realTimePosition, $user_id)
     {
         $user_route_id = (int)$realTimePosition['user_route_id'];
