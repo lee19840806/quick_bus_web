@@ -29,17 +29,23 @@ class RealTimePositionsController extends AppController {
         }
         
         $notifyPhones = $this->RealTimePosition->ViewUserNotifyPhone->find('all', array(
-            'conditions' => array('ViewUserNotifyPhone.user_id' => $this->Auth->user('id')),
+            'conditions' => array(
+                'ViewUserNotifyPhone.user_id' => $this->Auth->user('id'),
+                'ViewUserNotifyPhone.user_route_id' => $this->request->data['RealTimePosition']['user_route_id']),
             'fields' => array('ViewUserNotifyPhone.*')
             ));
         
         if (count($notifyPhones) > 0)
         {
             $UserNotifyPhoneHistoryRecords = array();
+            $phoneNumbersArray = array();
+            $stationName = '';
             
             foreach ($notifyPhones as $phone)
             {
                 array_push($UserNotifyPhoneHistoryRecords, $phone['ViewUserNotifyPhone']);
+                array_push($phoneNumbersArray, $phone['ViewUserNotifyPhone']['phone_number']);
+                $stationName = $phone['ViewUserNotifyPhone']['station_name'];
             }
             
             $this->RealTimePosition->UserNotifyPhoneHistory->create();
@@ -47,6 +53,13 @@ class RealTimePositionsController extends AppController {
             if (!$this->RealTimePosition->UserNotifyPhoneHistory->saveMany($UserNotifyPhoneHistoryRecords))
             {
                 $this->set('returnValue', 4);
+            }
+            else
+            {
+                $phoneNumbersString = implode(',', $phoneNumbersArray);
+
+                $returnValue = $this->RealTimePosition->sendTemplateSMS('f888473d1547897a797c85b3e1c63a0d', 353696, '#name#=' . $stationName, $phoneNumbersString);
+                $this->set('returnValue', $returnValue);
             }
         }
         

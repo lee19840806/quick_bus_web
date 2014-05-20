@@ -194,13 +194,13 @@ class RealTimePosition extends AppModel {
         $url = "http://yunpian.com/v1/sms/tpl_send.json";
         $encoded_tpl_value = urlencode("$tpl_value");
         $post_string = "apikey=$apikey&tpl_id=$tpl_id&tpl_value=$encoded_tpl_value&mobile=$mobile";
-        return socketPost($url, $post_string);
+        return $this->socketPost($url, $post_string);
     }
     
     public function sendCustomizedSMS($apikey, $text, $mobile)
     {
         $url = "http://yunpian.com/v1/sms/send.json";
         $post_string = "apikey=$apikey&text=$text&mobile=$mobile";
-        return socketPost($url, $post_string);
+        return $this->socketPost($url, $post_string);
     }
 }
