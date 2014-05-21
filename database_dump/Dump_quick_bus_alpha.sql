@@ -59,7 +59,7 @@ CREATE TABLE `phone_numbers` (
   UNIQUE KEY `UK_phone_numbers_id` (`id`),
   KEY `FK_phone_numbers_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_phone_numbers_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `phone_numbers` (
 
 LOCK TABLES `phone_numbers` WRITE;
 /*!40000 ALTER TABLE `phone_numbers` DISABLE KEYS */;
-INSERT INTO `phone_numbers` VALUES (18,41,'15216656707'),(19,41,'13918002736'),(20,42,'13918002736'),(21,42,'15516617777'),(22,58,'15216656707'),(23,59,'15216656708'),(29,62,'15216656707'),(30,62,'13977788888'),(31,63,'15216656707'),(32,63,'13977788888'),(33,64,'15216656707');
+INSERT INTO `phone_numbers` VALUES (18,41,'15216656707'),(19,41,'13918002736'),(20,42,'13918002736'),(21,42,'15516617777'),(22,58,'15216656707'),(23,59,'15216656708'),(34,62,'15216656707'),(35,62,'13524677703'),(36,62,'15821765327'),(37,63,'15216656707'),(38,64,'15216656707');
 /*!40000 ALTER TABLE `phone_numbers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `real_time_positions` (
 
 LOCK TABLES `real_time_positions` WRITE;
 /*!40000 ALTER TABLE `real_time_positions` DISABLE KEYS */;
-INSERT INTO `real_time_positions` VALUES (2,7,17,7.00000000,8.00000000,9,'2014-05-02 20:45:41','2014-05-02 20:27:41');
+INSERT INTO `real_time_positions` VALUES (2,7,17,7.00000000,8.00000000,9,'2014-05-02 20:45:41','2014-05-02 20:27:41'),(4,7,28,31.20889000,121.53549000,201,'2014-05-21 20:18:24','2014-05-21 20:18:24');
 /*!40000 ALTER TABLE `real_time_positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +130,7 @@ CREATE TABLE `user_notify_phone_history` (
   UNIQUE KEY `UK_table1_id` (`id`),
   KEY `FK_user_notify_phone_history_real_time_positions_id` (`real_time_id`),
   CONSTRAINT `FK_user_notify_phone_history_real_time_positions_id` FOREIGN KEY (`real_time_id`) REFERENCES `real_time_positions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,6 +139,7 @@ CREATE TABLE `user_notify_phone_history` (
 
 LOCK TABLES `user_notify_phone_history` WRITE;
 /*!40000 ALTER TABLE `user_notify_phone_history` DISABLE KEYS */;
+INSERT INTO `user_notify_phone_history` VALUES (4,4,7,'guest1',28,'锦绣线',1,'龙阳路站','13524677703','2014-05-21 20:18:25','2014-05-21 20:18:25'),(5,4,7,'guest1',28,'锦绣线',1,'龙阳路站','15216656707','2014-05-21 20:18:25','2014-05-21 20:18:25'),(6,4,7,'guest1',28,'锦绣线',1,'龙阳路站','15821765327','2014-05-21 20:18:25','2014-05-21 20:18:25');
 /*!40000 ALTER TABLE `user_notify_phone_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -655,4 +656,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-19 20:59:28
+-- Dump completed on 2014-05-21 21:21:46

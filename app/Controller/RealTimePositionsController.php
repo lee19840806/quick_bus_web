@@ -46,6 +46,10 @@ class RealTimePositionsController extends AppController {
                 array_push($UserNotifyPhoneHistoryRecords, $phone['ViewUserNotifyPhone']);
                 array_push($phoneNumbersArray, $phone['ViewUserNotifyPhone']['phone_number']);
                 $stationName = $phone['ViewUserNotifyPhone']['station_name'];
+                
+                $returnValue = $this->RealTimePosition->sendTemplateSMS(
+                    'f888473d1547897a797c85b3e1c63a0d', 353696, '#name#=' . $stationName, $phone['ViewUserNotifyPhone']['phone_number']);
+                $this->set('returnValue', $returnValue);
             }
             
             $this->RealTimePosition->UserNotifyPhoneHistory->create();
@@ -53,13 +57,6 @@ class RealTimePositionsController extends AppController {
             if (!$this->RealTimePosition->UserNotifyPhoneHistory->saveMany($UserNotifyPhoneHistoryRecords))
             {
                 $this->set('returnValue', 4);
-            }
-            else
-            {
-                $phoneNumbersString = implode(',', $phoneNumbersArray);
-
-                $returnValue = $this->RealTimePosition->sendTemplateSMS('f888473d1547897a797c85b3e1c63a0d', 353696, '#name#=' . $stationName, $phoneNumbersString);
-                $this->set('returnValue', $returnValue);
             }
         }
         
