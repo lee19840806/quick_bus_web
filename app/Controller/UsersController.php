@@ -36,6 +36,28 @@ class UsersController extends AppController {
         }
     }
     
+    public function client_login()
+    {
+        if ($this->request->is('post'))
+        {
+            if ($this->Auth->login())
+            {
+                $this->Session->write('Users.username', $this->Auth->user('username'));
+                
+                $routes = $this->User->UserRoute->find('list', array(
+                    'fields' => array('UserRoute.id', 'UserRoute.name', 'UserRoute.created'),
+                    'conditions' => array('user_id' => $this->Auth->user('id'))
+                    )
+                );
+                
+                $this->set('is_available', json_encode($routes));
+                $this->render('/UserRoutes/ajaxReturn', 'ajax');
+            }
+            
+            $this->Session->setFlash("用户名或密码错误，请输入正确的信息");
+        }
+    }
+    
     public function logout()
     {
         $this->Session->destroy();

@@ -99,7 +99,7 @@ class UserRoutesController extends AppController {
         if ($this->request->is('post'))
         {
             $routes = $this->UserRoute->find('list', array(
-                'fields' => array('name', 'created'),
+                'fields' => array('UserRoute.id', 'UserRoute.name', 'UserRoute.created'),
                 'conditions' => array('user_id' => $this->Auth->user('id'))
                 )
             );
