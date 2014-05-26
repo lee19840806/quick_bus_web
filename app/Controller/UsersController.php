@@ -19,7 +19,7 @@ class UsersController extends AppController {
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'register', 'add');
+        $this->Auth->allow('login', 'register', 'add', 'client_login');
     }
     
     public function login()
@@ -45,7 +45,7 @@ class UsersController extends AppController {
                 $this->Session->write('Users.username', $this->Auth->user('username'));
                 
                 $routes = $this->User->UserRoute->find('list', array(
-                    'fields' => array('UserRoute.id', 'UserRoute.name', 'UserRoute.created'),
+                    'fields' => array('UserRoute.id', 'UserRoute.name'),
                     'conditions' => array('user_id' => $this->Auth->user('id'))
                     )
                 );
