@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php echo $this->Html->charset(); ?>
 	<title>
 		Quick Bus
@@ -30,8 +31,8 @@
 </head>
 <body>
     <div class="container" style="margin-top: 20px">
-            <?php echo $this->element('global_header'); ?>
-            <?php echo $this->fetch('content'); ?>
+        <?php echo $this->element('global_header'); ?>
+        <?php echo $this->fetch('content'); ?>
     </div>
 </body>
 </html>

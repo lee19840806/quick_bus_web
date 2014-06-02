@@ -112,4 +112,9 @@ class RealTimePositionsController extends AppController {
     {
         
     }
+    
+    public function mobile_gps($routeID)
+    {
+        $this->set('routeID', $routeID);
+    }
 }

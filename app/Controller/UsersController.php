@@ -19,7 +19,7 @@ class UsersController extends AppController {
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'register', 'add', 'client_login');
+        $this->Auth->allow('login', 'register', 'add', 'client_login', 'mobile_login');
     }
     
     public function login()
@@ -52,6 +52,20 @@ class UsersController extends AppController {
                 
                 $this->set('is_available', json_encode($routes));
                 $this->render('/UserRoutes/ajaxReturn', 'ajax');
+            }
+            
+            $this->Session->setFlash("用户名或密码错误，请输入正确的信息");
+        }
+    }
+    
+    public function mobile_login()
+    {
+        if ($this->request->is('post'))
+        {
+            if ($this->Auth->login())
+            {
+                $this->Session->write('Users.username', $this->Auth->user('username'));
+                return $this->redirect(array('controller' => 'UserRoutes', 'action' => 'mRoute'));
             }
             
             $this->Session->setFlash("用户名或密码错误，请输入正确的信息");

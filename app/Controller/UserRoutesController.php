@@ -23,7 +23,8 @@ class UserRoutesController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index()
+    {
 		$this->UserRoute->recursive = 0;
         $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.username' => $this->Auth->user('username')), 'limit' => 10);
 		$this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
@@ -107,5 +108,12 @@ class UserRoutesController extends AppController {
             $this->set('is_available', json_encode($routes));
             $this->render('/UserRoutes/ajaxReturn', 'ajax');
         }
+    }
+    
+    public function mRoute()
+    {
+        $this->UserRoute->recursive = 0;
+        $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.username' => $this->Auth->user('username')), 'limit' => 5);
+		$this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
     }
 }
