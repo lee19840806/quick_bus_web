@@ -1,25 +1,56 @@
 <div class="row">
-    <div><p id="geo_support">GPS: </p></div>
-    <div><p>当前线路ID：<?php echo $routeID; ?></p></div>
+    <div>
+        <p id="prompt">初始化。请开启手机GPS。</p>
+        <p id="warning"></p>
+    </div>
     
     <script type="text/javascript">
-        var x = document.getElementById("geo_support");
+        var warning = document.getElementById("warning");
+        var prompt = document.getElementById("prompt");
+        var watchID;
         
         function getLocation()
         {
             if (navigator.geolocation)
             {
-                navigator.geolocation.getCurrentPosition(showPosition);
+                watchID = navigator.geolocation.watchPosition(showPosition);
             }
             else
             {
-                x.innerHTML = "此浏览器不支持GPS坐标发送。请更换浏览器";
+                prompt.innerHTML = "此浏览器不支持GPS坐标发送，请更换浏览器";
             }
         }
         
         function showPosition(position)
         {
-            x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;	
+            warning.innerHTML = "纬度: " + position.coords.latitude + "<br>经度: " + position.coords.longitude +
+                "<br>方向: " + position.coords.heading + "<br>速度: " + position.coords.speed;
+            
+            $.ajax({
+                url: "/RealTimePositions/upload",
+                type: "POST",
+                data: {
+                    "data[RealTimePosition][user_id]": <?php echo $userID; ?>,
+                    "data[RealTimePosition][user_route_id]": <?php echo $routeID; ?>,
+                    "data[RealTimePosition][latitude]": position.coords.latitude,
+                    "data[RealTimePosition][longitude]": position.coords.longitude,
+                    "data[RealTimePosition][heading]": position.coords.heading
+                },
+                timeout: 5000,
+                success: function(result) {
+                    if (result.toString() !== "0")
+                    {
+                        prompt.innerHTML = "方位信息上传有误，请联系网站管理员。(返回值非0)";
+                    }
+                    else
+                    {
+                        prompt.innerHTML = "方位信息正常。";
+                    }
+                },
+                error: function(xhr, status) {
+                    prompt.innerHTML = "方位信息上传有误，请联系网站管理员。(无法上传)";
+                }
+            });
         }
         
         $(document).ready(getLocation);
