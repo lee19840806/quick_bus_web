@@ -13,7 +13,7 @@
         {
             if (navigator.geolocation)
             {
-                watchID = navigator.geolocation.watchPosition(showPosition);
+                watchID = navigator.geolocation.watchPosition(showPosition, errorHandling, {enableHighAccuracy: true, maximumAge: 50000});
             }
             else
             {
@@ -51,6 +51,11 @@
                     prompt.innerHTML = "方位信息上传有误，请联系网站管理员。(无法上传)";
                 }
             });
+        }
+        
+        function errorHandling(err)
+        {
+            
         }
         
         $(document).ready(getLocation);
