@@ -1,5 +1,5 @@
 <div class="row">
-    <div>
+    <div class="col-xs-12">
         <p id="prompt">初始化。请开启手机GPS。</p>
         <p id="warning"></p>
     </div>
@@ -36,7 +36,7 @@
                     "data[RealTimePosition][longitude]": position.coords.longitude,
                     "data[RealTimePosition][heading]": position.coords.heading
                 },
-                timeout: 5000,
+                timeout: 20000,
                 success: function(result) {
                     if (result.toString() !== "0")
                     {
