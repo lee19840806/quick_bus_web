@@ -10,7 +10,7 @@
         </div>
         <div><hr/></div>
     </div>
-    <div class="col-md-9" id="showRoutes" style="height: 520px">
+    <div class="col-md-9" id="showRoutes">
         <div>
             <p>
                 <strong>查看已有的线路，或者</strong>
