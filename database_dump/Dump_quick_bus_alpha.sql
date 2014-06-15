@@ -421,7 +421,7 @@ DROP TABLE IF EXISTS `view_user_latest_pos_phone`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_user_latest_pos_phone` (
-  `id` tinyint NOT NULL,
+  `real_time_id` tinyint NOT NULL,
   `user_id` tinyint NOT NULL,
   `user_route_id` tinyint NOT NULL,
   `latitude` tinyint NOT NULL,
@@ -430,7 +430,8 @@ SET character_set_client = utf8;
   `created` tinyint NOT NULL,
   `modified` tinyint NOT NULL,
   `route_name` tinyint NOT NULL,
-  `phone_number` tinyint NOT NULL
+  `phone_number` tinyint NOT NULL,
+  `time_diff` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -676,7 +677,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_user_latest_pos_phone` AS select `b`.`id` AS `id`,`b`.`user_id` AS `user_id`,`b`.`user_route_id` AS `user_route_id`,`b`.`latitude` AS `latitude`,`b`.`longitude` AS `longitude`,`b`.`heading` AS `heading`,`b`.`created` AS `created`,`b`.`modified` AS `modified`,`c`.`route_name` AS `route_name`,`c`.`phone_number` AS `phone_number` from ((`view_subquery_latest_pos_created` `a` left join `real_time_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`) and (`a`.`created` = `b`.`created`)))) left join `view_subquery_route_phone_pair` `c` on(((`b`.`user_id` = `c`.`user_id`) and (`b`.`user_route_id` = `c`.`route_id`)))) order by `b`.`user_id`,`b`.`user_route_id`,`c`.`phone_number` */;
+/*!50001 VIEW `view_user_latest_pos_phone` AS select `b`.`id` AS `real_time_id`,`b`.`user_id` AS `user_id`,`b`.`user_route_id` AS `user_route_id`,`b`.`latitude` AS `latitude`,`b`.`longitude` AS `longitude`,`b`.`heading` AS `heading`,`b`.`created` AS `created`,`b`.`modified` AS `modified`,`c`.`route_name` AS `route_name`,`c`.`phone_number` AS `phone_number`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff` from ((`view_subquery_latest_pos_created` `a` left join `real_time_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`) and (`a`.`created` = `b`.`created`)))) left join `view_subquery_route_phone_pair` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`route_id`)))) where (time_to_sec(timediff(now(),`a`.`created`)) <= 1800000) order by `b`.`user_id`,`b`.`user_route_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -766,4 +767,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-12 21:01:12
+-- Dump completed on 2014-06-15 20:11:29

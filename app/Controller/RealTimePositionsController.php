@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
  * @property SessionComponent $Session
  */
 class RealTimePositionsController extends AppController {
-
+    
  /**
  * Components
  *
@@ -115,7 +115,14 @@ class RealTimePositionsController extends AppController {
     
     public function mobile_gps($routeID)
     {
-        $this->set('routeID', $routeID);
-        $this->set('userID', $this->Auth->user('id'));
+        if ($this->RealTimePosition->UserRoute->isOwnedBy($routeID, $this->Auth->user('id')))
+        {
+            $this->set('routeID', $routeID);
+            $this->set('userID', $this->Auth->user('id'));
+        }
+        else
+        {
+            $this->render('mobile_gps_error');
+        }
     }
 }
