@@ -22,7 +22,7 @@ class UserNotifyPhoneHistory extends AppModel {
 	public $validate = array(
 		'real_time_id' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -32,7 +32,7 @@ class UserNotifyPhoneHistory extends AppModel {
 		),
 		'user_id' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -52,7 +52,7 @@ class UserNotifyPhoneHistory extends AppModel {
 		),
 		'user_route_id' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -72,7 +72,7 @@ class UserNotifyPhoneHistory extends AppModel {
 		),
 		'station_sequence' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
