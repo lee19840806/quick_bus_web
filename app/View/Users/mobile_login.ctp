@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-4">
         <form class="form" action="/Users/mobile_login" method="post">
             <div class="form-group">
                 <div class="input-group input-group-lg">
@@ -23,7 +23,7 @@
                 <label class="control-label" style="margin-left: 15px"><?php echo $this->Session->flash(); ?></label>
             </div>
         </form>
-        <form class="form" action="/ViewUserLatestPosPhones/passenger_inquery" method="get">
+        <form class="form" action="/ViewUserLatestPosPhones/passenger_inquiry" method="get">
             <div class="form-group">
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon"><strong>手机号码</strong></span>

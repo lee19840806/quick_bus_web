@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/quick_bus_web/app/Model/UserNotifyPhoneHistory.php</file>
             <file>file:/C:/xampp/htdocs/quick_bus_web/app/Controller/ViewUserLatestPosPhonesController.php</file>
             <file>file:/C:/xampp/htdocs/quick_bus_web/app/View/Users/mobile_login.ctp</file>
-            <file>file:/C:/xampp/htdocs/quick_bus_web/app/Controller/RealTimePositionsController.php</file>
+            <file>file:/C:/xampp/htdocs/quick_bus_web/app/View/ViewUserLatestPosPhones/passenger_inquiry.ctp</file>
         </group>
     </open-files>
 </project-private>
