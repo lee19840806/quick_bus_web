@@ -13,8 +13,11 @@
             <tr>
                 <td><?php echo $pos['ViewUserLatestPosPhone']['route_name']; ?></td>
                 <td>
-                    <?php echo $this->Html->link('查看位置',
-                        array('controller' => 'ViewUserLatestPosPhones', 'action' => 'latestPosition', $pos['ViewUserLatestPosPhone']['route_name'])); ?>
+                    <?php echo $this->Html->link('查看位置', array(
+                        'controller' => 'ViewUserLatestPosPhones', 
+                        'action' => 'latestPosition', 
+                        $pos['ViewUserLatestPosPhone']['route_name'],
+                        $phone_num)); ?>
                 </td>
             </tr>
             <?php endforeach; ?>

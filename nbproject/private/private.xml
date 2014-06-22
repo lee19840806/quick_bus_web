@@ -5,7 +5,8 @@
         <group>
             <file>file:/C:/xampp/htdocs/quick_bus_web/app/Controller/ViewUserLatestPosPhonesController.php</file>
             <file>file:/C:/xampp/htdocs/quick_bus_web/app/View/Users/mobile_login.ctp</file>
-            <file>file:/C:/xampp/htdocs/quick_bus_web/app/View/ViewUserLatestPosPhones/passenger_inquiry.ctp</file>
+            <file>file:/C:/xampp/htdocs/quick_bus_web/app/Controller/UserRoutesController.php</file>
+            <file>file:/C:/xampp/htdocs/quick_bus_web/app/View/ViewUserLatestPosPhones/latest_position.ctp</file>
         </group>
     </open-files>
 </project-private>

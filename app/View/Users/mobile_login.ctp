@@ -30,11 +30,7 @@
                     <input type="text" class="form-control" name="phone_number" placeholder="输入手机号码" required="required">
                 </div>
             </div>
-            <div class="btn-group btn-group-justified">
-                <div class="btn-group">
-                    <button type="submit" class="btn btn-primary btn-lg"><strong>查询班车当前位置</strong></button>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block"><strong>查询班车当前位置</strong></button>
         </form>
     </div>
 </div>
