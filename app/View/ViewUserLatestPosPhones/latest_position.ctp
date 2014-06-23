@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12" id="Leaflet_map" style="height: 520px">
+    <div class="col-xs-12" id="Leaflet_map" style="height: 450px">
     </div>
 </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jENePgN7TufGt711E1uIb7BA"></script>
@@ -20,14 +20,22 @@
             timeout: 5000,
             success: function(result) {
                 var position = $.parseJSON(result);
-                $("#positionText").html(position.ViewUserLatestPosPhone.latitude);
+                var baiduQuery = "http://api.map.baidu.com/geocoder/v2/?ak=jENePgN7TufGt711E1uIb7BA&location=" + 
+                        position.ViewUserLatestPosPhone.latitude.toString() + "," + position.ViewUserLatestPosPhone.longitude.toString() + "&output=json";
+                
+                $.ajax(
+                {
+                    url: baiduQuery,
+                    type: "GET",
+                    timeout: 5000,
+                    crossDomain: true,
+                    dataType: "jsonp",
+                    success: function(baidu_position) { $("#positionText").html(baidu_position.result.formatted_address.toString()); },
+                    error: function(xhr, status) { $("#positionText").html("百度位置错误，请稍后再试"); }
+                });
             },
             error: function(xhr, status) {
-                alert("无法提交线路，请稍后再试");
-            },
-            complete: function()
-            {
-                $("#btnGoToSecondStep").attr("disabled", false);
+                $("#positionText").html("坐标错误，请稍后再试");
             }
         });
     }
