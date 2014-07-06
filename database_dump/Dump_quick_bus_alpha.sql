@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `quick_bus_alpha` /*!40100 DEFAULT CHARACTER SET 
 USE `quick_bus_alpha`;
 -- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
--- Host: localhost    Database: quick_bus_alpha
+-- Host: 127.0.0.1    Database: quick_bus_alpha
 -- ------------------------------------------------------
--- Server version	5.5.24-log
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -130,7 +130,7 @@ CREATE TABLE `user_notify_phone_history` (
   UNIQUE KEY `UK_table1_id` (`id`),
   KEY `FK_user_notify_phone_history_real_time_positions_id` (`real_time_id`),
   CONSTRAINT `FK_user_notify_phone_history_real_time_positions_id` FOREIGN KEY (`real_time_id`) REFERENCES `real_time_positions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -677,7 +677,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_user_latest_pos_phone` AS select `b`.`id` AS `real_time_id`,`b`.`user_id` AS `user_id`,`b`.`user_route_id` AS `user_route_id`,`b`.`latitude` AS `latitude`,`b`.`longitude` AS `longitude`,`b`.`heading` AS `heading`,`b`.`created` AS `created`,`b`.`modified` AS `modified`,`c`.`route_name` AS `route_name`,`c`.`phone_number` AS `phone_number`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff` from ((`view_subquery_latest_pos_created` `a` left join `real_time_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`) and (`a`.`created` = `b`.`created`)))) left join `view_subquery_route_phone_pair` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`route_id`)))) where (time_to_sec(timediff(now(),`a`.`created`)) <= 1800000) order by `b`.`user_id`,`b`.`user_route_id` */;
+/*!50001 VIEW `view_user_latest_pos_phone` AS select `b`.`id` AS `real_time_id`,`b`.`user_id` AS `user_id`,`b`.`user_route_id` AS `user_route_id`,`b`.`latitude` AS `latitude`,`b`.`longitude` AS `longitude`,`b`.`heading` AS `heading`,`b`.`created` AS `created`,`b`.`modified` AS `modified`,`c`.`route_name` AS `route_name`,`c`.`phone_number` AS `phone_number`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff` from ((`view_subquery_latest_pos_created` `a` left join `real_time_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`) and (`a`.`created` = `b`.`created`)))) left join `view_subquery_route_phone_pair` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`route_id`)))) where (time_to_sec(timediff(now(),`a`.`created`)) <= 18000000) order by `b`.`user_id`,`b`.`user_route_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -767,4 +767,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-23 20:48:43
+-- Dump completed on 2014-07-06 21:26:32
