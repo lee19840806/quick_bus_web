@@ -33,7 +33,7 @@
             url: "/ViewUserLatestPosPhones/latestPositionInquiry",
             type: "POST",
             data: {route_name: "<?php echo $route_name ?>", phone_num: <?php echo $phone_num ?>},
-            timeout: 5000,
+            timeout: 10000,
             success: function(result) {
                 var position = $.parseJSON(result);
                 var baiduQuery = "http://api.map.baidu.com/geocoder/v2/?ak=jENePgN7TufGt711E1uIb7BA&coordtype=wgs84ll&location=" + 
@@ -43,7 +43,7 @@
                 {
                     url: baiduQuery,
                     type: "GET",
-                    timeout: 5000,
+                    timeout: 10000,
                     crossDomain: true,
                     dataType: "jsonp",
                     success: function(baidu_position) { $("#positionText").html(baidu_position.result.formatted_address.toString()); },

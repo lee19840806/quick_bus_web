@@ -1,0 +1,1 @@
+<?php echo $route_detail; ?>
