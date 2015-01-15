@@ -47,7 +47,7 @@ CREATE TABLE `phone_numbers` (
   UNIQUE KEY `UK_phone_numbers_id` (`id`),
   KEY `FK_phone_numbers_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_phone_numbers_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=66306 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70895 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `user_notify_phone_history` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_table1_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5220 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8328 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `user_route_points` (
   UNIQUE KEY `UK_user_route_points_id` (`id`),
   KEY `FK_user_route_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=505 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `user_routes` (
   UNIQUE KEY `UK_user_routes_id` (`id`),
   KEY `FK_user_routes_user_accounts_id` (`user_id`),
   CONSTRAINT `FK_user_routes_user_accounts_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `user_station_points` (
   UNIQUE KEY `UK_user_station_points_id` (`id`),
   KEY `FK_user_station_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_station_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `user_trigger_points` (
   UNIQUE KEY `UK_user_trigger_points_id` (`id`),
   KEY `FK_user_trigger_points_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_user_trigger_points_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,8 +198,26 @@ CREATE TABLE `users` (
   UNIQUE KEY `UK_user_accounts_id` (`id`),
   KEY `FK_user_accounts_user_groups_id` (`group_id`),
   CONSTRAINT `FK_user_accounts_user_groups_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `view_route_passed_stations`
+--
+
+DROP TABLE IF EXISTS `view_route_passed_stations`;
+/*!50001 DROP VIEW IF EXISTS `view_route_passed_stations`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_route_passed_stations` (
+  `user_route_id` tinyint NOT NULL,
+  `route_name` tinyint NOT NULL,
+  `station_sequence` tinyint NOT NULL,
+  `station_name` tinyint NOT NULL,
+  `trigger_time` tinyint NOT NULL,
+  `minutes_elapsed` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary table structure for view `view_subquery_eligible_gps`
@@ -455,6 +473,25 @@ SET character_set_client = @saved_cs_client;
 --
 
 --
+-- Final view structure for view `view_route_passed_stations`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_route_passed_stations`*/;
+/*!50001 DROP VIEW IF EXISTS `view_route_passed_stations`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_route_passed_stations` AS select `a`.`user_route_id` AS `user_route_id`,`a`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`a`.`station_name` AS `station_name`,max(`b`.`created`) AS `trigger_time`,cast((time_to_sec(timediff(now(),max(`b`.`created`))) / 60) as signed) AS `minutes_elapsed` from (`view_user_route_detail` `a` left join `real_time_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) where ((`a`.`station_name` is not null) and (time_to_sec(timediff(now(),`b`.`created`)) <= 432000) and (time_to_sec(timediff(now(),`b`.`created`)) >= 0) and ((abs((`b`.`latitude` - `a`.`trigger_lat`)) + abs((`b`.`longitude` - `a`.`trigger_lng`))) <= 0.0020) and (abs(sin(radians(((cast(`b`.`heading` as signed) - cast(`a`.`trigger_heading` as signed)) / 2)))) <= 0.174)) group by 1,2,3,4 order by `trigger_time` desc,`a`.`user_route_id`,`a`.`station_sequence` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_subquery_eligible_gps`
 --
 
@@ -468,7 +505,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_subquery_eligible_gps` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`b`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`trigger_lat` AS `trigger_lat`,`b`.`trigger_lng` AS `trigger_lng`,`b`.`trigger_heading` AS `trigger_heading`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff`,(abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) AS `gps_diff`,abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) AS `heading_diff` from (`real_time_positions` `a` left join `view_user_route_detail` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) where ((time_to_sec(timediff(now(),`a`.`created`)) >= 0) and (time_to_sec(timediff(now(),`a`.`created`)) <= 3600) and ((abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) <= 0.0010) and (abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) <= 0.174)) */;
+/*!50001 VIEW `view_subquery_eligible_gps` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`b`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`trigger_lat` AS `trigger_lat`,`b`.`trigger_lng` AS `trigger_lng`,`b`.`trigger_heading` AS `trigger_heading`,time_to_sec(timediff(now(),`a`.`created`)) AS `time_diff`,(abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) AS `gps_diff`,abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) AS `heading_diff` from ((`real_time_positions` `a` left join `view_user_route_detail` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) left join `real_time_positions` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`user_route_id`) and (`a`.`created` <= `c`.`created`) and (`a`.`created` >= (`c`.`created` - 120))))) where ((time_to_sec(timediff(now(),`a`.`created`)) >= 0) and (time_to_sec(timediff(now(),`a`.`created`)) <= 3600) and ((abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) <= 0.0020) and (abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) <= 0.174)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -710,4 +747,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-01  9:50:16
+-- Dump completed on 2015-01-15 20:23:35
