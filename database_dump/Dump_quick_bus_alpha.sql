@@ -361,6 +361,25 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `view_user_latest_positions`
+--
+
+DROP TABLE IF EXISTS `view_user_latest_positions`;
+/*!50001 DROP VIEW IF EXISTS `view_user_latest_positions`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_user_latest_positions` (
+  `user_id` tinyint NOT NULL,
+  `user_route_id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `latitude` tinyint NOT NULL,
+  `longitude` tinyint NOT NULL,
+  `heading` tinyint NOT NULL,
+  `created` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `view_user_notify_phone`
 --
 
@@ -644,6 +663,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `view_user_latest_positions`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_user_latest_positions`*/;
+/*!50001 DROP VIEW IF EXISTS `view_user_latest_positions`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_user_latest_positions` AS select `a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`b`.`name` AS `name`,`c`.`latitude` AS `latitude`,`c`.`longitude` AS `longitude`,`c`.`heading` AS `heading`,`a`.`created` AS `created` from ((`view_subquery_latest_pos_created` `a` left join `user_routes` `b` on((`a`.`user_route_id` = `b`.`id`))) left join `real_time_positions` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`user_route_id`) and (`a`.`created` = `c`.`created`)))) order by `a`.`user_id`,`a`.`user_route_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_user_notify_phone`
 --
 
@@ -747,4 +785,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-15 20:23:35
+-- Dump completed on 2015-01-16 22:05:09
