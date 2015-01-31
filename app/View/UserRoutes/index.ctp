@@ -27,7 +27,7 @@
                     <th><?php echo $this->Paginator->sort('route_point_cnt', '导航点数'); ?></th>
                     <th><?php echo $this->Paginator->sort('station_cnt', '站点数'); ?></th>
                     <th><?php echo $this->Paginator->sort('trigger_cnt', '触发点数'); ?></th>
-                    <th><?php echo $this->Paginator->sort('name', '操作'); ?></th>
+                    <th><?php echo $this->Paginator->sort('name', '线路管理'); ?></th>
                 </tr>
                 <?php foreach ($userRoutesSummary as $route): ?>
                 <tr>
@@ -37,8 +37,10 @@
                     <td><?php echo $route['ViewUserRouteSummary']['station_cnt']; ?></td>
                     <td><?php echo $route['ViewUserRouteSummary']['trigger_cnt']; ?></td>
                     <td>
-                        <?php echo $this->Html->link('编辑站点',
+                        <?php echo $this->Html->link('编辑手机号',
                             array('controller' => 'UserStationPoints', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
+                        <?php echo $this->Html->link('站点名称更改',
+                            array('controller' => 'UserStationPoints', 'action' => 'edit_station', $route['ViewUserRouteSummary']['user_route_id'])); ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']), null,
                             '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>
