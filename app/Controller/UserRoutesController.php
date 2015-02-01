@@ -4,12 +4,13 @@ App::uses('AppController', 'Controller');
  * UserRoutes Controller
  *
  * @property UserRoute $UserRoute
+ * @property UserStationPoint $UserStationPoint
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
 class UserRoutesController extends AppController {
     
-    public $uses = array('UserRoute', 'ViewUserRouteSummary');
+    public $uses = array('UserRoute', 'ViewUserRouteSummary', 'ViewUserRouteDetail');
 
 /**
  * Components
@@ -115,5 +116,27 @@ class UserRoutesController extends AppController {
         $this->UserRoute->recursive = 0;
         $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.username' => $this->Auth->user('username')), 'limit' => 5);
 		$this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
+    }
+    
+    public function edit($id = NULL)
+    {
+    	if (!$this->UserRoute->exists($id))
+    	{
+    		$this->Session->setFlash('不存在此路线，请重选一条线路进行编辑');
+    		$this->redirect(array('action' => 'index'));
+    	}
+    	elseif (!$this->UserRoute->isOwnedBy($id, $this->Auth->user('id')))
+    	{
+    		$this->Session->setFlash('选择有误，请重选一条线路进行编辑');
+    		$this->redirect(array('action' => 'index'));
+    	}
+    	
+    	$stationsAndTriggers = $this->ViewUserRouteDetail->find('all', array('conditions' => array('user_route_id' => $id)));
+    	$route = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
+    	$this->set('stationsAndTriggers', json_encode($stationsAndTriggers));
+    	$this->set('route', json_encode($route));
+    	
+    	//$this->set('is_available', json_encode($route));
+    	//$this->render('/UserRoutes/ajaxReturn', 'ajax');
     }
 }

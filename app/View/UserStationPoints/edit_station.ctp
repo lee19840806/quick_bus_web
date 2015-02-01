@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-9" id="showStations" style="height: 520px">
         <div>
-            <strong><?php echo $route['UserRoute']['name']; ?>，编辑报站手机号码，或者</strong>
+            <strong><?php echo $route['UserRoute']['name']; ?>，更新站点的名称，或者</strong>
             <a class="btn btn-primary btn-sm" href="/UserRoutes/index" role="button">返回线路管理面板</a>
             <strong class="text-danger"><?php echo $this->Session->flash(); ?></strong>
         </div>

@@ -3,7 +3,7 @@ App::uses('AppModel', 'Model');
 /**
  * UserTriggerPoint Model
  *
- * @property UserStation $UserStation
+ * @property UserStationPoint $UserStationPoint
  */
 class UserTriggerPoint extends AppModel {
 

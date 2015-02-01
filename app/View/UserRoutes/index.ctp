@@ -13,7 +13,7 @@
     <div class="col-md-9" id="showRoutes">
         <div>
             <p>
-                <strong>查看已有的线路，或者</strong>
+                <strong>管理已有的线路，或者</strong>
                 <a class="btn btn-primary btn-sm" href="/UserRoutes/create" role="button">创建一条新的线路</a>
                 <strong class="text-danger"><?php echo $this->Session->flash(); ?></strong>
             </p>
@@ -41,6 +41,8 @@
                             array('controller' => 'UserStationPoints', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
                         <?php echo $this->Html->link('站点名称更改',
                             array('controller' => 'UserStationPoints', 'action' => 'edit_station', $route['ViewUserRouteSummary']['user_route_id'])); ?>
+                        <?php echo $this->Html->link('线路更改',
+                            array('controller' => 'UserRoutes', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']), null,
                             '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>
