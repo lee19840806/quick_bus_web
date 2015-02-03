@@ -6,10 +6,10 @@
 <div class="row">
     <div class="col-md-3">
         <div id="divHelpFirstStep">
-            <strong>第1步，设置线路</strong>
+            <strong>第1步，修改线路</strong>
             <ol style="padding-left: 20px">
                 <li>输入唯一的路线名</li>
-                <li>点击地图，添加或修改路线</li>
+                <li>点击地图，添加或修改路线（绿色标记为站点，黄色标记为触发点）</li>
                 <li>点击“下一步，设置报站点”</li>
             </ol>
         </div>
@@ -41,11 +41,12 @@
                 <div class="form-group">
                     <label class="control-label" id="labelRouteName">路线名</label>
                     <div>
-                        <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"/>
+                        <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"
+                        	value="<?php $a = json_decode($route); echo $a->{'UserRoute'}->{'name'}; ?>"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">已添加以下导航点</label>
+                    <label class="control-label">已存在的导航点</label>
                     <div>
                         <textarea class="form-control input-sm" id="inputNavPoints" rows="6" readonly></textarea>
                     </div>
@@ -121,10 +122,8 @@
 	    	sumLat = sumLat + parseFloat(route.UserRoutePoint[i].latitude);
 	    	sumLng = sumLng + parseFloat(route.UserRoutePoint[i].longitude);
 	    }
-		
-		alert(sumLat);
     
-        var map = L.map('Leaflet_map').setView([sumLat / route.UserRoutePoint.length, sumLng / route.UserRoutePoint.length], 14);
+        var map = L.map('Leaflet_map').setView([sumLat / route.UserRoutePoint.length, sumLng / route.UserRoutePoint.length], 13);
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' + ' | ' +
                 '&copy; <a href="http://www.glyphicons.com">GLYPHICONS</a>'}).addTo(map);
@@ -153,25 +152,165 @@
         var stationMarkers = [];
         var triggerMarkers = [];
 
+        for (var i = 0; i < stationsAndTriggers.length; i++)
+        {
+        	var marker = L.marker(L.latLng(stationsAndTriggers[i].ViewUserRouteDetail.station_lat, stationsAndTriggers[i].ViewUserRouteDetail.station_lng),
+                {icon: stationIcon}).addTo(map);
+        	stationMarkers.push(marker);
+        	marker.bindPopup("站点: " + (i + 1) + "." + stationsAndTriggers[i].ViewUserRouteDetail.station_name);
+
+        	var marker = L.marker(L.latLng(stationsAndTriggers[i].ViewUserRouteDetail.trigger_lat, stationsAndTriggers[i].ViewUserRouteDetail.trigger_lng),
+                {icon: triggerIcon}).addTo(map);
+        	triggerMarkers.push(marker);
+        	marker.bindPopup("触发点: " + (i + 1));
+        }
+
         for (var i = 0; i < route.UserRoutePoint.length; i++)
 		{
 			polyline.addLatLng(L.latLng(route.UserRoutePoint[i].latitude, route.UserRoutePoint[i].longitude));
 		}
 
         polyline.editing.enable();
+        updateNavPointBox();
 
-        for (var i = 0; i < stationsAndTriggers.length; i++)
+        function updateNavPointBox()
         {
-        	var marker = L.marker(L.latLng(stationsAndTriggers[i].ViewUserRouteDetail.station_lat, stationsAndTriggers[i].ViewUserRouteDetail.station_lng),
-                {icon: stationIcon}).addTo(map);
-        	stationMarkers.push(marker);
-        	marker.bindPopup("站点" + stationMarkers.length).openPopup();
+            $("#inputNavPoints").html("");
 
-        	var marker = L.marker(L.latLng(stationsAndTriggers[i].ViewUserRouteDetail.trigger_lat, stationsAndTriggers[i].ViewUserRouteDetail.trigger_lng),
-                {icon: triggerIcon}).addTo(map);
-        	triggerMarkers.push(marker);
-        	marker.bindPopup("触发点" + triggerMarkers.length).openPopup();
+            var navPoints = [];
+            latLngs = polyline.getLatLngs();
+            numberOfPoints = latLngs.length;
+
+            for (var i = 0; i < numberOfPoints; i++)
+            {
+                var navPoint = {sequence: i + 1, longitude: latLngs[i].lng, latitude: latLngs[i].lat};
+                navPoints.push(navPoint);
+                var num = i + 1;
+                $("#inputNavPoints").html($("#inputNavPoints").html() + num + ". " + 
+                    Math.round(latLngs[i].lng * 100000) / 100000 + ", " + Math.round(latLngs[i].lat * 100000) / 100000 + ";\n");
+            }
+
+            $("#hiddenNavPoints").val("");
+            $("#hiddenNavPoints").val(JSON.stringify(navPoints));
         }
+
+        function validatePoints()
+        {
+            var distanceThreshold = 0.0003;
+			var numberOfStationMarkers = stationMarkers.length;
+			var numberOfTriggerMarkers = triggerMarkers.length;
+			var numberOfLines = polyline.getLatLngs().length - 1;
+			var toBeDeleted = [];
+
+			for (var i = 0; i < numberOfStationMarkers; i++)
+			{
+				var point = {x: stationMarkers[i].getLatLng().lng, y: stationMarkers[i].getLatLng().lat};
+				var pointOnLine = false;
+				
+				for (var j = 0; j < numberOfLines; j++)
+				{
+				    var lineStart = {x: polyline.getLatLngs()[j].lng, y: polyline.getLatLngs()[j].lat};
+				    var lineEnd = {x: polyline.getLatLngs()[j + 1].lng, y: polyline.getLatLngs()[j + 1].lat};
+					
+					var distance = distToSegment(point, lineStart, lineEnd);
+
+					if (distance <= distanceThreshold)
+					{
+						pointOnLine = true;
+					}
+				}
+
+				if (pointOnLine === false)
+				{
+					map.removeLayer(stationMarkers[i]);
+					map.removeLayer(triggerMarkers[i]);
+					toBeDeleted[i] = true;
+				}
+
+				var point = {x: triggerMarkers[i].getLatLng().lng, y: triggerMarkers[i].getLatLng().lat};
+				var pointOnLine = false;
+				
+				for (var j = 0; j < numberOfLines; j++)
+				{
+				    var lineStart = {x: polyline.getLatLngs()[j].lng, y: polyline.getLatLngs()[j].lat};
+				    var lineEnd = {x: polyline.getLatLngs()[j + 1].lng, y: polyline.getLatLngs()[j + 1].lat};
+					
+					var distance = distToSegment(point, lineStart, lineEnd);
+
+					if (distance <= distanceThreshold)
+					{
+						pointOnLine = true;
+					}
+				}
+
+				if (pointOnLine === false)
+				{
+					map.removeLayer(stationMarkers[i]);
+					map.removeLayer(triggerMarkers[i]);
+					toBeDeleted[i] = true;
+				}
+			}
+
+			for (var i = numberOfStationMarkers - 1; i >= 0; i--)
+			{
+				if (toBeDeleted[i] === true)
+				{
+					stationMarkers.splice(i, 1);
+					triggerMarkers.splice(i, 1);
+				}
+			}
+        }
+
+        var eventPolylineReset =
+        function(e)
+        {
+            polyline.spliceLatLngs(0, polyline.getLatLngs().length);
+            polyline.editing.disable();
+            polyline.editing.enable();
+            
+            updateNavPointBox();
+        };
+
+        var eventPolylineRemoveOnePoint =
+        function(e)
+        {
+            polyline.spliceLatLngs(polyline.getLatLngs().length - 1, 1);
+            polyline.editing.disable();
+            polyline.editing.enable();
+            
+            updateNavPointBox();
+        };
+
+        var eventLineUpdate =
+        function(e)
+        {
+            updateNavPointBox();
+            validatePoints();
+        };
+
+        function sqr(x) { return x * x; }
+        
+        function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y); }
+        
+        function distToSegmentSquared(p, v, w) {
+            var l2 = dist2(v, w);
+            
+           	if (l2 == 0) return dist2(p, v);
+            
+          	var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            
+          	if (t < 0) return dist2(p, v);
+          	if (t > 1) return dist2(p, w);
+            
+          	return dist2(p, { x: v.x + t * (w.x - v.x), y: v.y + t * (w.y - v.y) });
+        }
+
+        function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
+
+        polyline.addEventListener('edit', eventLineUpdate);
+        $("#btnReset").click(eventPolylineReset);
+        $("#btnRemovePoint").click(eventPolylineRemoveOnePoint);
+        
     </script>
 </div>
 
