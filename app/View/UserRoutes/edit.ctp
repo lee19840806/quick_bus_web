@@ -127,7 +127,7 @@
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
             {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' + ' | ' +
                 '&copy; <a href="http://www.glyphicons.com">GLYPHICONS</a>'}).addTo(map);
-            
+        
         var stationIcon = L.icon({
             iconUrl: '/img/station.png', 
             iconSize: [32, 32], 
@@ -172,6 +172,7 @@
 
         polyline.editing.enable();
         updateNavPointBox();
+        updateStationPointBox();
 
         function updateNavPointBox()
         {
@@ -192,6 +193,8 @@
 
             $("#hiddenNavPoints").val("");
             $("#hiddenNavPoints").val(JSON.stringify(navPoints));
+
+            validatePoints();
         }
 
         function validatePoints()
@@ -251,15 +254,36 @@
 				}
 			}
 
+			var showAlert = false;
+			var pointRemovedAlert = "受影响线路调整的影响，以下站点和触发点将被删除。\n您需要在下一个页面根据新的路线重新添加：\n\n";
+
 			for (var i = numberOfStationMarkers - 1; i >= 0; i--)
 			{
 				if (toBeDeleted[i] === true)
 				{
+					showAlert = true;
+					pointRemovedAlert = pointRemovedAlert + stationMarkers[i].getPopup().getContent() + ", " + triggerMarkers[i].getPopup().getContent() + ";\n";
+					
 					stationMarkers.splice(i, 1);
 					triggerMarkers.splice(i, 1);
 				}
 			}
+
+			if (showAlert === true)
+			{
+				alert(pointRemovedAlert);
+			}
         }
+
+        var eventAddingPoints =
+        function(e)
+        {
+            polyline.addLatLng(e.latlng);
+            polyline.editing.disable();
+            polyline.editing.enable();
+
+            updateNavPointBox();
+        };
 
         var eventPolylineReset =
         function(e)
@@ -285,7 +309,6 @@
         function(e)
         {
             updateNavPointBox();
-            validatePoints();
         };
 
         function sqr(x) { return x * x; }
@@ -307,10 +330,145 @@
 
         function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
 
+        var eventGoToSecondStep =
+        function(e)
+        {
+            if ($("#inputRouteName").val() === "")
+            {
+                alert("请填写一个有效的路线名");
+                $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
+                $("#inputRouteName").fadeOut(
+                    function(){$("#inputRouteName").fadeIn(
+                        function(){$("#inputRouteName").focus();
+                    });
+                });
+                return;
+            }
+            
+            if (polyline.getLatLngs().length < 2)
+            {
+                alert("请至少在地图上点取2个导航点，组成有效的线路");
+                $("#Leaflet_map").fadeOut(function(){$("#Leaflet_map").fadeIn();});
+                return;
+            }
+            
+            $("#btnGoToSecondStep").attr("disabled", true);
+            
+            $.ajax(
+                {
+                    url: "/UserRoutes/ajaxCheckRouteNameAndID",
+                    type: "POST",
+                    data: {routeName: $("#inputRouteName").val(), routeID: route.UserRoute.id},
+                    timeout: 5000,
+                    success: function(result) {
+                        if (result === "yes")
+                        {
+                            $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+                            $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+                            
+                            polyline.editing.disable();
+                            map.removeEventListener("click", eventAddingPoints);
+                            polyline.addEventListener("click", eventAddStationPoint);
+                        }
+                        else
+                        {
+                            alert("已存在相同的路线名，请输入一个新的路线名");
+                            $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
+                            $("#inputRouteName").fadeOut(
+                                function(){$("#inputRouteName").fadeIn(
+                                    function(){$("#inputRouteName").focus();
+                                });
+                            });
+                        }
+                    },
+                    error: function(xhr, status) {
+                        alert("无法提交线路，请稍后再试");
+                    },
+                    complete: function()
+                    {
+                        $("#btnGoToSecondStep").attr("disabled", false);
+                    }
+                }
+            );
+
+            updateStationPointBox();
+        };
+
+        var eventBackToFirstStep =
+        function(e)
+        {
+            $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
+            $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
+            
+            map.addEventListener("click", eventAddingPoints);
+            polyline.removeEventListener("click", eventAddStationPoint);
+
+            polyline.editing.enable();
+            /*
+            var numberOfStations = stationMarkers.length;
+            
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                map.removeLayer(stationMarkers[i]);
+            }
+            
+            stationMarkers = [];
+            */
+            updateStationPointBox();
+        };
+
+        var eventAddStationPoint =
+        function(e)
+        {
+            var marker = L.marker(e.latlng, {icon: stationIcon}).addTo(map);
+            stationMarkers.push(marker);
+            
+            marker.bindPopup("站点" + stationMarkers.length).openPopup();
+            
+            updateStationPointBox();
+        };
+
+        function updateStationPointBox()
+        {
+            var stationPoints = [];
+            var numberOfStations = stationMarkers.length;
+            
+            var inputs = $("#tblStationName input");
+            var inputValues = [];
+            
+            for (var i = 0; i < inputs.length; i++)
+            {
+                inputValues.push($(inputs[i]).val());
+            }
+            
+            $("#tblStationName tr.values").remove();
+
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                var stationPoint = {sequence: i + 1, 
+                    longitude: stationMarkers[i].getLatLng().lng, latitude: stationMarkers[i].getLatLng().lat, name: stationMarkers[i].getPopup().getContent()};
+                stationPoints.push(stationPoint);
+                var num = i + 1;
+                var pointString = num + ".&nbsp;" +
+                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ",&nbsp;" +
+                    Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000;
+                
+                var inputValue = (inputValues[i] === undefined) ? stationPoint.name.slice(stationPoint.name.indexOf(".") + 1, stationPoint.name.length) : inputValues[i];
+                
+                $("#tblStationName").append("<tr class=\"values\"><td>" + pointString + 
+                    "</td><td><input type=\"text\" value=\"" + inputValue + "\" style=\"width: 70px\" /></td></tr>");
+            }
+
+            $("#hiddenStationPoints").val("");
+            $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+        }
+
+        map.addEventListener('click', eventAddingPoints);
         polyline.addEventListener('edit', eventLineUpdate);
         $("#btnReset").click(eventPolylineReset);
         $("#btnRemovePoint").click(eventPolylineRemoveOnePoint);
-        
+        $("#btnGoToSecondStep").click(eventGoToSecondStep);
+        $("#btnBackToFirstStep").click(eventBackToFirstStep);
     </script>
 </div>
 

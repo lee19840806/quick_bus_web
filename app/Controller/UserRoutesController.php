@@ -84,6 +84,38 @@ class UserRoutesController extends AppController {
         }
     }
     
+    public function ajaxCheckRouteNameAndID()
+    {
+    	if ($this->request->is('ajax'))
+    	{
+    		$findResult = $this->UserRoute->find('first', array(
+    			'conditions' => array(
+    				'user_id' => $this->Auth->user('id'),
+    				'name' => $this->request->data('routeName')
+    				)
+    			)
+    		);
+    
+    		if (count($findResult) == 0)
+    		{
+    			$this->set('is_available', 'yes');
+    		}
+    		else
+    		{
+    			if (((int)$findResult['UserRoute']['id']) == ((int)$this->request->data('routeID')))
+    			{
+    				$this->set('is_available', 'yes');
+    			}
+    			else
+    			{
+    				$this->set('is_available', 'no');
+    			}
+    		}
+    
+    		$this->render('/UserRoutes/ajaxReturn', 'ajax');
+    	}
+    }
+    
     public function submit()
     {
         if ($this->request->is('post'))
