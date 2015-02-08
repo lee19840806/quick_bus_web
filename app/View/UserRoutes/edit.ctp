@@ -109,77 +109,40 @@
     </div>
     <div class="col-md-9" id="Leaflet_map" style="height: 520px">
     </div>
-    
+    <script type="text/javascript" src="/js/editRoute.js"></script>
     <script type="text/javascript">
-		var stationsAndTriggers = $.parseJSON('<?php echo $stationsAndTriggers; ?>');
-		var route = $.parseJSON('<?php echo $route; ?>');
-
-		var sumLat = 0;
-		var sumLng = 0;
+		var stationsAndTriggersJSON = $.parseJSON('<?php echo $stationsAndTriggers; ?>');
+		var routeJSON = $.parseJSON('<?php echo $route; ?>');
 		
-	    for (var i = 0; i < route.UserRoutePoint.length; i++)
-		{
-	    	sumLat = sumLat + parseFloat(route.UserRoutePoint[i].latitude);
-	    	sumLng = sumLng + parseFloat(route.UserRoutePoint[i].longitude);
-	    }
-    
-        var map = L.map('Leaflet_map').setView([sumLat / route.UserRoutePoint.length, sumLng / route.UserRoutePoint.length], 13);
+		var initializedObject = initializeRoute(routeJSON, stationsAndTriggersJSON);
+		var route = initializedObject.route;
+		var mapCenter = initializedObject.mapCenter;
+		var stationIcon = initializedObject.stationIcon;
+		var stationEditingIcon = initializedObject.stationEditingIcon;
+		var triggerIcon = initializedObject.triggerIcon;
+    	
+        var map = L.map('Leaflet_map').setView([mapCenter.lat, mapCenter.lng], 13);
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' + ' | ' +
-                '&copy; <a href="http://www.glyphicons.com">GLYPHICONS</a>'}).addTo(map);
-        
-        var stationIcon = L.icon({
-            iconUrl: '/img/station.png', 
-            iconSize: [32, 32], 
-            iconAnchor: [16, 31], 
-            popupAnchor: [0, -30]});
-        
-        var stationEditingIcon = L.icon({
-            iconUrl: '/img/station_editing.png', 
-            iconSize: [32, 32], 
-            iconAnchor: [16, 31], 
-            popupAnchor: [0, -30]});
-        
-        var triggerIcon = L.icon({
-            iconUrl: '/img/trigger.png', 
-            iconSize: [32, 32], 
-            iconAnchor: [16, 31], 
-            popupAnchor: [0, -30]});
+            {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' + ' | ' + '&copy; <a href="http://www.glyphicons.com">GLYPHICONS</a>'}).addTo(map);
 
-        var polyline = L.polyline([], {color: 'blue', opacity: 0.6});
-        polyline.addTo(map);
-        
-        var stationMarkers = [];
-        var triggerMarkers = [];
+        route.polyline.addTo(map);
+        route.polyline.editing.enable();
 
-        for (var i = 0; i < stationsAndTriggers.length; i++)
+        for (var i = 0; i < route.stations.length; i++)
         {
-        	var marker = L.marker(L.latLng(stationsAndTriggers[i].ViewUserRouteDetail.station_lat, stationsAndTriggers[i].ViewUserRouteDetail.station_lng),
-                {icon: stationIcon}).addTo(map);
-        	stationMarkers.push(marker);
-        	marker.bindPopup("站点: " + (i + 1) + "." + stationsAndTriggers[i].ViewUserRouteDetail.station_name);
-
-        	var marker = L.marker(L.latLng(stationsAndTriggers[i].ViewUserRouteDetail.trigger_lat, stationsAndTriggers[i].ViewUserRouteDetail.trigger_lng),
-                {icon: triggerIcon}).addTo(map);
-        	triggerMarkers.push(marker);
-        	marker.bindPopup("触发点: " + (i + 1));
+        	route.stations[i].marker.addTo(map);
+        	route.stations[i].trigger.marker.addTo(map);
         }
-
-        for (var i = 0; i < route.UserRoutePoint.length; i++)
-		{
-			polyline.addLatLng(L.latLng(route.UserRoutePoint[i].latitude, route.UserRoutePoint[i].longitude));
-		}
-
-        polyline.editing.enable();
+        
         updateNavPointBox();
-        updateStationPointBox();
+        //updateStationPointBox();
 
         function updateNavPointBox()
         {
             $("#inputNavPoints").html("");
 
             var navPoints = [];
-            latLngs = polyline.getLatLngs();
+            latLngs = route.polyline.getLatLngs();
             numberOfPoints = latLngs.length;
 
             for (var i = 0; i < numberOfPoints; i++)
@@ -199,57 +162,59 @@
 
         function validatePoints()
         {
-            var distanceThreshold = 0.0003;
-			var numberOfStationMarkers = stationMarkers.length;
-			var numberOfTriggerMarkers = triggerMarkers.length;
-			var numberOfLines = polyline.getLatLngs().length - 1;
+            var distanceThreshold = 0.0004;
+			var numberOfStationMarkers = route.stations.length;
+			var numberOfLines = route.polyline.getLatLngs().length - 1;
 			var toBeDeleted = [];
 
 			for (var i = 0; i < numberOfStationMarkers; i++)
 			{
-				var point = {x: stationMarkers[i].getLatLng().lng, y: stationMarkers[i].getLatLng().lat};
-				var pointOnLine = false;
+				var stationPoint = {x: route.stations[i].marker.getLatLng().lng, y: route.stations[i].marker.getLatLng().lat};
+				var triggerPoint;
+
+				if (route.stations[i].trigger != undefined)
+				{
+					triggerPoint = {x: route.stations[i].trigger.marker.getLatLng().lng, y: route.stations[i].trigger.marker.getLatLng().lat};
+				}
+				else
+				{
+					triggerPoint = {x: route.stations[i].marker.getLatLng().lng, y: route.stations[i].marker.getLatLng().lat};
+				}
+				
+				var stationOnLine = false;
+				var triggerOnLine;
+				
+				if (route.stations[i].trigger != undefined) {triggerOnLine = false;}
+				else {triggerOnLine = true;}
 				
 				for (var j = 0; j < numberOfLines; j++)
 				{
-				    var lineStart = {x: polyline.getLatLngs()[j].lng, y: polyline.getLatLngs()[j].lat};
-				    var lineEnd = {x: polyline.getLatLngs()[j + 1].lng, y: polyline.getLatLngs()[j + 1].lat};
+				    var lineStart = {x: route.polyline.getLatLngs()[j].lng, y: route.polyline.getLatLngs()[j].lat};
+				    var lineEnd = {x: route.polyline.getLatLngs()[j + 1].lng, y: route.polyline.getLatLngs()[j + 1].lat};
 					
-					var distance = distToSegment(point, lineStart, lineEnd);
+					var distanceStation = distToSegment(stationPoint, lineStart, lineEnd);
+					var distanceTrigger = distToSegment(triggerPoint, lineStart, lineEnd);
 
-					if (distance <= distanceThreshold)
+					if (distanceStation <= distanceThreshold)
 					{
-						pointOnLine = true;
+						stationOnLine = true;
+					}
+
+					if (distanceTrigger <= distanceThreshold)
+					{
+						triggerOnLine = true;
 					}
 				}
 
-				if (pointOnLine === false)
+				if (stationOnLine === false || triggerOnLine === false)
 				{
-					map.removeLayer(stationMarkers[i]);
-					map.removeLayer(triggerMarkers[i]);
-					toBeDeleted[i] = true;
-				}
-
-				var point = {x: triggerMarkers[i].getLatLng().lng, y: triggerMarkers[i].getLatLng().lat};
-				var pointOnLine = false;
-				
-				for (var j = 0; j < numberOfLines; j++)
-				{
-				    var lineStart = {x: polyline.getLatLngs()[j].lng, y: polyline.getLatLngs()[j].lat};
-				    var lineEnd = {x: polyline.getLatLngs()[j + 1].lng, y: polyline.getLatLngs()[j + 1].lat};
+					map.removeLayer(route.stations[i].marker);
 					
-					var distance = distToSegment(point, lineStart, lineEnd);
-
-					if (distance <= distanceThreshold)
+					if (route.stations[i].trigger != undefined)
 					{
-						pointOnLine = true;
+						map.removeLayer(route.stations[i].trigger.marker);
 					}
-				}
-
-				if (pointOnLine === false)
-				{
-					map.removeLayer(stationMarkers[i]);
-					map.removeLayer(triggerMarkers[i]);
+					
 					toBeDeleted[i] = true;
 				}
 			}
@@ -262,10 +227,8 @@
 				if (toBeDeleted[i] === true)
 				{
 					showAlert = true;
-					pointRemovedAlert = pointRemovedAlert + stationMarkers[i].getPopup().getContent() + ", " + triggerMarkers[i].getPopup().getContent() + ";\n";
-					
-					stationMarkers.splice(i, 1);
-					triggerMarkers.splice(i, 1);
+					pointRemovedAlert = pointRemovedAlert + "站点" + (i + 1) + " " + route.stations[i].name + ", 触发点" + (i + 1) + ";\n";
+					route.stations.splice(i, 1);
 				}
 			}
 
@@ -278,9 +241,9 @@
         var eventAddingPoints =
         function(e)
         {
-            polyline.addLatLng(e.latlng);
-            polyline.editing.disable();
-            polyline.editing.enable();
+            route.polyline.addLatLng(e.latlng);
+            route.polyline.editing.disable();
+            route.polyline.editing.enable();
 
             updateNavPointBox();
         };
@@ -288,9 +251,9 @@
         var eventPolylineReset =
         function(e)
         {
-            polyline.spliceLatLngs(0, polyline.getLatLngs().length);
-            polyline.editing.disable();
-            polyline.editing.enable();
+            route.polyline.spliceLatLngs(0, route.polyline.getLatLngs().length);
+            route.polyline.editing.disable();
+            route.polyline.editing.enable();
             
             updateNavPointBox();
         };
@@ -298,9 +261,9 @@
         var eventPolylineRemoveOnePoint =
         function(e)
         {
-            polyline.spliceLatLngs(polyline.getLatLngs().length - 1, 1);
-            polyline.editing.disable();
-            polyline.editing.enable();
+            route.polyline.spliceLatLngs(route.polyline.getLatLngs().length - 1, 1);
+            route.polyline.editing.disable();
+            route.polyline.editing.enable();
             
             updateNavPointBox();
         };
@@ -345,7 +308,7 @@
                 return;
             }
             
-            if (polyline.getLatLngs().length < 2)
+            if (route.polyline.getLatLngs().length < 2)
             {
                 alert("请至少在地图上点取2个导航点，组成有效的线路");
                 $("#Leaflet_map").fadeOut(function(){$("#Leaflet_map").fadeIn();});
@@ -358,7 +321,7 @@
                 {
                     url: "/UserRoutes/ajaxCheckRouteNameAndID",
                     type: "POST",
-                    data: {routeName: $("#inputRouteName").val(), routeID: route.UserRoute.id},
+                    data: {routeName: $("#inputRouteName").val(), routeID: route.id},
                     timeout: 5000,
                     success: function(result) {
                         if (result === "yes")
@@ -366,9 +329,9 @@
                             $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
                             $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
                             
-                            polyline.editing.disable();
+                            route.polyline.editing.disable();
                             map.removeEventListener("click", eventAddingPoints);
-                            polyline.addEventListener("click", eventAddStationPoint);
+                            route.polyline.addEventListener("click", eventAddStationPoint);
                         }
                         else
                         {
@@ -401,19 +364,10 @@
             $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
             
             map.addEventListener("click", eventAddingPoints);
-            polyline.removeEventListener("click", eventAddStationPoint);
+            route.polyline.removeEventListener("click", eventAddStationPoint);
 
-            polyline.editing.enable();
-            /*
-            var numberOfStations = stationMarkers.length;
-            
-            for (var i = 0; i < numberOfStations; i++)
-            {
-                map.removeLayer(stationMarkers[i]);
-            }
-            
-            stationMarkers = [];
-            */
+            route.polyline.editing.enable();
+
             updateStationPointBox();
         };
 
@@ -421,39 +375,31 @@
         function(e)
         {
             var marker = L.marker(e.latlng, {icon: stationIcon}).addTo(map);
-            stationMarkers.push(marker);
-            
-            marker.bindPopup("站点" + stationMarkers.length).openPopup();
-            
+            var station = createStation(marker, route.stations.length + 1, "", undefined);
+            marker.bindPopup("站点" + (route.stations.length + 1)).openPopup();
+
+            route.stations.push(station);
             updateStationPointBox();
         };
 
         function updateStationPointBox()
         {
             var stationPoints = [];
-            var numberOfStations = stationMarkers.length;
-            
-            var inputs = $("#tblStationName input");
-            var inputValues = [];
-            
-            for (var i = 0; i < inputs.length; i++)
-            {
-                inputValues.push($(inputs[i]).val());
-            }
-            
+            var numberOfStations = route.stations.length;
+
             $("#tblStationName tr.values").remove();
 
             for (var i = 0; i < numberOfStations; i++)
             {
                 var stationPoint = {sequence: i + 1, 
-                    longitude: stationMarkers[i].getLatLng().lng, latitude: stationMarkers[i].getLatLng().lat, name: stationMarkers[i].getPopup().getContent()};
+                    longitude: route.stations[i].marker.getLatLng().lng, latitude: route.stations[i].marker.getLatLng().lat, name: route.stations[i].name};
                 stationPoints.push(stationPoint);
                 var num = i + 1;
                 var pointString = num + ".&nbsp;" +
-                    Math.round(stationMarkers[i].getLatLng().lng * 100000) / 100000 + ",&nbsp;" +
-                    Math.round(stationMarkers[i].getLatLng().lat * 100000) / 100000;
+                    Math.round(route.stations[i].marker.getLatLng().lng * 100000) / 100000 + ",&nbsp;" +
+                    Math.round(route.stations[i].marker.getLatLng().lat * 100000) / 100000;
                 
-                var inputValue = (inputValues[i] === undefined) ? stationPoint.name.slice(stationPoint.name.indexOf(".") + 1, stationPoint.name.length) : inputValues[i];
+                var inputValue = route.stations[i].name;
                 
                 $("#tblStationName").append("<tr class=\"values\"><td>" + pointString + 
                     "</td><td><input type=\"text\" value=\"" + inputValue + "\" style=\"width: 70px\" /></td></tr>");
@@ -463,12 +409,34 @@
             $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
         }
 
+        var eventResetStationPoints =
+        function(e)
+        {
+            var numberOfStations = stationMarkers.length;
+            
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                map.removeLayer(stationMarkers[i]);
+
+                if (triggerMarkers[i] != undefined)
+                {
+                	map.removeLayer(triggerMarkers[i]);
+                }
+            }
+            
+            stationMarkers = [];
+            triggerMarkers = [];
+            
+            updateStationPointBox();
+        };
+
         map.addEventListener('click', eventAddingPoints);
-        polyline.addEventListener('edit', eventLineUpdate);
+        route.polyline.addEventListener('edit', eventLineUpdate);
         $("#btnReset").click(eventPolylineReset);
         $("#btnRemovePoint").click(eventPolylineRemoveOnePoint);
         $("#btnGoToSecondStep").click(eventGoToSecondStep);
         $("#btnBackToFirstStep").click(eventBackToFirstStep);
+        //$("#btnResetStationPoints").click(eventResetStationPoints);
     </script>
 </div>
 
