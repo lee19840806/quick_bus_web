@@ -52,11 +52,11 @@ function initializeRoute(routeJSON, stationsAndTriggersJSON)
     {
     	var stationMarker = L.marker(L.latLng(stationsAndTriggersJSON[i].ViewUserRouteDetail.station_lat, stationsAndTriggersJSON[i].ViewUserRouteDetail.station_lng),
     		{icon: stationIcon});
-    	stationMarker.bindPopup("站点: " + (i + 1) + "." + stationsAndTriggersJSON[i].ViewUserRouteDetail.station_name);
+    	stationMarker.bindPopup("站点" + (i + 1) + " " + stationsAndTriggersJSON[i].ViewUserRouteDetail.station_name);
 
     	var triggerMarker = L.marker(L.latLng(stationsAndTriggersJSON[i].ViewUserRouteDetail.trigger_lat, stationsAndTriggersJSON[i].ViewUserRouteDetail.trigger_lng),
             {icon: triggerIcon});
-    	triggerMarker.bindPopup("触发点: " + (i + 1));
+    	triggerMarker.bindPopup("触发点" + (i + 1));
     	
     	var trigger = createTrigger(triggerMarker);
     	var station = createStation(stationMarker, stationsAndTriggersJSON[i].ViewUserRouteDetail.station_sequence,
@@ -95,16 +95,6 @@ function initializeRoute(routeJSON, stationsAndTriggersJSON)
 
 	return returnObject;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

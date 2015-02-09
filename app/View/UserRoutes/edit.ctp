@@ -1,6 +1,7 @@
 <?php
     echo $this->Html->script('leaflet-src');
     echo $this->Html->script('Edit.Poly');
+    echo $this->Html->script('jquery-ui');
     echo $this->fetch('script');
 ?>
 <div class="row">
@@ -18,7 +19,7 @@
             <ol style="padding-left: 20px">
                 <li>按途经站点的先后顺序，点击蓝线</li>
                 <li>为每个站点设置一个名称</li>
-                <li>点击“下一步，设置触发点”</li>
+                <li>拖动站点列表，按实际站点次序排序</li>
             </ol>
         </div>
         <div id="divHelpThirdStep" style="display: none">
@@ -65,12 +66,11 @@
                 <div class="form-group">
                     <label class="control-label">已添加以下报站点</label>
                     <div style="height: 200px; overflow-y: scroll">
-                        <table class="table small" id="tblStationName">
-                            <tr>
-                                <th>站点</th>
-                                <th>名称</th>
-                            </tr>
-                        </table>
+                    <p></p>
+                    	<small>
+                        	<li class="list-unstyled" id="sortable">
+                        	</li>
+                        </small>
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,7 +135,6 @@
         }
         
         updateNavPointBox();
-        //updateStationPointBox();
 
         function updateNavPointBox()
         {
@@ -232,6 +231,17 @@
 				}
 			}
 
+			for (var i = 0; i < route.stations.length; i++)
+			{
+				route.stations[i].sequence = i + 1;
+				route.stations[i].marker.bindPopup("站点" + (i + 1) + " " + route.stations[i].name);
+
+				if (route.stations[i].trigger != undefined)
+				{
+					route.stations[i].trigger.marker.bindPopup("触发点" + (i + 1));
+				}
+			}
+
 			if (showAlert === true)
 			{
 				alert(pointRemovedAlert);
@@ -273,26 +283,7 @@
         {
             updateNavPointBox();
         };
-
-        function sqr(x) { return x * x; }
         
-        function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y); }
-        
-        function distToSegmentSquared(p, v, w) {
-            var l2 = dist2(v, w);
-            
-           	if (l2 == 0) return dist2(p, v);
-            
-          	var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
-            
-          	if (t < 0) return dist2(p, v);
-          	if (t > 1) return dist2(p, w);
-            
-          	return dist2(p, { x: v.x + t * (w.x - v.x), y: v.y + t * (w.y - v.y) });
-        }
-
-        function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
-
         var eventGoToSecondStep =
         function(e)
         {
@@ -387,7 +378,7 @@
             var stationPoints = [];
             var numberOfStations = route.stations.length;
 
-            $("#tblStationName tr.values").remove();
+            $("#sortable").empty();
 
             for (var i = 0; i < numberOfStations; i++)
             {
@@ -400,10 +391,12 @@
                     Math.round(route.stations[i].marker.getLatLng().lat * 100000) / 100000;
                 
                 var inputValue = route.stations[i].name;
-                
-                $("#tblStationName").append("<tr class=\"values\"><td>" + pointString + 
-                    "</td><td><input type=\"text\" value=\"" + inputValue + "\" style=\"width: 70px\" /></td></tr>");
+
+                $("#sortable").append("<li>" + "站名：<input type=\"text\" value=\"" + inputValue + "\" style=\"width: 58px\" />&nbsp;&nbsp;"
+                    + "<kbd>" + pointString + "</kbd>" + "</li>");
             }
+
+            
 
             $("#hiddenStationPoints").val("");
             $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
@@ -430,6 +423,35 @@
             updateStationPointBox();
         };
 
+        function sqr(x)
+        {
+        	return x * x;
+        }
+
+        function dist2(v, w)
+        {
+        	return sqr(v.x - w.x) + sqr(v.y - w.y);
+        }
+
+        function distToSegmentSquared(p, v, w)
+        {
+            var l2 = dist2(v, w);
+            
+           	if (l2 == 0) return dist2(p, v);
+            
+          	var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            
+          	if (t < 0) return dist2(p, v);
+          	if (t > 1) return dist2(p, w);
+            
+          	return dist2(p, { x: v.x + t * (w.x - v.x), y: v.y + t * (w.y - v.y) });
+        }
+
+        function distToSegment(p, v, w)
+        {
+        	return Math.sqrt(distToSegmentSquared(p, v, w));
+        }
+
         map.addEventListener('click', eventAddingPoints);
         route.polyline.addEventListener('edit', eventLineUpdate);
         $("#btnReset").click(eventPolylineReset);
@@ -437,6 +459,17 @@
         $("#btnGoToSecondStep").click(eventGoToSecondStep);
         $("#btnBackToFirstStep").click(eventBackToFirstStep);
         //$("#btnResetStationPoints").click(eventResetStationPoints);
+        
+        $(function()
+        {
+            $("#sortable").sortable({update:
+                function (event, ui)
+                {
+                	
+                }
+            });
+            $("#sortable").disableSelection();
+        });
     </script>
 </div>
 
