@@ -392,11 +392,19 @@
                 
                 var inputValue = route.stations[i].name;
 
-                $("#sortable").append("<li>" + "站名：<input type=\"text\" value=\"" + inputValue + "\" style=\"width: 58px\" />&nbsp;&nbsp;"
+                $("#sortable").append("<li id=\"" + (i + 1) + "\">" + "站名：<input type=\"text\" value=\"" + inputValue + "\" style=\"width: 58px\" />&nbsp;&nbsp;"
                     + "<kbd>" + pointString + "</kbd>" + "</li>");
             }
 
-            
+            $("#sortable li").hover(
+                function()
+                {
+                    route.stations[parseInt($(this).attr("id")) - 1].marker.setIcon(stationEditingIcon);
+                },
+                function()
+                {
+                	route.stations[parseInt($(this).attr("id")) - 1].marker.setIcon(stationIcon);
+                });
 
             $("#hiddenStationPoints").val("");
             $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
@@ -462,14 +470,42 @@
         
         $(function()
         {
-            $("#sortable").sortable({update:
+            $("#sortable").sortable({
+                update:
                 function (event, ui)
                 {
-                	
+            		var newOrder = $("#sortable").sortable("toArray");
+
+            		for (var i = 0; i < newOrder.length; i++)
+            		{
+						route.stations[i].sequence = parseInt(newOrder[i]);
+            		}
+
+            		route.stations.sort(sortStation);
+
+            		for (var i = 0; i < newOrder.length; i++)
+            		{
+						route.stations[i].marker.bindPopup("站点" + route.stations[i].sequence + " " + route.stations[i].name);
+
+						if (route.stations[i].trigger != undefined)
+						{
+							route.stations[i].trigger.marker.bindPopup("触发点" + route.stations[i].sequence);
+						}
+
+						route.stations[i].marker.setIcon(stationIcon);
+            		}
+
+            		updateStationPointBox();
                 }
             });
+            
             $("#sortable").disableSelection();
         });
+
+        function sortStation(a, b)
+        {
+			return parseInt(a.sequence) - parseInt(b.sequence);
+        }
     </script>
 </div>
 
