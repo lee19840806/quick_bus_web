@@ -351,6 +351,11 @@
         var eventBackToFirstStep =
         function(e)
         {
+            for (var i = 0; i < route.stations.length; i++)
+            {
+				route.stations[i].name = $("#sortable li :input")[i].value.replace(/\s/g, "");
+            }
+            
             $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
             $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
             
@@ -365,6 +370,11 @@
         var eventAddStationPoint =
         function(e)
         {
+        	for (var i = 0; i < route.stations.length; i++)
+            {
+				route.stations[i].name = $("#sortable li :input")[i].value.replace(/\s/g, "");
+            }
+            
             var marker = L.marker(e.latlng, {icon: stationIcon}).addTo(map);
             var station = createStation(marker, route.stations.length + 1, "", undefined);
             marker.bindPopup("站点" + (route.stations.length + 1)).openPopup();
@@ -406,67 +416,130 @@
                 	route.stations[parseInt($(this).attr("id")) - 1].marker.setIcon(stationIcon);
                 });
 
-            $("#hiddenStationPoints").val("");
-            $("#hiddenStationPoints").val(JSON.stringify(stationPoints));
+            $("#sortable li input").keyup(
+				function()
+				{
+					for (var i = 0; i < route.stations.length; i++)
+                    {
+        				route.stations[i].name = $("#sortable li :input")[i].value.replace(/\s/g, "");
+                    }
+				}
+                );
         }
 
         var eventResetStationPoints =
         function(e)
         {
-            var numberOfStations = stationMarkers.length;
+            var numberOfStations = route.stations.length;
             
             for (var i = 0; i < numberOfStations; i++)
             {
-                map.removeLayer(stationMarkers[i]);
-
-                if (triggerMarkers[i] != undefined)
+                if (route.stations[i].trigger != undefined)
                 {
-                	map.removeLayer(triggerMarkers[i]);
+                	map.removeLayer(route.stations[i].trigger.marker);
+                	route.stations[i].trigger = undefined;
                 }
+
+                map.removeLayer(route.stations[i].marker);
             }
-            
-            stationMarkers = [];
-            triggerMarkers = [];
+
+            route.stations = [];
             
             updateStationPointBox();
         };
 
-        function sqr(x)
+        var eventRemoveStationPoint =
+        function(e)
         {
-        	return x * x;
-        }
+            if (route.stations.length > 0)
+            {
+            	if (route.stations[route.stations.length - 1].trigger != undefined)
+                {
+                	map.removeLayer(route.stations[route.stations.length - 1].trigger.marker);
+                	route.stations[route.stations.length - 1].trigger = undefined;
+                }
+                
+                map.removeLayer(route.stations[route.stations.length - 1].marker);
+                route.stations.pop();
+                
+                updateStationPointBox();
+            }
+        };
 
-        function dist2(v, w)
+        var eventGoToThirdStep =
+        function(e)
         {
-        	return sqr(v.x - w.x) + sqr(v.y - w.y);
-        }
+            if (route.stations.length === 0)
+            {
+                alert("请在路线上至少设置1个站点（点击地图中的蓝线）");
+                $("#Leaflet_map").fadeOut(function(){$("#Leaflet_map").fadeIn();});
+                return;
+            }
+            
+            for (var i = 0; i < route.stations.length; i++)
+            {
+                if ($("#sortable li :input")[i].value.replace(/\s/g, "") === "")
+                {
+                    alert("请为所有的站点设置一个名称，然后进入下一步");
+                    $("#sortable").fadeOut(function() {$("#sortable").fadeIn();});
+                    return;
+                }
+            }
 
-        function distToSegmentSquared(p, v, w)
+            for (var i = 0; i < route.stations.length; i++)
+            {
+				route.stations[i].name = $("#sortable li :input")[i].value.replace(/\s/g, "");
+            }
+            
+            $("#divSecondStep").fadeOut(function() {$("#divThirdStep").fadeIn();} );
+            $("#divHelpSecondStep").fadeOut(function() {$("#divHelpThirdStep").fadeIn();} );
+           
+            route.polyline.removeEventListener("click", eventAddStationPoint);
+            route.polyline.addEventListener("click", eventAddTriggerPoint);
+            
+            $("#selectStationPoint").empty();
+            $("#selectStationPoint").append($("<option>", {value: 0, text: "在此选择1个站点"}));
+            
+            var numberOfStations = route.stations.length;
+            
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                $("#selectStationPoint").append($("<option>", {value: i + 1, text: i + 1 + ". " + 
+                    Math.round(route.stations[i].marker.getLatLng().lng * 100000) / 100000 + ", " + 
+                    Math.round(route.stations[i].marker.getLatLng().lat * 100000) / 100000 + ", " + route.stations[i].name}));
+            }
+
+            updateTriggerPointBox();
+        };
+
+        var eventAddTriggerPoint =
+        function(e)
         {
-            var l2 = dist2(v, w);
+            var stationPointIndex = $("#selectStationPoint").val();
             
-           	if (l2 == 0) return dist2(p, v);
+            if (stationPointIndex <= 0)
+            {
+                alert("请在左侧下拉菜单选择站点");
+                $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                $("#selectStationPoint").fadeOut(function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                return;
+            }
             
-          	var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
-            
-          	if (t < 0) return dist2(p, v);
-          	if (t > 1) return dist2(p, w);
-            
-          	return dist2(p, { x: v.x + t * (w.x - v.x), y: v.y + t * (w.y - v.y) });
-        }
+            var marker = L.marker(e.latlng, {icon: triggerIcon});
+            marker.addTo(map);
+            marker.bindPopup("触发点" + stationPointIndex).openPopup();
+            trigger = createTrigger(marker, Math.round(getTriggerPonitHeading(marker.getLatLng().lng, marker.getLatLng().lat, route.polyline.getLatLngs())));
 
-        function distToSegment(p, v, w)
-        {
-        	return Math.sqrt(distToSegmentSquared(p, v, w));
-        }
+            if (route.stations[stationPointIndex - 1].trigger != undefined)
+            {
+				map.removeLayer(route.stations[stationPointIndex - 1].trigger.marker);
+				route.stations[stationPointIndex - 1].trigger = undefined;
+            }
+            
+            route.stations[stationPointIndex - 1].trigger = trigger;
 
-        map.addEventListener('click', eventAddingPoints);
-        route.polyline.addEventListener('edit', eventLineUpdate);
-        $("#btnReset").click(eventPolylineReset);
-        $("#btnRemovePoint").click(eventPolylineRemoveOnePoint);
-        $("#btnGoToSecondStep").click(eventGoToSecondStep);
-        $("#btnBackToFirstStep").click(eventBackToFirstStep);
-        //$("#btnResetStationPoints").click(eventResetStationPoints);
+       	 	updateTriggerPointBox();
+        };
         
         $(function()
         {
@@ -478,13 +551,14 @@
 
             		for (var i = 0; i < newOrder.length; i++)
             		{
-						route.stations[i].sequence = parseInt(newOrder[i]);
+						route.stations[newOrder[i] - 1].sequence = i + 1;
             		}
 
-            		route.stations.sort(sortStation);
+            		route.stations.sort(function sortStation(a, b) {return parseInt(a.sequence) - parseInt(b.sequence);} );
 
             		for (var i = 0; i < newOrder.length; i++)
             		{
+            			route.stations[i].marker.unbindPopup();
 						route.stations[i].marker.bindPopup("站点" + route.stations[i].sequence + " " + route.stations[i].name);
 
 						if (route.stations[i].trigger != undefined)
@@ -502,10 +576,71 @@
             $("#sortable").disableSelection();
         });
 
-        function sortStation(a, b)
+        var eventStationPointChange =
+        function(e)
         {
-			return parseInt(a.sequence) - parseInt(b.sequence);
+            var numberOfStations = route.stations.length;
+            
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                route.stations[i].marker.setIcon(stationIcon);
+            }
+            
+            if (parseInt(e.target.value) > 0)
+            {
+                route.stations[parseInt(e.target.value - 1)].marker.setIcon(stationEditingIcon);
+            }
+        };
+
+        function updateTriggerPointBox()
+        {
+        	$("#inputTriggerPoints").html("");
+            var numberOfStations = route.stations.length;
+
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                if (route.stations[i].trigger != undefined)
+                {
+                    $("#inputTriggerPoints").html($("#inputTriggerPoints").html() + 
+                        "站" + (i + 1) + ". " +
+                        Math.round(route.stations[i].marker.getLatLng().lng * 100000) / 100000 + ", " + 
+                        Math.round(route.stations[i].marker.getLatLng().lat * 100000) / 100000 + ", " +  route.stations[i].name + ";\n" + 
+                        "触" + (i + 1) + ". " +
+                        Math.round(route.stations[i].trigger.marker.getLatLng().lng * 100000) / 100000 + ", " + 
+                        Math.round(route.stations[i].trigger.marker.getLatLng().lat * 100000) / 100000 + ", " +
+                        "方向" + route.stations[i].trigger.heading + "°;\n\n");
+                }
+            }
         }
+
+        var eventBackToSecondStep =
+        function(e)
+        {
+            route.polyline.removeEventListener("click", eventAddTriggerPoint);
+            route.polyline.addEventListener("click", eventAddStationPoint);
+            
+            $("#divThirdStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
+            $("#divHelpThirdStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
+            
+            var numberOfStations = route.stations.length;
+            
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                route.stations[i].marker.setIcon(stationIcon);
+            }
+        };
+
+        map.addEventListener('click', eventAddingPoints);
+        route.polyline.addEventListener('edit', eventLineUpdate);
+        $("#btnReset").click(eventPolylineReset);
+        $("#btnRemovePoint").click(eventPolylineRemoveOnePoint);
+        $("#btnGoToSecondStep").click(eventGoToSecondStep);
+        $("#btnBackToFirstStep").click(eventBackToFirstStep);
+        $("#btnResetStationPoints").click(eventResetStationPoints);
+        $("#btnRemoveStationPoint").click(eventRemoveStationPoint);
+        $("#btnGoToThirdStep").click(eventGoToThirdStep);
+        $("#selectStationPoint").change(eventStationPointChange);
+        $("#btnBackToSecondStep").click(eventBackToSecondStep);
     </script>
 </div>
 
