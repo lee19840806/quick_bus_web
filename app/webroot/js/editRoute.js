@@ -105,6 +105,45 @@ function createRoute(id, name, polyline, stations)
 	route.name = name;
 	route.polyline = polyline;
 	route.stations = stations;
+	
+	route.serialize = 
+		function()
+		{
+			var seRoute = {Route: {
+				id: this.id,
+				name: this.name,
+				routePoints: [],
+				stationPoints: []
+			}};
+			
+			for (var i = 0; i < this.polyline.getLatLngs().length; i++)
+			{
+				var rp = {sequence: i + 1, lat: this.polyline.getLatLngs()[i].lat, lng: this.polyline.getLatLngs()[i].lng};
+				seRoute.Route.routePoints.push(rp);
+			}
+			
+			for (var i = 0; i < this.stations.length; i++)
+			{
+				var t = {
+					lat: this.stations[i].trigger.marker.getLatLng().lat,
+					lng: this.stations[i].trigger.marker.getLatLng().lng,
+					heading: this.stations[i].trigger.heading
+				};
+				
+				var s = {
+					sequence: this.stations[i].sequence,
+					name: this.stations[i].name,
+					lat: this.stations[i].marker.getLatLng().lat,
+					lng: this.stations[i].marker.getLatLng().lng,
+					trigger: t
+				};
+				
+				seRoute.Route.stationPoints.push(s);
+			}
+			
+			return seRoute;
+		};
+	
 	return route;
 }
 
@@ -141,7 +180,7 @@ function initializeRoute(routeJSON, stationsAndTriggersJSON)
             {icon: triggerIcon});
     	triggerMarker.bindPopup("触发点" + (i + 1));
     	
-    	var trigger = createTrigger(triggerMarker, stationsAndTriggersJSON[i].ViewUserRouteDetail.trigger_heading);
+    	var trigger = createTrigger(triggerMarker, parseInt(stationsAndTriggersJSON[i].ViewUserRouteDetail.trigger_heading));
     	var station = createStation(stationMarker, stationsAndTriggersJSON[i].ViewUserRouteDetail.station_sequence,
 			stationsAndTriggersJSON[i].ViewUserRouteDetail.station_name, trigger);
     	
@@ -167,7 +206,7 @@ function initializeRoute(routeJSON, stationsAndTriggersJSON)
 	mapCenter.lat = sumLat / numberOfRoutePoints;
 	mapCenter.lng = sumLng / numberOfRoutePoints;
 	
-	var route = createRoute(routeJSON.UserRoute.id, routeJSON.UserRoute.name, polyline, stations);
+	var route = createRoute(parseInt(routeJSON.UserRoute.id), routeJSON.UserRoute.name, polyline, stations);
 	
 	var returnObject = new Object();
 	returnObject.route = route;

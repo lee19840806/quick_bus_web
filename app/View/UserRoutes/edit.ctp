@@ -9,9 +9,10 @@
         <div id="divHelpFirstStep">
             <strong>第1步，修改线路</strong>
             <ol style="padding-left: 20px">
-                <li>输入唯一的路线名</li>
-                <li>点击地图，添加或修改路线（绿色标记为站点，黄色标记为触发点）</li>
-                <li>点击“下一步，设置报站点”</li>
+                <li>输入路线名</li>
+                <li>绿标为已有站点，黄标为已有触发点</li>
+                <li>点击地图或蓝线，修改路线</li>
+                <li>受影响的站点请在下一步重新添加</li>
             </ol>
         </div>
         <div id="divHelpSecondStep" style="display: none">
@@ -27,6 +28,7 @@
             <ol style="padding-left: 20px">
                 <li>选择相应的报站点</li>
                 <li>在路线上点击，选择触发点</li>
+                <li>请为每一个站点都设置一个触发点</li>
                 <li>点击“完成，提交此路线配置”</li>
             </ol>
         </div>
@@ -64,7 +66,7 @@
             </div>
             <div id="divSecondStep" style="display: none">
                 <div class="form-group">
-                    <label class="control-label">已添加以下报站点</label>
+                    <label class="control-label">拖动已有的站点进行排序</label>
                     <div style="height: 200px; overflow-y: scroll">
                     <p></p>
                     	<small>
@@ -497,20 +499,39 @@
             route.polyline.removeEventListener("click", eventAddStationPoint);
             route.polyline.addEventListener("click", eventAddTriggerPoint);
             
-            $("#selectStationPoint").empty();
+            updateStationTriggerList();
+            updateTriggerPointBox();
+        };
+
+        function updateStationTriggerList()
+        {
+        	var stationPointIndex = $("#selectStationPoint").val();
+        	$("#selectStationPoint").empty();
             $("#selectStationPoint").append($("<option>", {value: 0, text: "在此选择1个站点"}));
             
             var numberOfStations = route.stations.length;
             
             for (var i = 0; i < numberOfStations; i++)
             {
-                $("#selectStationPoint").append($("<option>", {value: i + 1, text: i + 1 + ". " + 
-                    Math.round(route.stations[i].marker.getLatLng().lng * 100000) / 100000 + ", " + 
-                    Math.round(route.stations[i].marker.getLatLng().lat * 100000) / 100000 + ", " + route.stations[i].name}));
+                var triggerText = "未设置";
+
+                if (route.stations[i].trigger != undefined)
+                {
+                	triggerText = "已设置";
+                }
+                
+                $("#selectStationPoint").append($("<option>", {value: i + 1, text: i + 1 + ". 站点: " + route.stations[i].name + ", 触发点: " + triggerText}));
             }
 
-            updateTriggerPointBox();
-        };
+            if (stationPointIndex != null)
+            {
+            	$("#selectStationPoint").val(stationPointIndex);
+            }
+            else
+            {
+            	$("#selectStationPoint").val(0);
+            }
+        }
 
         var eventAddTriggerPoint =
         function(e)
@@ -538,6 +559,7 @@
             
             route.stations[stationPointIndex - 1].trigger = trigger;
 
+            updateStationTriggerList();
        	 	updateTriggerPointBox();
         };
         
@@ -630,6 +652,36 @@
             }
         };
 
+        var eventGoToSubmit =
+        function(e)
+        {
+            var eachStationTriggerReady = true;
+            var numberOfStations = route.stations.length;
+            
+            for (var i = 0; i < numberOfStations; i++)
+            {
+                if (route.stations[i].trigger === undefined)
+                {
+                    eachStationTriggerReady = false;
+                }
+            }
+            
+            if (eachStationTriggerReady === false)
+            {
+                alert("还有未设置触发点的站点。请完成设置，然后再提交线路");
+                $("#labelTriggerPoint").fadeOut(function() {$("#labelTriggerPoint").fadeIn();} );
+                $("#selectStationPoint").fadeOut(function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
+                return;
+            }
+
+            alert(JSON.stringify(route.serialize()));
+
+            $("#inputTriggerPoints").html("");
+            $("#inputTriggerPoints").html(JSON.stringify(route.serialize()));
+            
+            //$("#formRouteInfo").submit();
+        };
+
         map.addEventListener('click', eventAddingPoints);
         route.polyline.addEventListener('edit', eventLineUpdate);
         $("#btnReset").click(eventPolylineReset);
@@ -641,29 +693,9 @@
         $("#btnGoToThirdStep").click(eventGoToThirdStep);
         $("#selectStationPoint").change(eventStationPointChange);
         $("#btnBackToSecondStep").click(eventBackToSecondStep);
+        $("#btnGoToSubmit").click(eventGoToSubmit);
     </script>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
