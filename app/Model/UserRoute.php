@@ -128,8 +128,73 @@ class UserRoute extends AppModel {
         }
     }
     
+    public function edit($route, $userID)
+    {
+    	$editedRoute = array(
+    		'id' => $route->id,
+    		'user_id' => $userID,
+    		'name' => $route->name,
+    		'UserRoutePoint' => array(),
+    		'UserStationPoint' => array()
+    	);
+    	
+    	foreach ($route->routePoints as $routePoint)
+    	{
+    		$rp = array(
+    			'sequence' => $routePoint->sequence,
+    			'latitude' => $routePoint->lat,
+    			'longitude' => $routePoint->lng
+    		);
+    		
+            array_push($editedRoute['UserRoutePoint'], $rp);
+    	}
+    	
+    	foreach ($route->stationPoints as $stationPoint)
+    	{
+    		$tp = array(
+    			'latitude' => $stationPoint->trigger->lat,
+    			'longitude' => $stationPoint->trigger->lng,
+    			'heading' => $stationPoint->trigger->heading
+    		);
+    		
+    		$sp = array(
+    			'sequence' => $stationPoint->sequence,
+    			'name' => $stationPoint->name,
+    			'latitude' => $stationPoint->lat,
+    			'longitude' => $stationPoint->lng,
+    			'UserTriggerPoint' => $tp
+    		);
+    		
+    		array_push($editedRoute['UserStationPoint'], $sp);
+    	}
+    	
+    	$this->delete($route->id, true);
+    	
+    	if ($this->saveAssociated($editedRoute, array('deep' => TRUE)))
+    	{
+    		return TRUE;
+    	}
+    	else
+    	{
+    		return FALSE;
+    	}
+    }
+    
     public function isOwnedBy($routeID, $userID)
     {
         return $this->field('user_id', array('id' => $routeID, 'user_id' => $userID)) === $userID;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

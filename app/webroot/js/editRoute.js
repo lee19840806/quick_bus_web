@@ -53,19 +53,19 @@ function getTriggerPonitHeading(lng, lat, latLngs)
 
 function sqr(x)
 {
-	return x * x;
+    return x * x;
 }
 
 function dist2(v, w)
 {
-	return sqr(v.x - w.x) + sqr(v.y - w.y);
+    return sqr(v.x - w.x) + sqr(v.y - w.y);
 }
 
 function distToSegmentSquared(p, v, w)
 {
     var l2 = dist2(v, w);
     
-   	if (l2 == 0) return dist2(p, v);
+    if (l2 == 0) return dist2(p, v);
     
   	var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
     

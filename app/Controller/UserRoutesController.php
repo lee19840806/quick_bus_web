@@ -120,12 +120,33 @@ class UserRoutesController extends AppController {
     {
         if ($this->request->is('post'))
         {
-            $this->UserRoute->saveRoute($this->request->data, $this->Auth->user('id'));
+        	$this->UserRoute->saveRoute($this->request->data, $this->Auth->user('id'));
         }
         else
         {
             $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
         }
+    }
+    
+    public function edit_submit()
+    {
+    	if ($this->request->is('post'))
+    	{
+    		$route = json_decode($this->request->data['UserRouteJsonObj'])->Route;
+    		
+    		if ($this->UserRoute->isOwnedBy($route->id, $this->Auth->user('id')))
+    		{
+    			$this->UserRoute->edit($route, $this->Auth->user('id'));
+    		}
+    		else
+    		{
+    			$this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+    		}
+    	}
+    	else
+    	{
+    		$this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+    	}
     }
     
     public function inquiry()

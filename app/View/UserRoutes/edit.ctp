@@ -9,7 +9,7 @@
         <div id="divHelpFirstStep">
             <strong>第1步，修改线路</strong>
             <ol style="padding-left: 20px">
-                <li>输入路线名</li>
+                <li>输入路线名称</li>
                 <li>绿标为已有站点，黄标为已有触发点</li>
                 <li>点击地图或蓝线，修改路线</li>
                 <li>受影响的站点请在下一步重新添加</li>
@@ -33,19 +33,16 @@
             </ol>
         </div>
         <div><hr/></div>
-        <form class="col-md-12 form-horizontal" id="formRouteInfo" action="/UserRoutes/submit" method="post">
+        <form class="col-md-12 form-horizontal" id="formRouteInfo" action="/UserRoutes/edit_submit" method="post">
             <div style="display: none">
                 <input type="hidden" name="_method" value="POST"/>
-                <input type="hidden" name="data[UserRoute][navPoints]" id="hiddenNavPoints"/>
-                <input type="hidden" name="data[UserRoute][stationPoints]" id="hiddenStationPoints"/>
-                <input type="hidden" name="data[UserRoute][triggerPoints]" id="hiddenTriggerPoints"/>
+                <input type="hidden" name="data[UserRouteJsonObj]" id="hiddenRoute"/>
             </div>
             <div id="divFirstStep">
                 <div class="form-group">
-                    <label class="control-label" id="labelRouteName">路线名</label>
+                    <label class="control-label" id="labelRouteName">路线名称</label>
                     <div>
-                        <input type="text" name="data[UserRoute][name]" class="form-control" id="inputRouteName" required="required"
-                        	value="<?php $a = json_decode($route); echo $a->{'UserRoute'}->{'name'}; ?>"/>
+                        <input type="text" class="form-control" id="inputRouteName" required="required" value="<?php echo json_decode($route)->{'UserRoute'}->{'name'}; ?>"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -66,13 +63,13 @@
             </div>
             <div id="divSecondStep" style="display: none">
                 <div class="form-group">
-                    <label class="control-label">拖动已有的站点进行排序</label>
-                    <div style="height: 200px; overflow-y: scroll">
+                    <label class="control-label">已有站点（可拖动列表进行排序）</label>
                     <p></p>
+                    <div style="height: 200px; overflow-y: scroll">
                     	<small>
-                        	<li class="list-unstyled" id="sortable">
-                        	</li>
-                        </small>
+                    		<ol class="list-unstyled" id="sortable">
+                    		</ol>
+                    	</small>
                     </div>
                 </div>
                 <div class="form-group">
@@ -321,7 +318,8 @@
                         {
                             $("#divFirstStep").fadeOut(function() {$("#divSecondStep").fadeIn();} );
                             $("#divHelpFirstStep").fadeOut(function() {$("#divHelpSecondStep").fadeIn();} );
-                            
+
+                            route.name = $("#inputRouteName").val();
                             route.polyline.editing.disable();
                             map.removeEventListener("click", eventAddingPoints);
                             route.polyline.addEventListener("click", eventAddStationPoint);
@@ -339,11 +337,11 @@
                     },
                     error: function(xhr, status) {
                         alert("无法提交线路，请稍后再试");
-                    },
+                    }/*,
                     complete: function()
                     {
                         $("#btnGoToSecondStep").attr("disabled", false);
-                    }
+                    }*/
                 }
             );
 
@@ -360,6 +358,8 @@
             
             $("#divSecondStep").fadeOut(function() {$("#divFirstStep").fadeIn();} );
             $("#divHelpSecondStep").fadeOut(function() {$("#divHelpFirstStep").fadeIn();} );
+
+            $("#btnGoToSecondStep").attr("disabled", false);
             
             map.addEventListener("click", eventAddingPoints);
             route.polyline.removeEventListener("click", eventAddStationPoint);
@@ -673,13 +673,15 @@
                 $("#selectStationPoint").fadeOut(function() {$("#selectStationPoint").fadeIn(function() {$("#selectStationPoint").focus();});} );
                 return;
             }
-
-            alert(JSON.stringify(route.serialize()));
-
-            $("#inputTriggerPoints").html("");
-            $("#inputTriggerPoints").html(JSON.stringify(route.serialize()));
             
-            //$("#formRouteInfo").submit();
+            $("#hiddenRoute").val("");
+            $("#hiddenRoute").val(JSON.stringify(route.serialize()));
+
+            $("#selectStationPoint").attr("disabled", true);
+            $("#btnBackToSecondStep").attr("disabled", true);
+            $("#btnGoToSubmit").attr("disabled", true);
+            
+            $("#formRouteInfo").submit();
         };
 
         map.addEventListener('click', eventAddingPoints);
