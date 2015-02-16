@@ -404,7 +404,7 @@
                 
                 var inputValue = route.stations[i].name;
 
-                $("#sortable").append("<li id=\"" + (i + 1) + "\">" + "站名：<input type=\"text\" value=\"" + inputValue + "\" style=\"width: 58px\" />&nbsp;&nbsp;"
+                $("#sortable").append("<li id=\"" + (i + 1) + "\">" + "站名：<input type=\"text\" value=\"" + inputValue + "\" style=\"width: 55px\" />&nbsp;"
                     + "<kbd>" + pointString + "</kbd>" + "</li>");
             }
 
