@@ -188,8 +188,5 @@ class UserRoutesController extends AppController {
     	$route = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
     	$this->set('stationsAndTriggers', json_encode($stationsAndTriggers));
     	$this->set('route', json_encode($route));
-    	
-    	//$this->set('is_available', json_encode($route));
-    	//$this->render('/UserRoutes/ajaxReturn', 'ajax');
     }
 }

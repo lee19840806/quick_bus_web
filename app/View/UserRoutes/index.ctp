@@ -26,7 +26,6 @@
                     <th><?php echo $this->Paginator->sort('modified', '上次修改时间'); ?></th>
                     <th><?php echo $this->Paginator->sort('route_point_cnt', '导航点数'); ?></th>
                     <th><?php echo $this->Paginator->sort('station_cnt', '站点数'); ?></th>
-                    <th><?php echo $this->Paginator->sort('trigger_cnt', '触发点数'); ?></th>
                     <th><?php echo $this->Paginator->sort('name', '线路管理'); ?></th>
                 </tr>
                 <?php foreach ($userRoutesSummary as $route): ?>
@@ -35,14 +34,15 @@
                     <td><?php echo $route['ViewUserRouteSummary']['modified']; ?></td>
                     <td><?php echo $route['ViewUserRouteSummary']['route_point_cnt']; ?></td>
                     <td><?php echo $route['ViewUserRouteSummary']['station_cnt']; ?></td>
-                    <td><?php echo $route['ViewUserRouteSummary']['trigger_cnt']; ?></td>
                     <td>
                         <?php echo $this->Html->link('编辑手机号',
                             array('controller' => 'UserStationPoints', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
-                        <?php echo $this->Html->link('站点名称更改',
+                        <?php echo $this->Html->link('站名更改',
                             array('controller' => 'UserStationPoints', 'action' => 'edit_station', $route['ViewUserRouteSummary']['user_route_id'])); ?>
                         <?php echo $this->Html->link('线路更改',
                             array('controller' => 'UserRoutes', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
+                        <?php echo $this->Html->link('关联或解除IMEI',
+                            array('controller' => 'UserRouteImeiMappings', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']), null,
                             '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>
