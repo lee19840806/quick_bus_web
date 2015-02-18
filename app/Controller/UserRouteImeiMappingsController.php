@@ -47,7 +47,7 @@ class UserRouteImeiMappingsController extends AppController {
 		{
 			$findResult = $this->UserRouteImeiMapping->find('first', array(
 				'conditions' => array(
-					'name' => $this->request->data('imei')
+					'imei' => $this->request->data('imei')
 			)));
 	
 			if (count($findResult) == 0)
@@ -115,7 +115,6 @@ class UserRouteImeiMappingsController extends AppController {
 		
 			if ($this->UserRouteImeiMapping->deleteAll(array('user_route_id' => $id)))
 			{
-				$this->Session->setFlash('此线路不存在，请重选一条线路进行编辑');
 				$this->redirect(array('action' => 'delete_succeeded'));
 			}
 			else

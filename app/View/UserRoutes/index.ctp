@@ -41,8 +41,8 @@
                             array('controller' => 'UserStationPoints', 'action' => 'edit_station', $route['ViewUserRouteSummary']['user_route_id'])); ?>
                         <?php echo $this->Html->link('线路更改',
                             array('controller' => 'UserRoutes', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
-                        <?php echo $this->Html->link('关联或解除IMEI',
-                            array('controller' => 'UserRouteImeiMappings', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id'])); ?>
+                        <?php if($group_id == 3) {echo $this->Html->link('关联或解除IMEI',
+                            array('controller' => 'UserRouteImeiMappings', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']));} ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']), null,
                             '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>

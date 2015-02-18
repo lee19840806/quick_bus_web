@@ -160,6 +160,51 @@ class RealTimePosition extends AppModel {
         return 0;
     }
     
+    public function saveImeiPosition($realTimePosition)
+    {
+    	$imei = $realTimePosition['imei'];
+    	$latitude = (double)$realTimePosition['latitude'];
+    	$longitude = (double)$realTimePosition['longitude'];
+    	$heading = (int)$realTimePosition['heading'];
+    
+    	$latitude_error = ($latitude < -90 || $latitude > 90);
+    	$longitude_error = ($longitude < -180 || $longitude > 180);
+    	$heading_error = ($heading < 0 || $heading > 360);
+    
+    	if ($latitude_error || $longitude_error || $heading_error)
+    	{
+    		return 1;
+    	}
+    	
+    	$user_route_imei = $this->UserRoute->UserRouteImeiMapping->find('first', array('conditions' => array('imei' => $imei)));
+    	
+    	if (count($user_route_imei) == 0)
+    	{
+    		return 5;
+    	}
+    	
+    	$user_route_id = $user_route_imei['UserRouteImeiMapping']['user_route_id'];
+    	$user_id = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $user_route_id)))['UserRoute']['user_id'];
+    
+    	$position = array(
+    		'user_id' => $user_id,
+    		'user_route_id' => $user_route_id,
+    		'latitude' => $latitude,
+    		'longitude' => $longitude,
+    		'heading' => $heading
+    	);
+    
+    	$this->create();
+    	$saveSuccess = $this->save($position);
+    
+    	if (!$saveSuccess)
+    	{
+    		return 3;
+    	}
+    
+    	return 0;
+    }
+    
     private function socketPost($url, $query)
     {
         $info = parse_url($url);

@@ -62,7 +62,8 @@
 	                        }
 	                        else
 	                        {
-	                            alert("已存在相同的路线名，请输入一个新的路线名");
+	                            alert("IMEI号码（" + imei + "）已被（" + $.parseJSON(result).route_name + "）使用\n\n请先解除（"
+	    	                        + $.parseJSON(result).route_name + "）的IMEI关联");
 	                            $("#labelRouteName").fadeOut(function(){$("#labelRouteName").fadeIn();});
 	                            $("#inputRouteName").fadeOut(
 	                                function(){$("#inputRouteName").fadeIn(

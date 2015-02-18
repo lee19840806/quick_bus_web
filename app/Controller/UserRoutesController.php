@@ -29,6 +29,7 @@ class UserRoutesController extends AppController {
 		$this->UserRoute->recursive = 0;
         $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.username' => $this->Auth->user('username')), 'limit' => 10);
 		$this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
+		$this->set('group_id', $this->Auth->user('group_id'));
 	}
     
     public function create()

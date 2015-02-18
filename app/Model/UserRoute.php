@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * UserRoute Model
  *
  * @property User $User
+ * @property UserRouteImeiMapping $UserRouteImeiMapping
  */
 class UserRoute extends AppModel {
 
@@ -90,6 +91,14 @@ class UserRoute extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		)
+	);
+	
+	public $hasOne = array(
+		'UserRouteImeiMapping' => array(
+			'className' => 'UserRouteImeiMapping',
+			'foreignKey' => 'user_route_id',
+			'dependent' => true
 		)
 	);
     
