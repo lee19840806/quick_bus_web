@@ -56,6 +56,7 @@
                 </div>
                 <div class="form-group">
                     <div>
+                        <a class="btn btn-warning btn-block" href="/UserRoutes/index" role="button"><strong>返回线路管理面板</strong></a>
                         <button type="button" class="btn btn-primary btn-block" id="btnGoToSecondStep"><strong>下一步，设置报站点</strong></button>
                     </div>
                 </div>

@@ -15,11 +15,31 @@ class RealTimePositionsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator', 'Session');
+	public $uses = array('RealTimePosition', 'ViewUserRouteSummary', 'ViewUserRouteHistReplay');
 	
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
 		$this->Auth->allow('imei_upload');
+	}
+	
+	public function index()
+	{
+	    $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.user_id' => $this->Auth->user('id')), 'limit' => 10);
+	    $this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
+	    
+	    $historyDays = $this->ViewUserRouteSummary->find('all', array(
+	        'conditions' => array('ViewUserRouteSummary.user_id' => $this->Auth->user('id')),
+	        'joins' => array(array(
+	           'table' => 'view_subquery_route_hist_days',
+	            'alias' => 'b',
+	            'type' => 'left',
+	            'conditions' => array('ViewUserRouteSummary.user_route_id = b.user_route_id'),
+	        'order' => array('ViewUserRouteSummary.user_route_id', 'b.replay_day desc')
+	        ))
+	    ));
+	    $a = 1;
+	    //$this->Auth->user('id')
 	}
 
     public function upload()
