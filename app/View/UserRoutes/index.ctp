@@ -3,9 +3,12 @@
         <div id="welcome">
             <strong>线路管理，可进行以下操作</strong>
             <ul style="padding-left: 20px">
-                <li>编辑线路</li>
-                <li>删除线路</li>
                 <li>创建一条新的线路</li>
+                <li>编辑报站手机号码</li>
+                <li>更改站点名称</li>
+                <li>更改线路轨迹或站点</li>
+                <li>回放线路的历史轨迹</li>
+                <li>删除线路</li>
             </ul>
         </div>
         <div><hr/></div>
@@ -15,8 +18,6 @@
             <p>
                 <strong>管理已有的线路，或者</strong>
                 <a class="btn btn-primary btn-sm" href="/UserRoutes/create" role="button">创建一条新的线路</a>
-                <strong>，或者</strong>
-                <a class="btn btn-primary btn-sm" href="/RealTimePositions/index" role="button">历史轨迹回放</a>
                 <strong class="text-danger"><?php echo $this->Session->flash(); ?></strong>
             </p>
         </div>
@@ -40,15 +41,18 @@
                         <?php echo $this->Html->link('编辑手机号',
                             array('controller' => 'UserStationPoints', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs')); ?>
-                        <?php echo $this->Html->link('站名更改',
+                        <?php echo $this->Html->link('改站名',
                             array('controller' => 'UserStationPoints', 'action' => 'edit_station', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs')); ?>
-                        <?php echo $this->Html->link('线路更改',
+                        <?php echo $this->Html->link('改线路',
                             array('controller' => 'UserRoutes', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs')); ?>
                         <?php if($group_id == 3) {echo $this->Html->link('关联或解除IMEI',
                             array('controller' => 'UserRouteImeiMappings', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs'));} ?>
+                        <?php if($group_id == 3) {echo $this->Html->link('看轨迹',
+                            array('controller' => 'RealTimePositions', 'action' => 'select_date', $route['ViewUserRouteSummary']['user_route_id']),
+                            array('role' => 'button', 'class' => 'btn btn-success btn-xs'));} ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-warning btn-xs'), '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>

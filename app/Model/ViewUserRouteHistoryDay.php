@@ -1,17 +1,10 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * ViewUserRouteHistReplay Model
+ * ViewUserRouteHistoryDay Model
  *
  */
-class ViewUserRouteHistReplay extends AppModel {
-
-/**
- * Use table
- *
- * @var mixed False or table name
- */
-	public $useTable = 'view_user_route_hist_replay';
+class ViewUserRouteHistoryDay extends AppModel {
 
 /**
  * Primary key field

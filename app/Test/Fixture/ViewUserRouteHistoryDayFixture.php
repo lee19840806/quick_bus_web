@@ -1,16 +1,9 @@
 <?php
 /**
- * ViewUserRouteHistReplayFixture
+ * ViewUserRouteHistoryDayFixture
  *
  */
-class ViewUserRouteHistReplayFixture extends CakeTestFixture {
-
-/**
- * Table name
- *
- * @var string
- */
-	public $table = 'view_user_route_hist_replay';
+class ViewUserRouteHistoryDayFixture extends CakeTestFixture {
 
 /**
  * Fields
@@ -38,7 +31,7 @@ class ViewUserRouteHistReplayFixture extends CakeTestFixture {
 			'user_id' => 1,
 			'user_route_id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'replay_day' => '2015-02-19'
+			'replay_day' => '2015-02-20'
 		),
 	);
 

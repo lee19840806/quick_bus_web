@@ -15,7 +15,7 @@ class RealTimePositionsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator', 'Session');
-	public $uses = array('RealTimePosition', 'ViewUserRouteSummary', 'ViewUserRouteHistReplay');
+	public $uses = array('RealTimePosition', 'ViewUserRouteHistoryDay', 'UserRoute', 'ViewUserRouteDetail');
 	
 	public function beforeFilter()
 	{
@@ -23,23 +23,55 @@ class RealTimePositionsController extends AppController {
 		$this->Auth->allow('imei_upload');
 	}
 	
-	public function index()
+	public function select_date($route_id = NULL)
 	{
-	    $this->Paginator->settings = array('conditions' => array('ViewUserRouteSummary.user_id' => $this->Auth->user('id')), 'limit' => 10);
-	    $this->set('userRoutesSummary', $this->Paginator->paginate('ViewUserRouteSummary'));
-	    
-	    $historyDays = $this->ViewUserRouteSummary->find('all', array(
-	        'conditions' => array('ViewUserRouteSummary.user_id' => $this->Auth->user('id')),
-	        'joins' => array(array(
-	           'table' => 'view_subquery_route_hist_days',
-	            'alias' => 'b',
-	            'type' => 'left',
-	            'conditions' => array('ViewUserRouteSummary.user_route_id = b.user_route_id'),
-	        'order' => array('ViewUserRouteSummary.user_route_id', 'b.replay_day desc')
-	        ))
-	    ));
-	    $a = 1;
+	    $history = $this->ViewUserRouteHistoryDay->find('all',
+	        array('conditions' => array('user_id' => $this->Auth->user('id'), 'user_route_id' => $route_id), 'order' => array('replay_day DESC')));
+	    $historySlice5 = array_slice($history, 0, 5);
 	    //$this->Auth->user('id')
+	    
+	    $this->set('history', $historySlice5);
+	}
+	
+	public function show_track()
+	{
+	    if ($this->request->is('post'))
+	    {
+	        //$routeID = $this->request->data['UserRouteID'];
+	        //$date = $this->request->data['SelectDate'];
+	        
+	        $routeID = '30';
+	        $date = '2015-01-13';
+	
+	        //if ($this->UserRoute->isOwnedBy($routeID, $this->Auth->user('id')))
+	        if ($this->UserRoute->isOwnedBy($routeID, '8'))
+	        {
+	            $routeName = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $routeID)))['UserRoute']['name'];
+	            
+	            $this->RealTimePosition->recursive = -1;
+	            $positions = $this->RealTimePosition->find('all', array('conditions' => array(
+	                'user_route_id' => $routeID,
+	                'MAKEDATE(EXTRACT(year FROM RealTimePosition.created), DAYOFYEAR(RealTimePosition.created))' => $date
+	            )));
+	            
+	            $stationsAndTriggers = $this->ViewUserRouteDetail->find('all', array('conditions' => array('user_route_id' => $routeID)));
+	            $route = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $routeID)));
+	            
+	            $this->set('stationsAndTriggers', json_encode($stationsAndTriggers));
+	            $this->set('route', json_encode($route));
+	            $this->set('positions', json_encode($positions));
+	            
+	            $a = 1;
+	        }
+	        else
+	        {
+	            $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+	        }
+	    }
+	    else
+	    {
+	        $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+	    }
 	}
 
     public function upload()

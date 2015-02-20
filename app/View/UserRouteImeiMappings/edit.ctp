@@ -14,7 +14,6 @@
         <div>
             <strong><?php echo $route['UserRoute']['name']; ?>，关联此线路与特定的设备IMEI，或者</strong>
             <a class="btn btn-primary btn-sm" href="/UserRoutes/index" role="button">返回线路管理面板</a>
-            <strong class="text-danger"><?php echo $this->Session->flash(); ?></strong>
         </div>
         <div><hr/></div>
         <form class="col-md-6 form-inline" id="formIMEI" action="/UserRouteImeiMappings/submit" method="post">
