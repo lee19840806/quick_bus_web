@@ -50,9 +50,9 @@
                         <?php if($group_id == 3) {echo $this->Html->link('关联或解除IMEI',
                             array('controller' => 'UserRouteImeiMappings', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs'));} ?>
-                        <?php if($group_id == 3) {echo $this->Html->link('看轨迹',
+                        <?php echo $this->Html->link('看轨迹',
                             array('controller' => 'RealTimePositions', 'action' => 'select_date', $route['ViewUserRouteSummary']['user_route_id']),
-                            array('role' => 'button', 'class' => 'btn btn-success btn-xs'));} ?>
+                            array('role' => 'button', 'class' => 'btn btn-success btn-xs')); ?>
                         <?php echo $this->Form->postLink('删除', array('action' => 'delete', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-warning btn-xs'), '确定：删除线路 - ' . $route['ViewUserRouteSummary']['name']) ?>
                     </td>
