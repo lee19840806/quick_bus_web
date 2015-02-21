@@ -33,7 +33,8 @@
                 <select class="form-control input-sm" name="data[SelectDate]" id="selectDate">
                     <?php foreach ($history as $date): ?>
                         <?php if ($date['ViewUserRouteHistoryDay']['replay_day'] == NULL): ?>
-                        <?php echo '<option>最近60天无运行记录，请使用自定义日期</option>'; ?>
+                        <?php echo '<option value="0">最近60天无运行记录，请使用自定义日期</option>'; ?>
+                        <?php break; ?>
                         <?php endif; ?>
                         <?php echo '<option>' . $date['ViewUserRouteHistoryDay']['replay_day'] . '</option>'; ?>
                     <?php endforeach; ?>
