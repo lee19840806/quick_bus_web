@@ -217,10 +217,3 @@ function initializeRoute(routeJSON, stationsAndTriggersJSON)
 
 	return returnObject;
 }
-
-
-
-
-
-
-

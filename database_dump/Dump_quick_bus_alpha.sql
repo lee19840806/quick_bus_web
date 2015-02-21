@@ -29,7 +29,7 @@ CREATE TABLE `groups` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_user_groups_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=8192;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `phone_numbers` (
   UNIQUE KEY `UK_phone_numbers_id` (`id`),
   KEY `FK_phone_numbers_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_phone_numbers_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=364;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=70895 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70895 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,27 @@ CREATE TABLE `user_notify_phone_history` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_table1_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8328 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8328 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_route_imei_mappings`
+--
+
+DROP TABLE IF EXISTS `user_route_imei_mappings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_route_imei_mappings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_route_id` int(10) unsigned NOT NULL,
+  `imei` char(15) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_user_route_imei_mappings_id` (`id`),
+  KEY `FK_user_route_imei_mappings_user_routes_id` (`user_route_id`),
+  CONSTRAINT `FK_user_route_imei_mappings_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +136,7 @@ CREATE TABLE `user_route_points` (
   UNIQUE KEY `UK_user_route_points_id` (`id`),
   KEY `FK_user_route_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=505 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +156,7 @@ CREATE TABLE `user_routes` (
   UNIQUE KEY `UK_user_routes_id` (`id`),
   KEY `FK_user_routes_user_accounts_id` (`user_id`),
   CONSTRAINT `FK_user_routes_user_accounts_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +177,7 @@ CREATE TABLE `user_station_points` (
   UNIQUE KEY `UK_user_station_points_id` (`id`),
   KEY `FK_user_station_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_station_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +197,7 @@ CREATE TABLE `user_trigger_points` (
   UNIQUE KEY `UK_user_trigger_points_id` (`id`),
   KEY `FK_user_trigger_points_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_user_trigger_points_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +218,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `UK_user_accounts_id` (`id`),
   KEY `FK_user_accounts_user_groups_id` (`group_id`),
   CONSTRAINT `FK_user_accounts_user_groups_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1365;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,6 +295,21 @@ SET character_set_client = utf8;
   `user_id` tinyint NOT NULL,
   `user_route_id` tinyint NOT NULL,
   `created` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_subquery_route_hist_60_days`
+--
+
+DROP TABLE IF EXISTS `view_subquery_route_hist_60_days`;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_route_hist_60_days`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_subquery_route_hist_60_days` (
+  `user_id` tinyint NOT NULL,
+  `user_route_id` tinyint NOT NULL,
+  `replay_day` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -423,6 +458,22 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `view_user_route_history_days`
+--
+
+DROP TABLE IF EXISTS `view_user_route_history_days`;
+/*!50001 DROP VIEW IF EXISTS `view_user_route_history_days`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_user_route_history_days` (
+  `user_id` tinyint NOT NULL,
+  `user_route_id` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `replay_day` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `view_user_route_maps`
 --
 
@@ -563,6 +614,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `view_subquery_latest_pos_created` AS select `real_time_positions`.`user_id` AS `user_id`,`real_time_positions`.`user_route_id` AS `user_route_id`,max(`real_time_positions`.`created`) AS `created` from `real_time_positions` group by 1,2 order by 1,2 */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_subquery_route_hist_60_days`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_subquery_route_hist_60_days`*/;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_route_hist_60_days`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_subquery_route_hist_60_days` AS select `real_time_positions`.`user_id` AS `user_id`,`real_time_positions`.`user_route_id` AS `user_route_id`,makedate(extract(year from `real_time_positions`.`created`),dayofyear(`real_time_positions`.`created`)) AS `replay_day` from `real_time_positions` where ((to_days(now()) - to_days(`real_time_positions`.`created`)) <= 60) group by `real_time_positions`.`user_route_id`,`replay_day` order by `real_time_positions`.`user_id`,`real_time_positions`.`user_route_id`,`replay_day` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -720,6 +790,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `view_user_route_history_days`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_user_route_history_days`*/;
+/*!50001 DROP VIEW IF EXISTS `view_user_route_history_days`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_user_route_history_days` AS select `a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`name` AS `name`,`b`.`replay_day` AS `replay_day` from (`view_user_route_summary` `a` left join `view_subquery_route_hist_60_days` `b` on((`a`.`user_route_id` = `b`.`user_route_id`))) order by `a`.`user_id`,`a`.`user_route_id`,`b`.`replay_day` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_user_route_maps`
 --
 
@@ -785,4 +874,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-16 22:05:09
+-- Dump completed on 2015-02-21 12:22:29

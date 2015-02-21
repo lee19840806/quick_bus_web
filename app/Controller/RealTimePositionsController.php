@@ -26,25 +26,24 @@ class RealTimePositionsController extends AppController {
 	public function select_date($route_id = NULL)
 	{
 	    $history = $this->ViewUserRouteHistoryDay->find('all',
-	        array('conditions' => array('user_id' => $this->Auth->user('id'), 'user_route_id' => $route_id), 'order' => array('replay_day DESC')));
-	    $historySlice5 = array_slice($history, 0, 5);
+	        array('conditions' => array('user_id' => $this->Auth->user('id'), 'user_route_id' => $route_id), 'order' => array('replay_day DESC'), 'limit' => 5));
 	    //$this->Auth->user('id')
 	    
-	    $this->set('history', $historySlice5);
+	    $this->set('history', $history);
 	}
 	
 	public function show_track()
 	{
 	    if ($this->request->is('post'))
 	    {
-	        //$routeID = $this->request->data['UserRouteID'];
-	        //$date = $this->request->data['SelectDate'];
+	        $routeID = $this->request->data['UserRouteID'];
+	        $date = $this->request->data['SelectDate'];
 	        
-	        $routeID = '30';
-	        $date = '2015-01-13';
+	        //$routeID = '30';
+	        //$date = '2015-01-13';
 	
-	        //if ($this->UserRoute->isOwnedBy($routeID, $this->Auth->user('id')))
-	        if ($this->UserRoute->isOwnedBy($routeID, '8'))
+	        if ($this->UserRoute->isOwnedBy($routeID, $this->Auth->user('id')))
+	        //if ($this->UserRoute->isOwnedBy($routeID, '8'))
 	        {
 	            $routeName = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $routeID)))['UserRoute']['name'];
 	            
@@ -52,7 +51,15 @@ class RealTimePositionsController extends AppController {
 	            $positions = $this->RealTimePosition->find('all', array('conditions' => array(
 	                'user_route_id' => $routeID,
 	                'MAKEDATE(EXTRACT(year FROM RealTimePosition.created), DAYOFYEAR(RealTimePosition.created))' => $date
-	            )));
+                    ),
+	                'fields' => array('id', 'latitude', 'longitude', 'heading', 'created')
+	            ));
+	            
+	            if (count($positions) == 0)
+	            {
+	                $this->Session->setFlash('所选日期没有运行记录，请重选一条线路进行轨迹回放');
+	                $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+	            }
 	            
 	            $stationsAndTriggers = $this->ViewUserRouteDetail->find('all', array('conditions' => array('user_route_id' => $routeID)));
 	            $route = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $routeID)));
@@ -60,8 +67,6 @@ class RealTimePositionsController extends AppController {
 	            $this->set('stationsAndTriggers', json_encode($stationsAndTriggers));
 	            $this->set('route', json_encode($route));
 	            $this->set('positions', json_encode($positions));
-	            
-	            $a = 1;
 	        }
 	        else
 	        {
