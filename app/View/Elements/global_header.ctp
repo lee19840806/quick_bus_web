@@ -14,9 +14,10 @@
                 }
             ?>
         </li>
+        <li style="margin-top: 20px"><a href="/UserRoutes/index"><strong>路线管理</strong></a></li>
         <li style="margin-top: 20px"><a href="#"><strong>联系我们</strong></a></li>
     </ul>
-    <h2><strong>Quick Bus</strong></h2>
+    <h2><strong><a href="/">Quick Bus</a></strong></h2>
 </div>
 <div class="row">
     <hr />
