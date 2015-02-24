@@ -24,7 +24,7 @@
         <h4>3. 为每一个站点设置要接收短信通知的手机号码</h4>
     </div>
         <div class="col-lg-5 col-lg-offset-1 col-sm-6">
-        <img class="img-responsive" src="img/landing_2.PNG" alt="">
+        <img class="img-responsive" src="img/landing_2.jpg" alt="">
     </div>
 </div>
 
@@ -37,7 +37,7 @@
         <h4>其它方案：可根据需求定制特定方案</h4>
     </div>
     <div class="col-lg-5 col-sm-pull-6 col-sm-6">
-        <img class="img-responsive" src="img/landing_3.png" alt="">
+        <img class="img-responsive" src="img/landing_3.jpg" alt="">
     </div>
 </div>
 
@@ -45,7 +45,7 @@
     <div class="col-lg-5 col-sm-6">
         <h2><strong>多种应用场景</strong></h2>
         <br/>
-        <h4>通勤车实时位置查询及短信到站通知</h4>
+        <h4>通勤车实时位置查询及到站短信通知</h4>
         <h4>车队运行状态监控</h4>
         <h4>定制开发微信公众号，查询实时位置</h4>
     </div>
