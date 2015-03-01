@@ -19,7 +19,7 @@ class UsersController extends AppController {
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'register', 'add', 'client_login', 'mobile_login');
+        $this->Auth->allow('login', 'register', 'add', 'client_login', 'mobile_login', 'registered');
     }
     
     public function login()
@@ -80,7 +80,7 @@ class UsersController extends AppController {
     
     public function register()
     {
-
+        
     }
     
     public function add()
@@ -94,9 +94,11 @@ class UsersController extends AppController {
                     'password' => $this->request->data['User']['password'],
                     'group_id' => 2
                 );
+                
                 $this->User->set($userToBeSaved);
+                $userValid = $this->User->validates();
 
-                if ($this->User->validates())
+                if ($userValid == TRUE)
                 {
                     $this->User->create();
                     if ($this->User->save($userToBeSaved))

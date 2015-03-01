@@ -10,7 +10,8 @@
         <br/>
         <div class="form-group">
             <a class="btn btn-primary btn-lg" href="/Users/login" role="button">登陆系统</a>
-            <a class="btn btn-success btn-lg" href="/Users/login" role="button">注册账号</a>
+            <a class="btn btn-success btn-lg" href="/Users/register" role="button">注册账号</a>
+            <a class="btn btn-warning btn-lg" href="/about" role="button">关于我们</a>
         </div>
     </div>
 </div>
