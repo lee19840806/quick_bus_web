@@ -21,7 +21,6 @@
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-9">
                         <button type="submit" class="btn btn-primary" name="LogIn">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
-                        <a href="/Users/register" class="btn btn-success" role="button" style="margin-left: 30px">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>
                     </div>
                 </div>
                 <div class="form-group has-error">

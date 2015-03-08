@@ -23,7 +23,7 @@
         </div>
         <div><br/></div>
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover table-condensed">
                 <tr>
                     <th><?php echo $this->Paginator->sort('name', '路线名称'); ?></th>
                     <th><?php echo $this->Paginator->sort('modified', '上次修改时间'); ?></th>
@@ -47,6 +47,10 @@
                         <?php echo $this->Html->link('改线路',
                             array('controller' => 'UserRoutes', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs')); ?>
+                        <?php echo $this->Html->link('时刻表',
+                            array('controller' => 'UserStationPoints', 'action' => 'edit_time_table', $route['ViewUserRouteSummary']['user_route_id']),
+                            array('role' => 'button', 'class' => 'btn btn-primary btn-xs')); ?>
+                        <p></p>
                         <?php if($group_id == 3) {echo $this->Html->link('关联或解除IMEI',
                             array('controller' => 'UserRouteImeiMappings', 'action' => 'edit', $route['ViewUserRouteSummary']['user_route_id']),
                             array('role' => 'button', 'class' => 'btn btn-primary btn-xs'));} ?>

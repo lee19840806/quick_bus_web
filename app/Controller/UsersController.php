@@ -19,7 +19,9 @@ class UsersController extends AppController {
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'register', 'add', 'client_login', 'mobile_login', 'registered');
+        $this->Auth->allow('login', 'add', 'client_login', 'mobile_login', 'registered');
+        
+        //$this->Auth->allow('login', 'register', 'add', 'client_login', 'mobile_login', 'registered');
     }
     
     public function login()

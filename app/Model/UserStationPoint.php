@@ -5,9 +5,10 @@ App::uses('AppModel', 'Model');
  *
  * @property UserRoute $UserRoute
  * @property PhoneNumber $PhoneNumber
+ * @property UserRouteTimetable $UserRouteTimetable
  */
 class UserStationPoint extends AppModel {
-
+    
 /**
  * Validation rules
  *
@@ -94,7 +95,20 @@ class UserStationPoint extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+	    'UserRouteTimetable' => array(
+	        'className' => 'UserRouteTimetable',
+	        'foreignKey' => 'user_station_id',
+	        'dependent' => true,
+	        'conditions' => '',
+	        'fields' => '',
+	        'order' => array('day_of_week', 'run_sequence'),
+	        'limit' => '',
+	        'offset' => '',
+	        'exclusive' => '',
+	        'finderQuery' => '',
+	        'counterQuery' => ''
+	    )
 	);
     
     public function isOwnedBy($station_id, $user_id)

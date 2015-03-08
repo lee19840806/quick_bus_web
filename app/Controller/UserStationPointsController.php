@@ -12,7 +12,7 @@ class UserStationPointsController extends AppController {
     
     public $uses = array('UserStationPoint', 'PhoneNumber');
 
-     /**
+/**
  * Components
  *
  * @var array
@@ -52,6 +52,8 @@ class UserStationPointsController extends AppController {
                     'conditions' => array('PhoneNumber.user_station_id' => $station['id'])));
                 $phoneNumbersString = implode(', ', $phoneNumbers);
                 array_push($phoneNumberArray, $phoneNumbersString);
+                
+                unset($station);
             }
             
             $this->set('phoneNumberArray', $phoneNumberArray);
@@ -151,5 +153,73 @@ class UserStationPointsController extends AppController {
     			$this->UserStationPoint->save($stationToBeUpdated);
     		}
     	}
+    }
+    
+    public function edit_time_table($id = NULL)
+    {
+        if (!$this->UserStationPoint->UserRoute->exists($id))
+        {
+            $this->Session->setFlash('不存在此路线，请重选一条线路进行编辑');
+            $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+        }
+        elseif (!$this->UserStationPoint->UserRoute->isOwnedBy($id, $this->Auth->user('id')))
+        {
+            $this->Session->setFlash('选择有误，请重选一条线路进行编辑');
+            $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+        }
+        
+        $stations = $this->UserStationPoint->find('all', array(
+            'conditions' => array('UserRoute.id' => $id),
+            'fields' => array('UserStationPoint.id', 'UserStationPoint.sequence', 'UserStationPoint.name'),
+            'order' => array('UserStationPoint.sequence'),
+            'recursive' => 0
+        ));
+        $station_IDs = array();
+        
+        foreach ($stations as $station)
+        {
+            array_push($station_IDs, $station['UserStationPoint']['id']);
+            unset($station);
+        }
+        
+        $stationsWithAssociates = $this->UserStationPoint->find('all', array(
+            'conditions' => array('UserStationPoint.id' => $station_IDs),
+            'fields' => array(
+                'UserStationPoint.id',
+                'UserStationPoint.sequence',
+                'UserStationPoint.name'
+            ),
+            'order' => array('UserStationPoint.sequence')
+        ));
+        
+        $timeTablesMatrix = array(
+            '1' => array(),
+            '2' => array(),
+            '3' => array(),
+            '4' => array(),
+            '5' => array(),
+            '6' => array(),
+            '7' => array()
+        );
+        
+        $timeTables = $this->UserStationPoint->UserRouteTimetable->find('all', array(
+            'conditions' => array('UserRouteTimetable.user_station_id' => $station_IDs),
+            'fields' => array('UserRouteTimetable.id', 'UserRouteTimetable.user_station_id', 'UserRouteTimetable.day_of_week',
+                'UserRouteTimetable.run_sequence', 'UserRouteTimetable.planned'),
+            'order' => array('UserRouteTimetable.day_of_week', 'UserRouteTimetable.run_sequence', 'UserRouteTimetable.planned'),
+            'recursive' => -1
+        ));
+        
+        foreach ($timeTables as $time)
+        {
+            $timeTablesMatrix[$time['UserRouteTimetable']['day_of_week']][$time['UserRouteTimetable']['run_sequence']][$time['UserRouteTimetable']['user_station_id']] = $time;
+        }
+        
+        $route = $this->UserStationPoint->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
+        
+        $this->set('route', $route);
+        $this->set('stations', $stations);
+        $this->set('stationsJSON', json_encode($stations));
+        $this->set('timeTablesMatrix', $timeTablesMatrix);
     }
 }
