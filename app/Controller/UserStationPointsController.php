@@ -52,9 +52,9 @@ class UserStationPointsController extends AppController {
                     'conditions' => array('PhoneNumber.user_station_id' => $station['id'])));
                 $phoneNumbersString = implode(', ', $phoneNumbers);
                 array_push($phoneNumberArray, $phoneNumbersString);
-                
-                unset($station);
             }
+            
+            unset($station);
             
             $this->set('phoneNumberArray', $phoneNumberArray);
         }
@@ -179,8 +179,9 @@ class UserStationPointsController extends AppController {
         foreach ($stations as $station)
         {
             array_push($station_IDs, $station['UserStationPoint']['id']);
-            unset($station);
         }
+        
+        unset($station);
         
         $stationsWithAssociates = $this->UserStationPoint->find('all', array(
             'conditions' => array('UserStationPoint.id' => $station_IDs),
@@ -215,6 +216,8 @@ class UserStationPointsController extends AppController {
             $timeTablesMatrix[$time['UserRouteTimetable']['day_of_week']][$time['UserRouteTimetable']['run_sequence']][$time['UserRouteTimetable']['user_station_id']] = $time;
         }
         
+        unset($time);
+        
         $route = $this->UserStationPoint->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $id)));
         
         $this->set('route', $route);
@@ -222,4 +225,69 @@ class UserStationPointsController extends AppController {
         $this->set('stationsJSON', json_encode($stations));
         $this->set('timeTablesMatrix', $timeTablesMatrix);
     }
+    
+    public function submit_time_table()
+    {
+        if ($this->request->is('post'))
+        {
+            $timeTables = json_decode($this->request->data['timeTableJson']);
+            
+            $stationIdCollection = array();
+            $timeToBeSaved = array();
+            
+            foreach ($timeTables as $key => $value)
+            {
+                $strings = explode('-', $key);
+                $dayOfWeek = substr($strings[1], 1);
+                $runSequence = substr($strings[2], 1);
+                $stationID = substr($strings[3], 1);
+                $planned = $value . ':00';
+                
+                array_push($timeToBeSaved, array(
+                    'user_station_id' => $stationID,
+                    'day_of_week' => $dayOfWeek,
+                    'run_sequence' => $runSequence,
+                    'planned' => $planned
+                ));
+                
+                if (!in_array($stationID, $stationIdCollection))
+                {
+                    array_push($stationIdCollection, $stationID);
+                }
+            }
+            
+            unset($key);
+            unset($value);
+            
+            foreach ($stationIdCollection as $statID)
+            {
+                if (!$this->UserStationPoint->isOwnedBy($statID, $this->Auth->user('id')))
+                {
+                    unset($statID);
+                    $this->Session->setFlash('站点归属权有误，请重选一条线路进行时刻表编辑');
+                    $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+                }
+            }
+            
+            unset($statID);
+            
+            $this->UserStationPoint->UserRouteTimetable->deleteAll(array('user_station_id' => $stationIdCollection));
+            $this->UserStationPoint->UserRouteTimetable->saveMany($timeToBeSaved);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

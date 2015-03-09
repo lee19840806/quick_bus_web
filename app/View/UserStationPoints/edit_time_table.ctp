@@ -102,10 +102,11 @@
                 {
                     var td = $("<td></td>");
                     
-                    var input = $("<input/>", {
+                    var input = $("<input>", {
                         "class": "form-control input-sm",
                         placeholder: "输入时间",
-                        id: "time-d" + weekDay + "-r" + run + "-s" + stations[i]["UserStationPoint"]["id"]
+                        id: "time-d" + weekDay + "-r" + run + "-s" + stations[i]["UserStationPoint"]["id"],
+                        value: ""
                     });
 
                     td.append(input);
@@ -133,7 +134,7 @@
             for (var i = 0; i < timeInputCollection.length; i++)
             {
                 var key = $(timeInputCollection[i]).attr("id");
-                var time = $.trim($(timeInputCollection[i]).attr("value"));
+                var time = $.trim($(timeInputCollection[i]).val());
 
                 if (time.length === 5)
                 {
@@ -142,24 +143,9 @@
             }
 
             $("#hiddenData").val(JSON.stringify(submitData));
-            alert($("#hiddenData").val());
-            
-            //$("#form1").submit();
+            $("#form1").submit();
         };
 
         $("#btnGoToSubmit").click(eventGoToSubmit);
     </script>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
