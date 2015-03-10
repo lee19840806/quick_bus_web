@@ -137,6 +137,17 @@ class UserRoutesController extends AppController {
     		
     		if ($this->UserRoute->isOwnedBy($route->id, $this->Auth->user('id')))
     		{
+    		    foreach ($route->stationPoints as $stationPoint)
+    		    {
+    		        if ((int)$stationPoint->id > 0)
+    		        {
+    		            if (!$this->UserRoute->UserStationPoint->isOwnedBy($stationPoint->id, $this->Auth->user('id')))
+    		            {
+    		                $this->redirect(array('controller' => 'UserRoutes', 'action' => 'index'));
+    		            }
+    		        }
+    		    }
+    		    
     			$this->UserRoute->edit($route, $this->Auth->user('id'));
     		}
     		else

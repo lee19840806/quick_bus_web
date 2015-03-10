@@ -88,10 +88,11 @@ function createTrigger(marker, heading)
 	return trigger;
 }
 
-function createStation(marker, sequence, name, trigger)
+function createStation(marker, id, sequence, name, trigger)
 {
 	var station = new Object;
 	station.marker = marker;
+	station.id = id;
 	station.sequence = sequence;
 	station.name = name;
 	station.trigger = trigger;
@@ -131,6 +132,7 @@ function createRoute(id, name, polyline, stations)
 				};
 				
 				var s = {
+					id: this.stations[i].id,
 					sequence: this.stations[i].sequence,
 					name: this.stations[i].name,
 					lat: this.stations[i].marker.getLatLng().lat,
@@ -181,7 +183,7 @@ function initializeRoute(routeJSON, stationsAndTriggersJSON)
     	triggerMarker.bindPopup("触发点" + (i + 1));
     	
     	var trigger = createTrigger(triggerMarker, parseInt(stationsAndTriggersJSON[i].ViewUserRouteDetail.trigger_heading));
-    	var station = createStation(stationMarker, stationsAndTriggersJSON[i].ViewUserRouteDetail.station_sequence,
+    	var station = createStation(stationMarker, stationsAndTriggersJSON[i].ViewUserRouteDetail.station_id, stationsAndTriggersJSON[i].ViewUserRouteDetail.station_sequence,
 			stationsAndTriggersJSON[i].ViewUserRouteDetail.station_name, trigger);
     	
     	stations.push(station);

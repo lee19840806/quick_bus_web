@@ -5,6 +5,7 @@ App::uses('AppModel', 'Model');
  *
  * @property UserRoute $UserRoute
  * @property PhoneNumber $PhoneNumber
+ * @property UserTriggerPoint $UserTriggerPoint
  * @property UserRouteTimetable $UserRouteTimetable
  */
 class UserStationPoint extends AppModel {

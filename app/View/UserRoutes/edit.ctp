@@ -379,7 +379,7 @@
             }
             
             var marker = L.marker(e.latlng, {icon: stationIcon}).addTo(map);
-            var station = createStation(marker, route.stations.length + 1, "", undefined);
+            var station = createStation(marker, 0, route.stations.length + 1, "", undefined);
             marker.bindPopup("站点" + (route.stations.length + 1)).openPopup();
 
             route.stations.push(station);
@@ -388,16 +388,18 @@
 
         function updateStationPointBox()
         {
-            var stationPoints = [];
+            //var stationPoints = [];
             var numberOfStations = route.stations.length;
 
             $("#sortable").empty();
 
             for (var i = 0; i < numberOfStations; i++)
             {
+                /*
                 var stationPoint = {sequence: i + 1, 
                     longitude: route.stations[i].marker.getLatLng().lng, latitude: route.stations[i].marker.getLatLng().lat, name: route.stations[i].name};
                 stationPoints.push(stationPoint);
+                */
                 var num = i + 1;
                 var pointString = num + ".&nbsp;" +
                     Math.round(route.stations[i].marker.getLatLng().lng * 100000) / 100000 + ",&nbsp;" +
@@ -417,7 +419,7 @@
                 function()
                 {
                 	route.stations[parseInt($(this).attr("id")) - 1].marker.setIcon(stationIcon);
-                });
+            });
 
             $("#sortable li input").keyup(
 				function()
@@ -427,7 +429,7 @@
         				route.stations[i].name = $("#sortable li :input")[i].value.replace(/\s/g, "");
                     }
 				}
-                );
+            );
         }
 
         var eventResetStationPoints =
@@ -681,7 +683,7 @@
             $("#selectStationPoint").attr("disabled", true);
             $("#btnBackToSecondStep").attr("disabled", true);
             $("#btnGoToSubmit").attr("disabled", true);
-            
+
             $("#formRouteInfo").submit();
         };
 

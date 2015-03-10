@@ -4,6 +4,8 @@ App::uses('AppModel', 'Model');
  * UserRoute Model
  *
  * @property User $User
+ * @property UserStationPoint $UserStationPoint
+ * @property UserRoutePoint $UserRoutePoint
  * @property UserRouteImeiMapping $UserRouteImeiMapping
  */
 class UserRoute extends AppModel {
@@ -158,6 +160,10 @@ class UserRoute extends AppModel {
             array_push($editedRoute['UserRoutePoint'], $rp);
     	}
     	
+    	unset($routePoint);
+    	
+    	$reservedStationIDs = array();
+    	
     	foreach ($route->stationPoints as $stationPoint)
     	{
     		$tp = array(
@@ -166,7 +172,15 @@ class UserRoute extends AppModel {
     			'heading' => $stationPoint->trigger->heading
     		);
     		
+    		$stationID = NULL;
+    		
+    		if ((int)$stationPoint->id > 0)
+    		{
+    		    $stationID = $stationPoint->id;
+    		}
+    		
     		$sp = array(
+    		    'id' => $stationID,
     			'sequence' => $stationPoint->sequence,
     			'name' => $stationPoint->name,
     			'latitude' => $stationPoint->lat,
@@ -174,10 +188,33 @@ class UserRoute extends AppModel {
     			'UserTriggerPoint' => $tp
     		);
     		
+    		if ((int)$stationPoint->id > 0)
+    		{
+    		    array_push($reservedStationIDs, $stationPoint->id);
+    		    $this->UserStationPoint->UserTriggerPoint->deleteAll(array('user_station_id' => $stationPoint->id));
+    		}
+    		
     		array_push($editedRoute['UserStationPoint'], $sp);
     	}
     	
-    	$this->delete($route->id, true);
+    	unset($stationPoint);
+    	
+    	$allStations = $this->UserStationPoint->find('list', array('conditions' => array('user_route_id' => $route->id)));
+    	
+    	foreach ($allStations as $id => $station)
+    	{
+    	    if (!in_array($id, $reservedStationIDs))
+    	    {
+    	        $this->UserStationPoint->delete($id);
+    	    }
+    	}
+    	
+    	unset($id);
+    	unset($station);
+    	
+    	$this->UserRoutePoint->deleteAll(array('user_route_id' => $route->id));
+    	
+    	//$this->delete($route->id, true);
     	
     	if ($this->saveAssociated($editedRoute, array('deep' => TRUE)))
     	{
