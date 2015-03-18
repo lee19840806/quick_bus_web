@@ -214,8 +214,6 @@ class UserRoute extends AppModel {
     	
     	$this->UserRoutePoint->deleteAll(array('user_route_id' => $route->id));
     	
-    	//$this->delete($route->id, true);
-    	
     	if ($this->saveAssociated($editedRoute, array('deep' => TRUE)))
     	{
     		return TRUE;

@@ -38,12 +38,8 @@ class RealTimePositionsController extends AppController {
 	    {
 	        $routeID = $this->request->data['UserRouteID'];
 	        $date = $this->request->data['SelectDate'];
-	        
-	        //$routeID = '30';
-	        //$date = '2015-01-13';
 	
 	        if ($this->UserRoute->isOwnedBy($routeID, $this->Auth->user('id')))
-	        //if ($this->UserRoute->isOwnedBy($routeID, '8'))
 	        {
 	            $routeName = $this->UserRoute->find('first', array('conditions' => array('UserRoute.id' => $routeID)))['UserRoute']['name'];
 	            
@@ -152,7 +148,6 @@ class RealTimePositionsController extends AppController {
         
     	$notifyPhones = $this->RealTimePosition->ViewUserNotifyPhone->find('all', array(
    			'conditions' => array(
-				'ViewUserNotifyPhone.user_id' => $this->Auth->user('id'),
 				'ViewUserNotifyPhone.user_route_id' => $user_route_id),
    			'fields' => array('ViewUserNotifyPhone.*')
     	));
