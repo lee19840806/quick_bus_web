@@ -31,7 +31,7 @@ class ViewRoutePassedStationsController extends AppController {
 					'conditions' => array(
 						'route_name' => $this->request->data('route_name'),
 						'minutes_elapsed <=' => $this->request->data('minutes_elapsed')),
-					'order' => array('minutes_elapsed' => 'asc')
+					'order' => array('minutes_elapsed' => 'asc', 'station_sequence' => 'desc')
 				));
 	
 			$this->set('passed_stations', json_encode($passed_stations));
@@ -44,12 +44,12 @@ class ViewRoutePassedStationsController extends AppController {
 		if ($this->request->is('post'))
 		{
 			$passed_stations = $this->ViewRoutePassedStation->find('all',
-					array(
-						'conditions' => array(
-							'user_route_id' => $this->request->data('route_id'),
-							'minutes_elapsed <=' => $this->request->data('minutes_elapsed')),
-						'order' => array('minutes_elapsed' => 'asc')
-					));
+				array(
+					'conditions' => array(
+						'user_route_id' => $this->request->data('route_id'),
+						'minutes_elapsed <=' => $this->request->data('minutes_elapsed')),
+					'order' => array('minutes_elapsed' => 'asc', 'station_sequence' => 'desc')
+				));
 	
 			$this->set('passed_stations', json_encode($passed_stations));
 			$this->render('/ViewRoutePassedStations/ajaxReturn', 'ajax');
