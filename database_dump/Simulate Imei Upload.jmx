@@ -152,11 +152,11 @@
               <encoding>false</encoding>
               <assertions>true</assertions>
               <subresults>true</subresults>
-              <responseData>false</responseData>
+              <responseData>true</responseData>
               <samplerData>false</samplerData>
-              <xml>false</xml>
+              <xml>true</xml>
               <fieldNames>false</fieldNames>
-              <responseHeaders>false</responseHeaders>
+              <responseHeaders>true</responseHeaders>
               <requestHeaders>false</requestHeaders>
               <responseDataOnError>false</responseDataOnError>
               <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
@@ -165,7 +165,7 @@
               <threadCounts>true</threadCounts>
             </value>
           </objProp>
-          <stringProp name="filename">C:\xampp\htdocs\quick_bus_web\database_dump\result.csv</stringProp>
+          <stringProp name="filename">C:\xampp\htdocs\quick_bus_web\database_dump\result.xml</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>

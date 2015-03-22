@@ -51,7 +51,7 @@ class ViewRoutePassedStationsController extends AppController {
 					'order' => array('minutes_elapsed' => 'asc', 'station_sequence' => 'desc')
 				));
 	
-			$this->set('passed_stations', json_encode($passed_stations));
+			$this->set('passed_stations', json_encode($passed_stations, JSON_UNESCAPED_UNICODE));
 			$this->render('/ViewRoutePassedStations/ajaxReturn', 'ajax');
 		}
 	}
