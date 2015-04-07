@@ -1,1 +1,1877 @@
-﻿
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<httpSample t="7122" lt="7121" ts="1428200733634" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:33 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3016" lt="3016" ts="1428200740760" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:40 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=99
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3136" lt="3135" ts="1428200743779" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:43 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1814" lt="1814" ts="1428200746917" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:46 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=97
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3687" lt="3687" ts="1428200748735" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:48 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=96
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3109" lt="3109" ts="1428200752424" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:52 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=95
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="4170" lt="4170" ts="1428200755532" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:55 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=94
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2386" lt="2386" ts="1428200759707" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:25:59 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=93
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3636" lt="3636" ts="1428200762099" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:02 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=92
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2451" lt="2451" ts="1428200765738" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:05 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=91
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3883" lt="3883" ts="1428200768191" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:08 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=90
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2723" lt="2723" ts="1428200772076" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:12 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=89
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3831" lt="3831" ts="1428200774801" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:14 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=88
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2786" lt="2786" ts="1428200778634" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:18 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=87
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="4010" lt="4010" ts="1428200781423" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:21 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=86
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2242" lt="2242" ts="1428200785434" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:25 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=85
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2941" lt="2941" ts="1428200787678" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:27 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=84
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2413" lt="2413" ts="1428200790622" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:30 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=83
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3475" lt="3475" ts="1428200793037" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:33 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=82
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2240" lt="2240" ts="1428200796512" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:36 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=81
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3798" lt="3798" ts="1428200798754" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:38 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=80
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1529" lt="1529" ts="1428200802558" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:42 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=79
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3909" lt="3909" ts="1428200804089" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:44 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=78
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2807" lt="2807" ts="1428200807998" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:47 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=77
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3362" lt="3362" ts="1428200810814" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:50 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=76
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1913" lt="1913" ts="1428200814178" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:54 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=75
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3686" lt="3686" ts="1428200816092" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:56 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=74
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2178" lt="2178" ts="1428200819780" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:26:59 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=73
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3678" lt="3678" ts="1428200821960" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:01 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=72
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3092" lt="3092" ts="1428200825640" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:05 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=71
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3296" lt="3296" ts="1428200828734" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:08 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=70
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1943" lt="1943" ts="1428200832032" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:12 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=69
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3704" lt="3704" ts="1428200833977" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:13 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=68
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2929" lt="2929" ts="1428200837683" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:17 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=67
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="4001" lt="4001" ts="1428200840625" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:20 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=66
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2035" lt="2035" ts="1428200844628" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:24 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=65
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3166" lt="3166" ts="1428200846664" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:26 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=64
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1975" lt="1975" ts="1428200849832" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:29 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=63
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3095" lt="3095" ts="1428200851821" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:31 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=62
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2948" lt="2948" ts="1428200854919" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:34 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=61
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3180" lt="3180" ts="1428200857869" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:37 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=60
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2134" lt="2134" ts="1428200861050" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:41 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=59
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="3802" lt="3802" ts="1428200863189" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:43 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=58
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3061" lt="3061" ts="1428200866994" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:46 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=57
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="4228" lt="4228" ts="1428200870062" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="336" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:50 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 83
+Keep-Alive: timeout=5, max=56
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">{&quot;code&quot;:-3,&quot;msg&quot;:&quot;IP没有权限&quot;,&quot;detail&quot;:&quot;IP 180.164.193.146 未加入白名单&quot;}</responseData>
+</httpSample>
+<httpSample t="1723" lt="1723" ts="1428200874292" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:54 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=55
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3177" lt="3177" ts="1428200876019" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:56 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=54
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2092" lt="2091" ts="1428200879197" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:27:59 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=53
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3322" lt="3322" ts="1428200881290" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:01 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=52
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2304" lt="2304" ts="1428200884627" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:04 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=51
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3520" lt="3520" ts="1428200886932" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:06 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=50
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3343" lt="3343" ts="1428200890456" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:10 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=49
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3394" lt="3394" ts="1428200893801" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:13 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=48
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1977" lt="1976" ts="1428200897198" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:17 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=47
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2943" lt="2943" ts="1428200899176" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:19 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=46
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1742" lt="1742" ts="1428200902121" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:22 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=45
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="4098" lt="4098" ts="1428200903865" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:23 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=44
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2679" lt="2679" ts="1428200907964" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:27 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=43
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="4340" lt="4340" ts="1428200910644" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:30 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=42
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2208" lt="2208" ts="1428200914986" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:34 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=41
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2942" lt="2942" ts="1428200917198" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:37 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=40
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2535" lt="2535" ts="1428200920144" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:40 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=39
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3962" lt="3962" ts="1428200922684" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:42 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=38
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3122" lt="3122" ts="1428200926646" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:46 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=37
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="5029" lt="5029" ts="1428200929770" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:49 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=36
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2764" lt="2764" ts="1428200934803" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:54 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=35
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="4087" lt="4087" ts="1428200937568" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:28:57 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=34
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2366" lt="2366" ts="1428200941658" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:01 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=33
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3952" lt="3952" ts="1428200944026" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:04 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=32
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="3014" lt="3014" ts="1428200947977" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:07 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=31
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3913" lt="3913" ts="1428200950995" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:10 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=30
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1862" lt="1862" ts="1428200954922" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:14 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=29
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2869" lt="2869" ts="1428200956787" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:16 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=28
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1945" lt="1945" ts="1428200959658" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:19 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=27
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3000" lt="3000" ts="1428200961604" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:21 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=26
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1898" lt="1898" ts="1428200964606" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:24 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=25
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;2&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2611" lt="2611" ts="1428200966506" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:26 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=24
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1829" lt="1829" ts="1428200969119" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 02:29:29 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=23
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 10:27:51&quot;,&quot;minutes_elapsed&quot;:&quot;2&quot;}}]</responseData>
+</httpSample>
+
+<httpSample t="5657" lt="5656" ts="1428238053723" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:33 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1637" lt="1637" ts="1428238059395" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:39 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=99
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2143" lt="2143" ts="1428238061034" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:41 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1171" lt="1171" ts="1428238063179" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:43 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=97
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="1895" lt="1895" ts="1428238064352" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:44 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=96
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1483" lt="1483" ts="1428238066249" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:46 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=95
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2542" lt="2542" ts="1428238067735" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:47 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=94
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1144" lt="1144" ts="1428238070280" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:50 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=93
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="1987" lt="1987" ts="1428238071426" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:51 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=92
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1633" lt="1633" ts="1428238073416" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:53 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=91
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2472" lt="2472" ts="1428238075051" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:55 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=90
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1224" lt="1224" ts="1428238077525" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:57 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=89
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2637" lt="2637" ts="1428238078750" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:47:58 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=88
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1549" lt="1549" ts="1428238081389" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:01 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=87
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2368" lt="2368" ts="1428238082944" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:02 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=86
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1333" lt="1333" ts="1428238085314" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:05 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=85
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2326" lt="2326" ts="1428238086649" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:06 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=84
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1511" lt="1511" ts="1428238088977" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:08 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=83
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2363" lt="2363" ts="1428238090490" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:10 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=82
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1394" lt="1394" ts="1428238092855" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:12 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=81
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2557" lt="2557" ts="1428238094252" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:14 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=80
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1272" lt="1272" ts="1428238096811" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:16 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=79
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2332" lt="2332" ts="1428238098086" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:18 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=78
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1572" lt="1572" ts="1428238100420" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:20 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=77
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2113" lt="2113" ts="1428238101994" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:21 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=76
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1830" lt="1830" ts="1428238104112" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:24 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=75
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2113" lt="2113" ts="1428238105944" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:25 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=74
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1262" lt="1262" ts="1428238108060" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:28 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=73
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2312" lt="2312" ts="1428238109323" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:29 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=72
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1345" lt="1345" ts="1428238111637" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:31 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=71
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2447" lt="2447" ts="1428238112984" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:32 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=70
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1315" lt="1314" ts="1428238115433" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:35 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=69
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2312" lt="2312" ts="1428238116749" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:36 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=68
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1544" lt="1544" ts="1428238119073" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:39 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=67
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2012" lt="2012" ts="1428238120619" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:40 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=66
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1485" lt="1485" ts="1428238122633" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:42 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=65
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2357" lt="2357" ts="1428238124119" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:44 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=64
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1358" lt="1358" ts="1428238126478" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:46 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=63
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2302" lt="2302" ts="1428238127837" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:47 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=62
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1376" lt="1376" ts="1428238130140" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:50 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=61
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2266" lt="2266" ts="1428238131518" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:51 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=60
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1417" lt="1417" ts="1428238133786" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:53 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=59
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2375" lt="2375" ts="1428238135205" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:55 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=58
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1365" lt="1365" ts="1428238137581" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="254" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:57 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 2
+Keep-Alive: timeout=5, max=57
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[]</responseData>
+</httpSample>
+<httpSample t="2654" lt="2654" ts="1428238138948" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="336" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:48:58 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 83
+Keep-Alive: timeout=5, max=56
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">{&quot;code&quot;:-3,&quot;msg&quot;:&quot;IP没有权限&quot;,&quot;detail&quot;:&quot;IP 180.164.193.146 未加入白名单&quot;}</responseData>
+</httpSample>
+<httpSample t="1632" lt="1631" ts="1428238141604" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:01 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=55
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2168" lt="2168" ts="1428238143238" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:03 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=54
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1983" lt="1982" ts="1428238145408" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:05 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=53
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3708" lt="3708" ts="1428238147393" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:07 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=52
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1615" lt="1615" ts="1428238151108" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:11 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=51
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3653" lt="3653" ts="1428238152974" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:12 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=50
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2494" lt="2494" ts="1428238156629" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:16 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=49
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="4054" lt="4054" ts="1428238159126" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:19 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=48
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1920" lt="1920" ts="1428238163180" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:23 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=47
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3090" lt="3090" ts="1428238165102" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:25 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=46
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1964" lt="1964" ts="1428238168195" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:28 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=45
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;0&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3955" lt="3955" ts="1428238170161" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:30 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=44
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2927" lt="2927" ts="1428238174119" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:34 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=43
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="4153" lt="4153" ts="1428238177071" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:37 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=42
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2279" lt="2279" ts="1428238181230" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:41 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=41
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2466" lt="2466" ts="1428238183512" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:43 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=40
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1406" lt="1406" ts="1428238185996" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:45 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=39
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2639" lt="2639" ts="1428238187420" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:47 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=38
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1376" lt="1375" ts="1428238190064" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:50 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=37
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2592" lt="2592" ts="1428238191442" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:51 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=36
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1337" lt="1337" ts="1428238194034" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:54 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=35
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3352" lt="3352" ts="1428238195375" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:55 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=34
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1958" lt="1958" ts="1428238198730" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:49:58 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=33
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3958" lt="3958" ts="1428238200690" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:00 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=32
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="5407" lt="5407" ts="1428238204653" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:04 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=31
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3847" lt="3847" ts="1428238210064" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:10 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=30
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1817" lt="1817" ts="1428238213912" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:13 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=29
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="2867" lt="2867" ts="1428238215731" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:15 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=28
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2035" lt="2035" ts="1428238218601" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:18 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=27
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="3215" lt="3215" ts="1428238220639" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:20 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=26
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="1651" lt="1651" ts="1428238223856" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:23 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=25
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;1&quot;}}]</responseData>
+</httpSample>
+<httpSample t="4072" lt="4072" ts="1428238225509" s="true" lb="Post IMEI GPS" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="253" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:25 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 1
+Keep-Alive: timeout=5, max=24
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">0</responseData>
+</httpSample>
+<httpSample t="2707" lt="2707" ts="1428238229583" s="true" lb="Request Passed Stations by ID" rc="200" rm="OK" tn="Upload GPS via IMEI 1-1" dt="text" by="440" ng="1" na="1">
+  <responseHeader class="java.lang.String">HTTP/1.1 200 OK
+Date: Sun, 05 Apr 2015 12:50:29 GMT
+Server: Apache/2.4.9 (Win32) OpenSSL/1.0.1g PHP/5.5.11
+X-Powered-By: PHP/5.5.11
+Content-Length: 186
+Keep-Alive: timeout=5, max=23
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+</responseHeader>
+  <responseData class="java.lang.String">[{&quot;ViewRoutePassedStation&quot;:{&quot;user_route_id&quot;:&quot;58&quot;,&quot;route_name&quot;:&quot;zhangyu&quot;,&quot;station_sequence&quot;:&quot;3&quot;,&quot;station_name&quot;:&quot;外环隧道&quot;,&quot;trigger_time&quot;:&quot;2015-04-05 20:48:59&quot;,&quot;minutes_elapsed&quot;:&quot;2&quot;}}]</responseData>
+</httpSample>
+
+</testResults>
