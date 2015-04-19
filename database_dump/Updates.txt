@@ -1,31 +1,49 @@
 view_subquery_prev_next_run
-(
-select i.user_route_id, '2015-04-18 19:22:00Z' as time_now, b.sequence, b.name, c.day_of_week,
-    max(c.run_sequence) as run_sequence, max(c.planned) as planned, 
-    max(TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned)) as diff_now_and_planned
-from view_user_route_summary as i
-    left join user_station_points as b
-    on i.user_route_id = b.user_route_id
-    left join user_route_timetables as c
-    on b.id = c.user_station_id and c.day_of_week = DAYOFWEEK('2015-04-18 19:22:00Z')
-where b.sequence = 1 and TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned) <= 0
-group by 1, 2, 3, 4, 5
-order by 1, 2, 3, 4, 5
-)
-UNION
-(
-select i.user_route_id, '2015-04-18 19:22:00Z' as time_now, b.sequence, b.name, c.day_of_week,
-    min(c.run_sequence) as run_sequence, min(c.planned) as planned, 
-    min(TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned)) as diff_now_and_planned
-from view_user_route_summary as i
-    left join user_station_points as b
-    on i.user_route_id = b.user_route_id
-    left join user_route_timetables as c
-    on b.id = c.user_station_id and c.day_of_week = DAYOFWEEK('2015-04-18 19:22:00Z')
-where b.sequence = 1 and TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned) > 0
-group by 1, 2, 3, 4, 5
-order by 1, 2, 3, 4, 5
-)
+(SELECT
+        `i`.`user_route_id` AS `user_route_id`,
+        NOW() AS `time_now`,
+        `b`.`sequence` AS `sequence`,
+        `b`.`name` AS `name`,
+        `c`.`day_of_week` AS `day_of_week`,
+        MAX(`c`.`run_sequence`) AS `run_sequence`,
+        MAX(`c`.`planned`) AS `planned`,
+        MAX(TIMESTAMPDIFF(MINUTE, CAST(NOW() AS time), `c`.`planned`)) AS `diff_now_and_planned`
+    FROM ((`view_user_route_summary` `i`
+        LEFT JOIN `user_station_points` `b`
+            ON ((`i`.`user_route_id` = `b`.`user_route_id`)))
+        LEFT JOIN `user_route_timetables` `c`
+            ON (((`b`.`id` = `c`.`user_station_id`)
+            AND (`c`.`day_of_week` = DAYOFWEEK(NOW())))))
+    WHERE ((`b`.`sequence` = 1)
+    AND (TIMESTAMPDIFF(MINUTE, CAST(NOW() AS time), `c`.`planned`) <= 0))
+    GROUP BY 1,
+             2,
+             3,
+             4,
+             5
+    ORDER BY 1, 2, 3, 4, 5) UNION (SELECT
+        `i`.`user_route_id` AS `user_route_id`,
+        NOW() AS `time_now`,
+        `b`.`sequence` AS `sequence`,
+        `b`.`name` AS `name`,
+        `c`.`day_of_week` AS `day_of_week`,
+        MIN(`c`.`run_sequence`) AS `run_sequence`,
+        MIN(`c`.`planned`) AS `planned`,
+        MIN(TIMESTAMPDIFF(MINUTE, CAST(NOW() AS time), `c`.`planned`)) AS `diff_now_and_planned`
+    FROM ((`view_user_route_summary` `i`
+        LEFT JOIN `user_station_points` `b`
+            ON ((`i`.`user_route_id` = `b`.`user_route_id`)))
+        LEFT JOIN `user_route_timetables` `c`
+            ON (((`b`.`id` = `c`.`user_station_id`)
+            AND (`c`.`day_of_week` = DAYOFWEEK(NOW())))))
+    WHERE ((`b`.`sequence` = 1)
+    AND (TIMESTAMPDIFF(MINUTE, CAST(NOW() AS time), `c`.`planned`) > 0))
+    GROUP BY 1,
+             2,
+             3,
+             4,
+             5
+    ORDER BY 1, 2, 3, 4, 5)
 
 
 view_user_operation_status
@@ -42,6 +60,9 @@ select a.user_route_id, a.name as route_name, l.created as latest, b.time_now, b
          when c.diff_now_and_planned BETWEEN 0 and 5 then concat('班车', date_format(c.planned, '%H点%i分'), '已发车，正常运营')
          when b.diff_now_and_planned BETWEEN -5 and 0 then concat('班车', date_format(b.planned, '%H点%i分'), '已发车，正常运营')
          when (b.planned BETWEEN time(l.created) and time(b.time_now))
+            and TIMESTAMPDIFF(MINUTE, l.created, b.time_now) > 5
+            then concat('班车目前暂停服务。下一趟', date_format(c.planned, '%H点%i分'), '发车')
+         when (b.planned not BETWEEN time(l.created) and time(b.time_now))
             and TIMESTAMPDIFF(MINUTE, l.created, b.time_now) > 5
             then concat('班车目前暂停服务。下一趟', date_format(c.planned, '%H点%i分'), '发车')
          when TIMESTAMPDIFF(MINUTE, l.created, b.time_now) >= 480
