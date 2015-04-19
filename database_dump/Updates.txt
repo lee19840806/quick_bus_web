@@ -1,0 +1,80 @@
+view_subquery_prev_next_run
+(
+select i.user_route_id, '2015-04-18 19:22:00Z' as time_now, b.sequence, b.name, c.day_of_week,
+    max(c.run_sequence) as run_sequence, max(c.planned) as planned, 
+    max(TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned)) as diff_now_and_planned
+from view_user_route_summary as i
+    left join user_station_points as b
+    on i.user_route_id = b.user_route_id
+    left join user_route_timetables as c
+    on b.id = c.user_station_id and c.day_of_week = DAYOFWEEK('2015-04-18 19:22:00Z')
+where b.sequence = 1 and TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned) <= 0
+group by 1, 2, 3, 4, 5
+order by 1, 2, 3, 4, 5
+)
+UNION
+(
+select i.user_route_id, '2015-04-18 19:22:00Z' as time_now, b.sequence, b.name, c.day_of_week,
+    min(c.run_sequence) as run_sequence, min(c.planned) as planned, 
+    min(TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned)) as diff_now_and_planned
+from view_user_route_summary as i
+    left join user_station_points as b
+    on i.user_route_id = b.user_route_id
+    left join user_route_timetables as c
+    on b.id = c.user_station_id and c.day_of_week = DAYOFWEEK('2015-04-18 19:22:00Z')
+where b.sequence = 1 and TIMESTAMPDIFF(MINUTE, time('2015-04-18 19:22:00Z'), c.planned) > 0
+group by 1, 2, 3, 4, 5
+order by 1, 2, 3, 4, 5
+)
+
+
+view_user_operation_status
+select a.user_route_id, a.name as route_name, l.created as latest, b.time_now, b.day_of_week, 
+    TIMESTAMPDIFF(MINUTE, l.created, b.time_now) diff_latest_and_now,
+    b.run_sequence as previous_run_sequence, b.diff_now_and_planned as previous_planned_diff, b.planned as previous_planned,
+    c.run_sequence as next_run_sequence, c.diff_now_and_planned as next_planned_diff, c.planned as next_planned,
+    case when c.planned is null then '今天所有运营已结束'
+         when b.planned is null and c.planned is not null
+            then concat('班车目前暂停服务。下一趟', date_format(c.planned, '%H点%i分'), '发车')
+         when (b.planned NOT BETWEEN time(l.created) and time(b.time_now))
+            and TIMESTAMPDIFF(MINUTE, l.created, b.time_now) BETWEEN 0 and 5
+            then concat('班车', date_format(b.planned, '%H点%i分'), '已发车，正常运营')
+         when c.diff_now_and_planned BETWEEN 0 and 5 then concat('班车', date_format(c.planned, '%H点%i分'), '已发车，正常运营')
+         when b.diff_now_and_planned BETWEEN -5 and 0 then concat('班车', date_format(b.planned, '%H点%i分'), '已发车，正常运营')
+         when (b.planned BETWEEN time(l.created) and time(b.time_now))
+            and TIMESTAMPDIFF(MINUTE, l.created, b.time_now) > 5
+            then concat('班车目前暂停服务。下一趟', date_format(c.planned, '%H点%i分'), '发车')
+         when TIMESTAMPDIFF(MINUTE, l.created, b.time_now) >= 480
+            then concat('班车目前暂停服务。下一趟', date_format(c.planned, '%H点%i分'), '发车')
+         else '正常运营中' end as run_status,
+    'place_holder' as ph
+from view_user_route_summary as a
+    left join view_subquery_latest_pos_created as l
+    on a.user_route_id = l.user_route_id
+    left join view_subquery_prev_next_run as b
+    on a.user_route_id = b.user_route_id and b.diff_now_and_planned <= 0
+    left join view_subquery_prev_next_run as c
+    on a.user_route_id = c.user_route_id and c.diff_now_and_planned > 0
+where b.time_now is not null or c.time_now is not NULL
+
+
+view_user_latest_positions
+SELECT
+    `a`.`user_id` AS `user_id`,
+    `a`.`user_route_id` AS `user_route_id`,
+    `b`.`name` AS `name`,
+    `c`.`latitude` AS `latitude`,
+    `c`.`longitude` AS `longitude`,
+    `c`.`heading` AS `heading`,
+    `a`.`created` AS `created`,
+    `d`.`run_status` AS `run_status`
+FROM (((`view_subquery_latest_pos_created` `a`
+    LEFT JOIN `user_routes` `b`
+        ON ((`a`.`user_route_id` = `b`.`id`)))
+    LEFT JOIN `real_time_positions` `c`
+        ON (((`a`.`user_id` = `c`.`user_id`)
+        AND (`a`.`user_route_id` = `c`.`user_route_id`)
+        AND (`a`.`created` = `c`.`created`))))
+    LEFT JOIN `view_user_operation_status` `d`
+        ON ((`a`.`user_route_id` = `d`.`user_route_id`)))
+ORDER BY `a`.`user_id`, `a`.`user_route_id`
