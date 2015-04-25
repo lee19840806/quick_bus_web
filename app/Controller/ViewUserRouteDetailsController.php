@@ -19,7 +19,7 @@ class ViewUserRouteDetailsController extends AppController {
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Auth->allow('wechat_route_station_detail');
+		$this->Auth->allow('wechat_route_station_detail', 'wechat_route_station_detail_by_name');
 	}
 	
 	public function wechat_route_station_detail()
@@ -36,6 +36,22 @@ class ViewUserRouteDetailsController extends AppController {
 			$this->set('route_detail', json_encode($route_detail));
 			$this->render('/ViewUserRouteDetails/ajaxReturn', 'ajax');
 		}
+	}
+	
+	public function wechat_route_station_detail_by_name()
+	{
+	    if ($this->request->is('post'))
+	    {
+	        $route_detail = $this->ViewUserRouteDetail->find('all',
+	            array('conditions' => array(
+	                'ViewUserRouteDetail.route_name' => $this->request->data('route_name')
+	            ),
+	                'fields' => array('user_route_id', 'route_name', 'station_sequence', 'station_name', 'station_lng', 'station_lat')
+	            ));
+	
+	        $this->set('route_detail', json_encode($route_detail));
+	        $this->render('/ViewUserRouteDetails/ajaxReturn', 'ajax');
+	    }
 	}
 	
 	public function wechat_route_ending_station()
