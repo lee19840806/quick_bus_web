@@ -72,7 +72,7 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=130300 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+) ENGINE=InnoDB AUTO_INCREMENT=257477 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `user_notify_phone_history` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_table1_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9365 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
+) ENGINE=InnoDB AUTO_INCREMENT=9452 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `user_route_imei_mappings` (
   UNIQUE KEY `UK_user_route_imei_mappings_id` (`id`),
   KEY `FK_user_route_imei_mappings_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_imei_mappings_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `user_route_points` (
   UNIQUE KEY `UK_user_route_points_id` (`id`),
   KEY `FK_user_route_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1548 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
+) ENGINE=InnoDB AUTO_INCREMENT=1999 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `user_route_timetables` (
   UNIQUE KEY `UK_user_route_timetables` (`user_station_id`,`day_of_week`,`run_sequence`),
   UNIQUE KEY `UK_user_route_timetables_id` (`id`),
   CONSTRAINT `FK_user_route_timetables_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=330 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2048;
+) ENGINE=InnoDB AUTO_INCREMENT=841 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2048;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `user_routes` (
   UNIQUE KEY `UK_user_routes_id` (`id`),
   KEY `FK_user_routes_user_accounts_id` (`user_id`),
   CONSTRAINT `FK_user_routes_user_accounts_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +199,7 @@ CREATE TABLE `user_station_points` (
   UNIQUE KEY `UK_user_station_points_id` (`id`),
   KEY `FK_user_station_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_station_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
+) ENGINE=InnoDB AUTO_INCREMENT=369 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `user_trigger_points` (
   UNIQUE KEY `UK_user_trigger_points_id` (`id`),
   KEY `FK_user_trigger_points_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_user_trigger_points_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=393 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
+) ENGINE=InnoDB AUTO_INCREMENT=498 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +284,8 @@ SET character_set_client = utf8;
   `trigger_heading` tinyint NOT NULL,
   `time_diff` tinyint NOT NULL,
   `gps_diff` tinyint NOT NULL,
-  `heading_diff` tinyint NOT NULL
+  `heading_diff` tinyint NOT NULL,
+  `latest_created` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -297,11 +298,23 @@ DROP TABLE IF EXISTS `view_subquery_eligible_stations`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_subquery_eligible_stations` (
-  `real_time_id` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
   `user_id` tinyint NOT NULL,
   `user_route_id` tinyint NOT NULL,
+  `latitude` tinyint NOT NULL,
+  `longitude` tinyint NOT NULL,
+  `heading` tinyint NOT NULL,
+  `created` tinyint NOT NULL,
   `station_sequence` tinyint NOT NULL,
-  `cnt` tinyint NOT NULL
+  `station_name` tinyint NOT NULL,
+  `trigger_lat` tinyint NOT NULL,
+  `trigger_lng` tinyint NOT NULL,
+  `trigger_heading` tinyint NOT NULL,
+  `time_diff` tinyint NOT NULL,
+  `gps_diff` tinyint NOT NULL,
+  `heading_diff` tinyint NOT NULL,
+  `latest_created` tinyint NOT NULL,
+  `history_created` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -317,6 +330,26 @@ SET character_set_client = utf8;
   `user_id` tinyint NOT NULL,
   `user_route_id` tinyint NOT NULL,
   `created` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_subquery_positions_1_hour`
+--
+
+DROP TABLE IF EXISTS `view_subquery_positions_1_hour`;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_positions_1_hour`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_subquery_positions_1_hour` (
+  `id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL,
+  `user_route_id` tinyint NOT NULL,
+  `latitude` tinyint NOT NULL,
+  `longitude` tinyint NOT NULL,
+  `heading` tinyint NOT NULL,
+  `created` tinyint NOT NULL,
+  `modified` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -397,6 +430,25 @@ SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_subquery_station_cnt` (
   `user_route_id` tinyint NOT NULL,
   `station_cnt` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_subquery_today_positions`
+--
+
+DROP TABLE IF EXISTS `view_subquery_today_positions`;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_today_positions`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_subquery_today_positions` (
+  `id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL,
+  `user_route_id` tinyint NOT NULL,
+  `latitude` tinyint NOT NULL,
+  `longitude` tinyint NOT NULL,
+  `heading` tinyint NOT NULL,
+  `created` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -626,7 +678,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_route_passed_stations` AS select `a`.`user_route_id` AS `user_route_id`,`a`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`a`.`station_name` AS `station_name`,max(`b`.`created`) AS `trigger_time`,cast((timestampdiff(SECOND,max(`b`.`created`),now()) / 60) as signed) AS `minutes_elapsed` from (`view_user_route_detail` `a` left join `real_time_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) where ((`a`.`station_name` is not null) and (timestampdiff(SECOND,`b`.`created`,now()) <= 432000) and (timestampdiff(SECOND,`b`.`created`,now()) >= 0) and ((abs((`b`.`latitude` - `a`.`trigger_lat`)) + abs((`b`.`longitude` - `a`.`trigger_lng`))) <= 0.0020) and (abs(sin(radians(((cast(`b`.`heading` as signed) - cast(`a`.`trigger_heading` as signed)) / 2)))) <= 0.174)) group by 1,2,3,4 order by `a`.`user_route_id`,`trigger_time` desc,`a`.`station_sequence` desc */;
+/*!50001 VIEW `view_route_passed_stations` AS select `a`.`user_route_id` AS `user_route_id`,`a`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`a`.`station_name` AS `station_name`,max(`b`.`created`) AS `trigger_time`,cast((timestampdiff(SECOND,max(`b`.`created`),now()) / 60) as signed) AS `minutes_elapsed` from (`view_user_route_detail` `a` left join `view_subquery_today_positions` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) where ((`a`.`station_name` is not null) and (timestampdiff(SECOND,`b`.`created`,now()) <= 432000) and (timestampdiff(SECOND,`b`.`created`,now()) >= 0) and ((abs((`b`.`latitude` - `a`.`trigger_lat`)) + abs((`b`.`longitude` - `a`.`trigger_lng`))) <= 0.0020) and (abs(sin(radians(((cast(`b`.`heading` as signed) - cast(`a`.`trigger_heading` as signed)) / 2)))) <= 0.174)) group by 1,2,3,4 order by `a`.`user_route_id`,`trigger_time` desc,`a`.`station_sequence` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -645,7 +697,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_subquery_eligible_gps` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`b`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`trigger_lat` AS `trigger_lat`,`b`.`trigger_lng` AS `trigger_lng`,`b`.`trigger_heading` AS `trigger_heading`,timestampdiff(SECOND,`a`.`created`,now()) AS `time_diff`,(abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) AS `gps_diff`,abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) AS `heading_diff` from ((`real_time_positions` `a` left join `view_user_route_detail` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) left join `real_time_positions` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`user_route_id`) and (`a`.`created` <= `c`.`created`) and (`a`.`created` >= (`c`.`created` - 3600))))) where ((timestampdiff(SECOND,`a`.`created`,now()) >= 0) and (timestampdiff(SECOND,`a`.`created`,now()) <= 3600) and ((abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) <= 0.0020) and (abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) <= 0.174)) */;
+/*!50001 VIEW `view_subquery_eligible_gps` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`b`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`trigger_lat` AS `trigger_lat`,`b`.`trigger_lng` AS `trigger_lng`,`b`.`trigger_heading` AS `trigger_heading`,timestampdiff(SECOND,`a`.`created`,now()) AS `time_diff`,(abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) AS `gps_diff`,abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) AS `heading_diff`,`c`.`created` AS `latest_created` from ((`view_subquery_positions_1_hour` `a` left join `view_user_route_detail` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`)))) left join `view_subquery_latest_pos_created` `c` on(((`a`.`user_id` = `c`.`user_id`) and (`a`.`user_route_id` = `c`.`user_route_id`)))) where (((abs((`a`.`latitude` - `b`.`trigger_lat`)) + abs((`a`.`longitude` - `b`.`trigger_lng`))) <= 0.0020) and (abs(sin(radians(((cast(`a`.`heading` as signed) - cast(`b`.`trigger_heading` as signed)) / 2)))) <= 0.174)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -664,7 +716,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_subquery_eligible_stations` AS select max(`view_subquery_eligible_gps`.`id`) AS `real_time_id`,`view_subquery_eligible_gps`.`user_id` AS `user_id`,`view_subquery_eligible_gps`.`user_route_id` AS `user_route_id`,`view_subquery_eligible_gps`.`station_sequence` AS `station_sequence`,count(0) AS `cnt` from `view_subquery_eligible_gps` group by 2,3,4 having (`cnt` = 1) */;
+/*!50001 VIEW `view_subquery_eligible_stations` AS select `a`.`id` AS `id`,`a`.`user_id` AS `user_id`,`a`.`user_route_id` AS `user_route_id`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`heading` AS `heading`,`a`.`created` AS `created`,`a`.`station_sequence` AS `station_sequence`,`a`.`station_name` AS `station_name`,`a`.`trigger_lat` AS `trigger_lat`,`a`.`trigger_lng` AS `trigger_lng`,`a`.`trigger_heading` AS `trigger_heading`,`a`.`time_diff` AS `time_diff`,`a`.`gps_diff` AS `gps_diff`,`a`.`heading_diff` AS `heading_diff`,`a`.`latest_created` AS `latest_created`,`b`.`created` AS `history_created` from (`view_subquery_eligible_gps` `a` left join `view_subquery_eligible_gps` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`user_route_id`) and (`a`.`station_sequence` = `b`.`station_sequence`) and (`a`.`latest_created` > `b`.`created`)))) where ((`a`.`latest_created` = `a`.`created`) and isnull(`b`.`created`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -689,6 +741,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `view_subquery_positions_1_hour`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_subquery_positions_1_hour`*/;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_positions_1_hour`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_subquery_positions_1_hour` AS select `real_time_positions`.`id` AS `id`,`real_time_positions`.`user_id` AS `user_id`,`real_time_positions`.`user_route_id` AS `user_route_id`,`real_time_positions`.`latitude` AS `latitude`,`real_time_positions`.`longitude` AS `longitude`,`real_time_positions`.`heading` AS `heading`,`real_time_positions`.`created` AS `created`,`real_time_positions`.`modified` AS `modified` from `real_time_positions` where ((timestampdiff(SECOND,`real_time_positions`.`created`,now()) >= 0) and (timestampdiff(SECOND,`real_time_positions`.`created`,now()) <= 3600)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_subquery_prev_next_run`
 --
 
@@ -702,7 +773,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_subquery_prev_next_run` AS (select `i`.`user_route_id` AS `user_route_id`,'2015-04-19 16:50:59Z' AS `time_now`,`b`.`sequence` AS `sequence`,`b`.`name` AS `name`,`c`.`day_of_week` AS `day_of_week`,max(`c`.`run_sequence`) AS `run_sequence`,max(`c`.`planned`) AS `planned`,max(timestampdiff(MINUTE,cast('2015-04-19 16:50:59Z' as time),`c`.`planned`)) AS `diff_now_and_planned` from ((`view_user_route_summary` `i` left join `user_station_points` `b` on((`i`.`user_route_id` = `b`.`user_route_id`))) left join `user_route_timetables` `c` on(((`b`.`id` = `c`.`user_station_id`) and (`c`.`day_of_week` = dayofweek('2015-04-19 16:50:59Z'))))) where ((`b`.`sequence` = 1) and (timestampdiff(MINUTE,cast('2015-04-19 16:50:59Z' as time),`c`.`planned`) <= 0)) group by 1,2,3,4,5 order by 1,2,3,4,5) union (select `i`.`user_route_id` AS `user_route_id`,'2015-04-19 16:50:59Z' AS `time_now`,`b`.`sequence` AS `sequence`,`b`.`name` AS `name`,`c`.`day_of_week` AS `day_of_week`,min(`c`.`run_sequence`) AS `run_sequence`,min(`c`.`planned`) AS `planned`,min(timestampdiff(MINUTE,cast('2015-04-19 16:50:59Z' as time),`c`.`planned`)) AS `diff_now_and_planned` from ((`view_user_route_summary` `i` left join `user_station_points` `b` on((`i`.`user_route_id` = `b`.`user_route_id`))) left join `user_route_timetables` `c` on(((`b`.`id` = `c`.`user_station_id`) and (`c`.`day_of_week` = dayofweek('2015-04-19 16:50:59Z'))))) where ((`b`.`sequence` = 1) and (timestampdiff(MINUTE,cast('2015-04-19 16:50:59Z' as time),`c`.`planned`) > 0)) group by 1,2,3,4,5 order by 1,2,3,4,5) */;
+/*!50001 VIEW `view_subquery_prev_next_run` AS (select `i`.`user_route_id` AS `user_route_id`,now() AS `time_now`,`b`.`sequence` AS `sequence`,`b`.`name` AS `name`,`c`.`day_of_week` AS `day_of_week`,max(`c`.`run_sequence`) AS `run_sequence`,max(`c`.`planned`) AS `planned`,max(timestampdiff(MINUTE,cast(now() as time),`c`.`planned`)) AS `diff_now_and_planned` from ((`view_user_route_summary` `i` left join `user_station_points` `b` on((`i`.`user_route_id` = `b`.`user_route_id`))) left join `user_route_timetables` `c` on(((`b`.`id` = `c`.`user_station_id`) and (`c`.`day_of_week` = dayofweek(now()))))) where ((`b`.`sequence` = 1) and (timestampdiff(MINUTE,cast(now() as time),`c`.`planned`) <= 0)) group by 1,2,3,4,5 order by 1,2,3,4,5) union (select `i`.`user_route_id` AS `user_route_id`,now() AS `time_now`,`b`.`sequence` AS `sequence`,`b`.`name` AS `name`,`c`.`day_of_week` AS `day_of_week`,min(`c`.`run_sequence`) AS `run_sequence`,min(`c`.`planned`) AS `planned`,min(timestampdiff(MINUTE,cast(now() as time),`c`.`planned`)) AS `diff_now_and_planned` from ((`view_user_route_summary` `i` left join `user_station_points` `b` on((`i`.`user_route_id` = `b`.`user_route_id`))) left join `user_route_timetables` `c` on(((`b`.`id` = `c`.`user_station_id`) and (`c`.`day_of_week` = dayofweek(now()))))) where ((`b`.`sequence` = 1) and (timestampdiff(MINUTE,cast(now() as time),`c`.`planned`) > 0)) group by 1,2,3,4,5 order by 1,2,3,4,5) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -784,6 +855,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `view_subquery_today_positions`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_subquery_today_positions`*/;
+/*!50001 DROP VIEW IF EXISTS `view_subquery_today_positions`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_subquery_today_positions` AS select `real_time_positions`.`id` AS `id`,`real_time_positions`.`user_id` AS `user_id`,`real_time_positions`.`user_route_id` AS `user_route_id`,`real_time_positions`.`latitude` AS `latitude`,`real_time_positions`.`longitude` AS `longitude`,`real_time_positions`.`heading` AS `heading`,`real_time_positions`.`created` AS `created` from `real_time_positions` where (cast(`real_time_positions`.`created` as date) = cast(now() as date)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `view_subquery_trigger_cnt`
 --
 
@@ -854,7 +944,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_user_notify_phone` AS select `a`.`real_time_id` AS `real_time_id`,`a`.`user_id` AS `user_id`,`b`.`username` AS `username`,`a`.`user_route_id` AS `user_route_id`,`b`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`phone_number` AS `phone_number` from (`view_subquery_eligible_stations` `a` left join `view_user_route_phone_number` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`route_id`) and (`a`.`station_sequence` = `b`.`station_sequence`)))) */;
+/*!50001 VIEW `view_user_notify_phone` AS select `a`.`id` AS `real_time_id`,`a`.`user_id` AS `user_id`,`b`.`username` AS `username`,`a`.`user_route_id` AS `user_route_id`,`b`.`route_name` AS `route_name`,`a`.`station_sequence` AS `station_sequence`,`b`.`station_name` AS `station_name`,`b`.`phone_number` AS `phone_number` from (`view_subquery_eligible_stations` `a` left join `view_user_route_phone_number` `b` on(((`a`.`user_id` = `b`.`user_id`) and (`a`.`user_route_id` = `b`.`route_id`) and (`a`.`station_sequence` = `b`.`station_sequence`)))) where (`b`.`phone_number` is not null) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -873,7 +963,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_user_operation_status` AS select `a`.`user_route_id` AS `user_route_id`,`a`.`name` AS `route_name`,`l`.`created` AS `latest`,`b`.`time_now` AS `time_now`,`b`.`day_of_week` AS `day_of_week`,timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) AS `diff_latest_and_now`,`b`.`run_sequence` AS `previous_run_sequence`,`b`.`diff_now_and_planned` AS `previous_planned_diff`,`b`.`planned` AS `previous_planned`,`c`.`run_sequence` AS `next_run_sequence`,`c`.`diff_now_and_planned` AS `next_planned_diff`,`c`.`planned` AS `next_planned`,(case when isnull(`c`.`planned`) then '今天所有运营已结束' when (isnull(`b`.`planned`) and (`c`.`planned` is not null)) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') when ((`b`.`planned` not between cast(`l`.`created` as time) and cast(`b`.`time_now` as time)) and (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) between 0 and 5)) then concat('班车',date_format(`b`.`planned`,'%H点%i分'),'已发车，正常运营') when (`c`.`diff_now_and_planned` between 0 and 5) then concat('班车',date_format(`c`.`planned`,'%H点%i分'),'已发车，正常运营') when (`b`.`diff_now_and_planned` between -(5) and 0) then concat('班车',date_format(`b`.`planned`,'%H点%i分'),'已发车，正常运营') when ((`b`.`planned` between cast(`l`.`created` as time) and cast(`b`.`time_now` as time)) and (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) > 5)) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') when (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) >= 480) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') else '正常运营中' end) AS `run_status`,'place_holder' AS `ph` from (((`view_user_route_summary` `a` left join `view_subquery_latest_pos_created` `l` on((`a`.`user_route_id` = `l`.`user_route_id`))) left join `view_subquery_prev_next_run` `b` on(((`a`.`user_route_id` = `b`.`user_route_id`) and (`b`.`diff_now_and_planned` <= 0)))) left join `view_subquery_prev_next_run` `c` on(((`a`.`user_route_id` = `c`.`user_route_id`) and (`c`.`diff_now_and_planned` > 0)))) where ((`b`.`time_now` is not null) or (`c`.`time_now` is not null)) */;
+/*!50001 VIEW `view_user_operation_status` AS select `a`.`user_route_id` AS `user_route_id`,`a`.`name` AS `route_name`,`l`.`created` AS `latest`,`b`.`time_now` AS `time_now`,`b`.`day_of_week` AS `day_of_week`,timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) AS `diff_latest_and_now`,`b`.`run_sequence` AS `previous_run_sequence`,`b`.`diff_now_and_planned` AS `previous_planned_diff`,`b`.`planned` AS `previous_planned`,`c`.`run_sequence` AS `next_run_sequence`,`c`.`diff_now_and_planned` AS `next_planned_diff`,`c`.`planned` AS `next_planned`,(case when isnull(`c`.`planned`) then '今天所有运营已结束' when (isnull(`b`.`planned`) and (`c`.`planned` is not null)) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') when ((`b`.`planned` not between cast(`l`.`created` as time) and cast(`b`.`time_now` as time)) and (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) between 0 and 5)) then concat('班车',date_format(`b`.`planned`,'%H点%i分'),'已发车，正常运营') when (`c`.`diff_now_and_planned` between 0 and 5) then concat('班车',date_format(`c`.`planned`,'%H点%i分'),'已发车，正常运营') when (`b`.`diff_now_and_planned` between -(5) and 0) then concat('班车',date_format(`b`.`planned`,'%H点%i分'),'已发车，正常运营') when ((`b`.`planned` between cast(`l`.`created` as time) and cast(`b`.`time_now` as time)) and (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) > 5)) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') when ((`b`.`planned` not between cast(`l`.`created` as time) and cast(`b`.`time_now` as time)) and (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) > 5)) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') when (timestampdiff(MINUTE,`l`.`created`,`b`.`time_now`) >= 480) then concat('班车目前暂停服务。下一趟',date_format(`c`.`planned`,'%H点%i分'),'发车') else '正常运营中' end) AS `run_status`,'place_holder' AS `ph` from (((`view_user_route_summary` `a` left join `view_subquery_latest_pos_created` `l` on((`a`.`user_route_id` = `l`.`user_route_id`))) left join `view_subquery_prev_next_run` `b` on(((`a`.`user_route_id` = `b`.`user_route_id`) and (`b`.`diff_now_and_planned` <= 0)))) left join `view_subquery_prev_next_run` `c` on(((`a`.`user_route_id` = `c`.`user_route_id`) and (`c`.`diff_now_and_planned` > 0)))) where ((`b`.`time_now` is not null) or (`c`.`time_now` is not null)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -982,4 +1072,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-19 17:01:46
+-- Dump completed on 2015-05-10 11:01:07
