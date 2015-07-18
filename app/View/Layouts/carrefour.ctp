@@ -8,7 +8,7 @@
  */
 ?>
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php echo $this->Html->charset(); ?>
@@ -29,9 +29,8 @@
 		echo $this->fetch('script');
 	?>
 </head>
-<body>
-    <div class="container">
-        <?php echo $this->element('global_header'); ?>
+<body style="height: 100%">
+    <div class="container" style="margin-top: -130px; height: 100%; padding: 130px 0 0 0;">
         <?php echo $this->fetch('content'); ?>
     </div>
 </body>

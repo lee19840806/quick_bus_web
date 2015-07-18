@@ -101,7 +101,12 @@ class UserRoute extends AppModel {
 			'className' => 'UserRouteImeiMapping',
 			'foreignKey' => 'user_route_id',
 			'dependent' => true
-		)
+		),
+	    'ViewUserLatestPosition' => array(
+	        'className' => 'ViewUserLatestPosition',
+	        'foreignKey' => 'user_route_id',
+	        'dependent' => true
+	    )
 	);
     
     public function saveRoute($route, $userID)
