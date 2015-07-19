@@ -15,7 +15,7 @@
     var NumMapsPerScreen = 2;
     var screenSwitchInterval = 10000;
     var getGpsInterval = 10000;
-    var progressUpdateFrequency = 2000;
+    var progressUpdateFrequency = 1000;
     
     var progressValue = 0;
     var mapHandlers = {};
@@ -75,7 +75,9 @@
                     var myIcon = new BMap.Icon(imgUrl, new BMap.Size(32, 32));
                     myIcon.setImageSize(new BMap.Size(32, 32));
                     myIcon.setAnchor(new BMap.Size(16, 32));
+                    var label = new BMap.Label(i + 1, {offset: new BMap.Size(8, -20)});
                     var stationMarker = new BMap.Marker(new BMap.Point(data.result[i].x, data.result[i].y), {icon: myIcon});
+                    stationMarker.setLabel(label);
                     map.addOverlay(stationMarker);
                 }
             },
@@ -103,23 +105,38 @@
 
                     for (var j = 0; j < NumMapsPerScreen; j++)
                     {
-                        var mapID = "map" + ((i * NumMapsPerScreen) + j + 1);
-                        var busTitle = "";
-                        var busStatus = "";
-                        
                         if (buses[(i * NumMapsPerScreen) + j] !== undefined)
                         {
+                            var mapID = "map" + ((i * NumMapsPerScreen) + j + 1);
                             busTitle = buses[(i * NumMapsPerScreen) + j]["UserRoute"]["name"];
                             busStatus = buses[(i * NumMapsPerScreen) + j]["ViewUserLatestPosition"]["run_status"];
-                        }
-                        
-                        var column = $("<div>").addClass(columnClass).attr("style", "height: 100%;");
-                        var title = $("<h4>").addClass("text-center").html($("<strong>").html(busTitle));
-                        var status = $("<p>").addClass("text-center").html($("<strong>").html(busStatus));
-                        var mapArea = $("<div>").addClass("col-xs-12").attr("id", mapID).attr("style", "height: 100%;");
 
-                        column.append(title).append(status).append(mapArea);
-                        screen.append(column);
+                            var ul = $("<ul>").addClass("list-unstyled").attr("style", "font-size: 16px; margin-top: -30px;");
+
+                            for (var k = 0; k < buses[(i * NumMapsPerScreen) + j]["UserStationPoint"].length; k++)
+                            {
+                                stationSequence = buses[(i * NumMapsPerScreen) + j]["UserStationPoint"][k]["sequence"];
+                                stationName = buses[(i * NumMapsPerScreen) + j]["UserStationPoint"][k]["name"];
+                                stationText = " " + stationSequence + ". " + stationName;
+                                
+                                //<li><span class="glyphicon glyphicon-star" aria-hidden="true" style="color: blue;"></span> 1. 竖排的文字</li>
+                                var li = $("<li>").attr("id", "station" + stationSequence).html(stationText).prepend($("<span>")).find("span")
+                                    .addClass("glyphicon glyphicon-unchecked").attr("aria-hidden", "true").end();
+                                ul.prepend(li);
+                            }
+                            
+                            var column = $("<div>").addClass(columnClass).attr("style", "height: 100%;");
+                            var title = $("<h4>").addClass("text-center").html($("<strong>").html(busTitle));
+                            var status = $("<p>").addClass("text-center").html($("<strong>").html(busStatus));
+                            var stationsDiv = $("<div>").attr("id", "miniMap" + ((i * NumMapsPerScreen) + j))
+                                .attr("style", 
+                                    "-webkit-writing-mode: vertical-rl; -moz-writing-mode: vertical-rl; -ms-writing-mode: tb-rl; writing-mode: vertical-rl; height: 240px;");
+                            var mapArea = $("<div>").addClass("col-xs-12").attr("id", mapID).attr("style", "height: 100%;");
+
+                            stationsDiv.append(ul);
+                            column.append(title).append(status).append(stationsDiv).append(mapArea);
+                            screen.append(column);
+                        }
                     }
 
                     $("#maps_display").append(screen);
@@ -136,7 +153,7 @@
                     BaiduMapInitialize(buses[i], mapHandlers[mapID]);
                 }
 
-                setInterval(UpdateProgressBar, progressUpdateFrequency);
+                setTimeout(function() {setInterval(UpdateProgressBar, progressUpdateFrequency);}, 5000);
             },
             error: function(xhr, status) {
                 alert("初始化错误，请重新打开浏览器");
@@ -162,7 +179,6 @@
     }
 
     $(document).ready(initialize);
-    //setInterval(UpdateProgressBar, progressUpdateFrequency);
 </script>
 
 
