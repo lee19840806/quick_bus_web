@@ -65,8 +65,8 @@ class ViewUserLatestPositionsController extends AppController {
 	
 	public function get_carrefour_buses()
 	{
-// 	    if ($this->request->is('ajax'))
-// 	    {
+	    if ($this->request->is('ajax'))
+	    {
 	        $latest_position = $this->UserRoute->find('all',
 	            array(
 	                'conditions' => array('UserRoute.name LIKE' => '家乐福万里店%'),
@@ -80,7 +80,7 @@ class ViewUserLatestPositionsController extends AppController {
 	         
 	        $this->set('latest_position', json_encode($latest_position));
 	        $this->render('/ViewUserLatestPositions/ajaxReturn', 'ajax');
-// 	    }
+	    }
 	}
 }
 
