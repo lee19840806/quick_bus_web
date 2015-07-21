@@ -1,21 +1,49 @@
 <div class="row">
     <div class="page-header" style="margin-top: 10px;">
-        <p class="text-center"><strong>班车显示切换</strong></p>
-        <div class="progress">
-            <div id="progresBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-            </div>
-        </div>
+        <h3 class="text-center"><strong>快巴士班车位置查询</strong></h3>
     </div>
 </div>
 <div class="row" id="maps_display" style="height: 100%;">
 </div>
+<div class="row" style="display: none">
+    <div id="infoArea" class="col-xs-12" style="height: 100%;">
+        <div class="col-xs-3">
+            <h4 id="title">欢迎光临家乐福万里店</h4>
+            <hr>
+            <h4><strong>班车状态</strong></h4>
+            <ul id="busStatus" class="list-unstyled">
+                <li>家乐福万里店1号班车</li>
+                <li>正常运营</li>
+            </ul>
+            <hr>
+            <h4><strong>站点信息</strong></h4>
+            <ul id="stations" class="list-unstyled">
+                <li id="station1"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 1. 家乐福始发站</li>
+                <li id="station2"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 2. 大华路455弄</li>
+            </ul>
+            <hr>
+            <h4><strong>公告</strong></h4>
+            <ul id="announcement" class="list-unstyled">
+                <li>家乐福万里店4号班车停运</li>
+            </ul>
+            <hr>
+            <h4><strong>显示下一条线路</strong></h4>
+            <div class="progress">
+                <div id="progresBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="col-xs-9" style="height: 100%;">
+            <div id="map" style="height: 100%;"></div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jENePgN7TufGt711E1uIb7BA"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
 <script type="text/javascript">
-    var NumMapsPerScreen = 2;
+    var NumMapsPerScreen = 1;
     var screenSwitchInterval = 10000;
     var getGpsInterval = 10000;
-    var progressUpdateFrequency = 1000;
+    var progressUpdateFrequency = 2000;
     
     var progressValue = 0;
     var mapHandlers = {};
@@ -97,52 +125,54 @@
                 var numberOfBuses = buses.length;
                 var columnClass = "col-xs-" + parseInt(12 / NumMapsPerScreen);
                 numberOfScreens = Math.ceil(numberOfBuses / NumMapsPerScreen);
-
+                
                 for (var i = 0; i < numberOfScreens; i++)
                 {
                     var screenID = "screen" + (i + 1);
-                    var screen = $("<div>").addClass("row").attr("id", screenID).attr("style", "height: 100%; margin-top: -50px; padding: 50px 0 0 0;");
+                    var screen = $("<div>").addClass("row").attr("id", screenID).attr("style", "height: 100%;");
 
                     for (var j = 0; j < NumMapsPerScreen; j++)
                     {
+                        var column = $("<div>").addClass(columnClass).attr("style", "height: 100%;");
+                        
                         if (buses[(i * NumMapsPerScreen) + j] !== undefined)
                         {
-                            var mapID = "map" + ((i * NumMapsPerScreen) + j + 1);
-                            busTitle = buses[(i * NumMapsPerScreen) + j]["UserRoute"]["name"];
-                            busStatus = buses[(i * NumMapsPerScreen) + j]["ViewUserLatestPosition"]["run_status"];
+                            var infoArea = $("div[id='infoArea']").clone();
+                            infoArea.attr("id", "infoArea" + ((i * NumMapsPerScreen) + j + 1));
+                            
+                            infoArea.find("#title").html("<strong>欢迎光临家乐福万里店</strong>");
+                            
+                            var busStatus = infoArea.find("#busStatus");
+                            busStatus.empty();
+                            $("<li>").html(buses[(i * NumMapsPerScreen) + j]["UserRoute"]["name"]).appendTo(busStatus);
+                            $("<li>").html(buses[(i * NumMapsPerScreen) + j]["ViewUserLatestPosition"]["run_status"]).appendTo(busStatus);
 
-                            var ul = $("<ul>").addClass("list-unstyled").attr("style", "font-size: 16px; margin-top: -30px;");
+                            var stations = infoArea.find("#stations");
+                            stations.empty();
 
                             for (var k = 0; k < buses[(i * NumMapsPerScreen) + j]["UserStationPoint"].length; k++)
                             {
                                 stationSequence = buses[(i * NumMapsPerScreen) + j]["UserStationPoint"][k]["sequence"];
                                 stationName = buses[(i * NumMapsPerScreen) + j]["UserStationPoint"][k]["name"];
                                 stationText = " " + stationSequence + ". " + stationName;
-                                
-                                //<li><span class="glyphicon glyphicon-star" aria-hidden="true" style="color: blue;"></span> 1. 竖排的文字</li>
-                                var li = $("<li>").attr("id", "station" + stationSequence).html(stationText).prepend($("<span>")).find("span")
-                                    .addClass("glyphicon glyphicon-unchecked").attr("aria-hidden", "true").end();
-                                ul.prepend(li);
-                            }
-                            
-                            var column = $("<div>").addClass(columnClass).attr("style", "height: 100%;");
-                            var title = $("<h4>").addClass("text-center").html($("<strong>").html(busTitle));
-                            var status = $("<p>").addClass("text-center").html($("<strong>").html(busStatus));
-                            var stationsDiv = $("<div>").attr("id", "miniMap" + ((i * NumMapsPerScreen) + j))
-                                .attr("style", 
-                                    "-webkit-writing-mode: vertical-rl; -moz-writing-mode: vertical-rl; -ms-writing-mode: tb-rl; writing-mode: vertical-rl; height: 240px;");
-                            var mapArea = $("<div>").addClass("col-xs-12").attr("id", mapID).attr("style", "height: 100%;");
 
-                            stationsDiv.append(ul);
-                            column.append(title).append(status).append(stationsDiv).append(mapArea);
-                            screen.append(column);
+                                $("<li>").attr("id", "station" + stationSequence).html(stationText).prepend($("<span>")).find("span")
+                                    .addClass("glyphicon glyphicon-unchecked").attr("aria-hidden", "true").end().appendTo(stations);
+                            }
+
+                            infoArea.find("#announcement").empty();
+                            
+                            infoArea.find("#map").attr("id", "map" + ((i * NumMapsPerScreen) + j + 1));
+
+                            var row = $("<div>").addClass("row").attr("style", "height: 100%;");
+                            infoArea.children().appendTo(row);
+                            row.appendTo(column);
+                            column.appendTo(screen);
                         }
                     }
 
                     $("#maps_display").append(screen);
                 }
-
-                $("div[id='screen1']").show();
 
                 for (var i = 0; i < numberOfBuses; i++)
                 {
@@ -163,8 +193,10 @@
 
     function UpdateProgressBar()
     {
-        $("#progresBar").attr("aria-valuenow", Math.floor((progressValue / screenSwitchInterval) * 100))
-            .attr("style", "width: " + Math.floor(((progressValue / screenSwitchInterval) * 100)) + "%");
+        $(".progress-bar").each(function(index) {
+            $(this).attr("aria-valuenow", Math.floor((progressValue / screenSwitchInterval) * 100))
+                .attr("style", "width: " + Math.floor(((progressValue / screenSwitchInterval) * 100)) + "%");
+        });
         
         if (progressValue == 0)
         {

@@ -21,7 +21,7 @@ class ViewUserLatestPositionsController extends AppController {
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Auth->allow('wechat_latest_position_by_name', 'wechat_latest_position_by_id', 'carrefour', 'get_carrefour_buses');
+		$this->Auth->allow('wechat_latest_position_by_name', 'wechat_latest_position_by_id', 'carrefour_wanli', 'get_carrefour_buses');
 	}
 	
 	public function wechat_latest_position_by_name()
@@ -48,7 +48,7 @@ class ViewUserLatestPositionsController extends AppController {
 		}
 	}
 	
-	public function carrefour()
+	public function carrefour_wanli()
 	{
 	    $this->layout = 'carrefour';
 	    

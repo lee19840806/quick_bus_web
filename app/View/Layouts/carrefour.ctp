@@ -30,7 +30,7 @@
 	?>
 </head>
 <body style="height: 100%">
-    <div class="container" style="margin-top: -380px; height: 100%; padding: 380px 0 0 0;">
+    <div class="container" style="margin-top: -120px; height: 100%; padding: 120px 0 0 0;">
         <?php echo $this->fetch('content'); ?>
     </div>
 </body>
