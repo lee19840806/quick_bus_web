@@ -31,6 +31,9 @@
             <div class="progress">
                 <div id="progresBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
             </div>
+            <hr>
+            <img src="/img/wanli_qr_code.png" class="img-responsive center-block" alt="Responsive image">
+            <h4 class="text-center"><strong>微信扫码，查班车更方便</strong></h4>
         </div>
         <div class="col-xs-9" style="height: 100%;">
             <div id="map" style="height: 100%;"></div>
@@ -98,12 +101,12 @@
                 for (var i = 0; i < data.result.length; i++)
                 {
                     var imgUrl = "";
-                    (i == 0) ? imgUrl = "/img/station_editing.png" : imgUrl = "/img/station.png";
+                    (i == 0) ? imgUrl = "/img/circle.png" : imgUrl = "/img/circle.png";
                     
-                    var myIcon = new BMap.Icon(imgUrl, new BMap.Size(32, 32));
-                    myIcon.setImageSize(new BMap.Size(32, 32));
-                    myIcon.setAnchor(new BMap.Size(16, 32));
-                    var label = new BMap.Label(i + 1, {offset: new BMap.Size(8, -20)});
+                    var myIcon = new BMap.Icon(imgUrl, new BMap.Size(12, 12));
+                    myIcon.setImageSize(new BMap.Size(12, 12));
+                    myIcon.setAnchor(new BMap.Size(6, 6));
+                    var label = new BMap.Label(i + 1, {offset: new BMap.Size(0, -24)});
                     var stationMarker = new BMap.Marker(new BMap.Point(data.result[i].x, data.result[i].y), {icon: myIcon});
                     stationMarker.setLabel(label);
                     map.addOverlay(stationMarker);
