@@ -29,8 +29,8 @@
 		echo $this->fetch('script');
 	?>
 </head>
-<body style="height: 100%">
-    <div class="container" style="margin-top: -120px; height: 100%; padding: 120px 0 0 0;">
+<body style="height: 100%; font-family: 'Microsoft YaHei',微软雅黑,宋体,Arial,sans-serif;">
+    <div class="container-fluid" style="margin-left: 50px; margin-right: 50px; margin-top: -120px; height: 100%; padding: 120px 0 0 0;">
         <?php echo $this->fetch('content'); ?>
     </div>
 </body>

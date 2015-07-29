@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="page-header" style="margin-top: 10px;">
-        <h3 class="text-center"><strong>快巴士班车位置查询</strong></h3>
+    <div class="page-header" style="margin-top: 20px;">
+        <h4 class="text-center"><strong>快巴士班车位置查询</strong></h4>
     </div>
 </div>
 <div class="row" id="maps_display" style="height: 100%;">
@@ -77,7 +77,7 @@
                 }
 
                 map.setViewport(routePoints);
-                map.addOverlay(new BMap.Polyline(routePoints));
+                map.addOverlay(new BMap.Polyline(routePoints, {strokeOpacity: 1}));
             },
             "jsonp"
         );
@@ -102,6 +102,15 @@
                 {
                     var imgUrl = "";
                     (i == 0) ? imgUrl = "/img/circle.png" : imgUrl = "/img/circle.png";
+
+                    if (i == 0)
+                    {
+                        var carrefourIcon = new BMap.Icon("/img/carrefour_logo.jpg", new BMap.Size(36, 36));
+                        carrefourIcon.setImageSize(new BMap.Size(36, 36));
+                        carrefourIcon.setAnchor(new BMap.Size(-8, 18));
+                        var carrefourMarker = new BMap.Marker(new BMap.Point(data.result[i].x, data.result[i].y), {icon: carrefourIcon});
+                        map.addOverlay(carrefourMarker);
+                    }
                     
                     var myIcon = new BMap.Icon(imgUrl, new BMap.Size(12, 12));
                     myIcon.setImageSize(new BMap.Size(12, 12));
@@ -114,6 +123,17 @@
             },
             "jsonp"
         );
+
+        var styleGoogleLite = [
+            {"featureType": "road", "elementType": "all", "stylers": {"lightness": 20}},
+            {"featureType": "highway", "elementType": "geometry", "stylers": {"color": "#f49935"}},
+            {"featureType": "railway", "elementType": "all", "stylers": {"visibility": "off"}},
+            {"featureType": "local", "elementType": "labels", "stylers": {"visibility": "off"}},
+            {"featureType": "water", "elementType": "all", "stylers": {"color": "#d1e5ff"}},
+            {"featureType": "poi", "elementType": "labels", "stylers": {"visibility": "off"}}
+        ];
+
+        map.setMapStyle({styleJson: styleGoogleLite});
     }
 
     function initialize()
@@ -181,7 +201,7 @@
                 {
                     var mapID = "map" + (i + 1);
                     mapHandlers[mapID] = new BMap.Map(mapID);
-                    mapHandlers[mapID].disableDoubleClickZoom();
+                    //mapHandlers[mapID].disableDoubleClickZoom();
 
                     BaiduMapInitialize(buses[i], mapHandlers[mapID]);
                 }
