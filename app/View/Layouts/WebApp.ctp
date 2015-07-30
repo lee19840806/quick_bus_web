@@ -1,12 +1,3 @@
-<?php
-/**
- *
- *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Layouts
- * @since         CakePHP(tm) v 0.10.0.1076
- */
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +10,7 @@
         <script src="/js/jquery-1.11.0.js"></script>
         <script src="/js/jquery.mobile-1.4.5.js"></script>
     </head>
-    
+
     <body data-role="page">
         <?php echo $this->fetch('content'); ?>
     </body>

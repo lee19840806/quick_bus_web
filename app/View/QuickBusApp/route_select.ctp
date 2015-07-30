@@ -12,7 +12,7 @@
         
         foreach ($routes as $id => $name)
         {
-            echo '<li><a href="/QuickBusApp/route_position/' . $id . '">' . $name . '</a></li>';
+            echo '<li><a data-transition="slide" data-ajax="false" href="/QuickBusApp/route_position/' . $id . '">' . $name . '</a></li>';
         }
         ?>
     </ul>

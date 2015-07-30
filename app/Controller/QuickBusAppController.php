@@ -19,7 +19,7 @@ class QuickBusAppController extends AppController {
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Auth->allow('store_select', 'route_select');
+		$this->Auth->allow('store_select', 'route_select', 'route_position');
 	}
 	
 	public function store_select()
@@ -65,7 +65,21 @@ class QuickBusAppController extends AppController {
 	{
 	    $this->layout = 'WebApp';
 	    
+	    $aaa = $this->request->host();
 	    
+	    $route = $this->UserRoute->find('first',
+	        array(
+	            'conditions' => array('UserRoute.id' => $routeID),
+	            'fields' => array(
+	                'UserRoute.id', 'UserRoute.name', 'ViewUserLatestPosition.latitude','ViewUserLatestPosition.longitude', 'ViewUserLatestPosition.heading',
+	                'ViewUserLatestPosition.created', 'ViewUserLatestPosition.run_status'
+	            )
+	        )
+	    );
+	    
+	    $this->set('route', json_encode($route));
+	    $this->set('routeName', $route['UserRoute']['name']);
+	    $this->set('routeID', $route['UserRoute']['id']);
 	}
 }
 
