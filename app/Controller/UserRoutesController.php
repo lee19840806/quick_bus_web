@@ -66,8 +66,8 @@ class UserRoutesController extends AppController {
         {
             $findResult = $this->UserRoute->find('first', array(
                 'conditions' => array(
-                    'user_id' => $this->Auth->user('id'),
-                    'name' => $this->request->data('routeName')
+                    'UserRoute.user_id' => $this->Auth->user('id'),
+                    'UserRoute.name' => $this->request->data('routeName')
                     )
                 )
             );
@@ -91,8 +91,8 @@ class UserRoutesController extends AppController {
     	{
     		$findResult = $this->UserRoute->find('first', array(
     			'conditions' => array(
-    				'user_id' => $this->Auth->user('id'),
-    				'name' => $this->request->data('routeName')
+    				'UserRoute.user_id' => $this->Auth->user('id'),
+    				'UserRoute.name' => $this->request->data('routeName')
     				)
     			)
     		);
