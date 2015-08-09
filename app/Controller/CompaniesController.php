@@ -31,25 +31,6 @@ class CompaniesController extends AppController {
 		$this->set('var', json_encode($companies));
 		$this->render('/Companies/ajaxReturn', 'ajax');
 	}
-	
-	public function getSubCompanies($companyName = NULL)
-	{
-	    $this->request->onlyAllow('post');
-	
-	    $subCompanies = $this->Company->find('first', array(
-	        'conditions' => array('Company.name' => $this->request->data('companyName'))
-	    ));
-	    
-	    $districts = $this->District->find('list');
-	    
-	    foreach ($subCompanies['SubCompany'] as $value)
-	    {
-	        ;
-	    }
-	
-	    $this->set('var', json_encode($subCompanies));
-	    $this->render('/Companies/ajaxReturn', 'ajax');
-	}
 }
 
 

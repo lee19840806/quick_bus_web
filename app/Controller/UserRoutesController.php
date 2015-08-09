@@ -19,6 +19,12 @@ class UserRoutesController extends AppController {
  */
 	public $components = array('Paginator', 'Session');
     
+	public function beforeFilter()
+	{
+	    parent::beforeFilter();
+	    $this->Auth->allow('getUserRoute');
+	}
+	
 /**
  * index method
  *
@@ -201,4 +207,23 @@ class UserRoutesController extends AppController {
     	$this->set('stationsAndTriggers', json_encode($stationsAndTriggers));
     	$this->set('route', json_encode($route));
     }
+    
+    public function getUserRoute()
+    {
+        $this->request->onlyAllow('post');
+    
+        $route = $this->UserRoute->find('first', array(
+            'conditions' => array('UserRoute.name' => $this->request->data('name')),
+            'fields' => array('UserRoute.*')
+        ));
+    
+        $this->set('var', json_encode($route));
+        $this->render('/Companies/ajaxReturn', 'ajax');
+    }
 }
+
+
+
+
+
+
