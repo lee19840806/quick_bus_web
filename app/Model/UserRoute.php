@@ -59,7 +59,14 @@ class UserRoute extends AppModel {
 			'conditions' => '',
 			'fields' => array('id', 'username'),
 			'order' => ''
-		)
+		),
+	    'SubCompany' => array(
+	        'className' => 'SubCompany',
+	        'foreignKey' => 'sub_company_id',
+	        'conditions' => '',
+	        'fields' => '',
+	        'order' => ''
+	    )
 	);
     
 /**

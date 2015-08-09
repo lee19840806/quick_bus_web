@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: quick_bus_alpha
 -- ------------------------------------------------------
--- Server version	5.6.21
+-- Server version	5.6.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,41 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `companies`
+--
+
+DROP TABLE IF EXISTS `companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `companies` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_companies_id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `districts`
+--
+
+DROP TABLE IF EXISTS `districts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `districts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `city` varchar(50) NOT NULL,
+  `district` varchar(50) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_districts_id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `groups`
@@ -72,7 +107,30 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=257477 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+) ENGINE=InnoDB AUTO_INCREMENT=716730 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sub_companies`
+--
+
+DROP TABLE IF EXISTS `sub_companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sub_companies` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `company_id` int(10) unsigned NOT NULL,
+  `district_id` int(10) unsigned NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_sub_companies_id` (`id`),
+  KEY `FK_sub_companies_companies_id` (`company_id`),
+  KEY `FK_sub_companies_districts_id` (`district_id`),
+  CONSTRAINT `FK_sub_companies_companies_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`),
+  CONSTRAINT `FK_sub_companies_districts_id` FOREIGN KEY (`district_id`) REFERENCES `districts` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +154,7 @@ CREATE TABLE `user_notify_phone_history` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_table1_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9452 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
+) ENGINE=InnoDB AUTO_INCREMENT=10082 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +174,7 @@ CREATE TABLE `user_route_imei_mappings` (
   UNIQUE KEY `UK_user_route_imei_mappings_id` (`id`),
   KEY `FK_user_route_imei_mappings_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_imei_mappings_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +194,7 @@ CREATE TABLE `user_route_points` (
   UNIQUE KEY `UK_user_route_points_id` (`id`),
   KEY `FK_user_route_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1999 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
+) ENGINE=InnoDB AUTO_INCREMENT=2470 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +216,7 @@ CREATE TABLE `user_route_timetables` (
   UNIQUE KEY `UK_user_route_timetables` (`user_station_id`,`day_of_week`,`run_sequence`),
   UNIQUE KEY `UK_user_route_timetables_id` (`id`),
   CONSTRAINT `FK_user_route_timetables_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=841 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2048;
+) ENGINE=InnoDB AUTO_INCREMENT=881 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2048;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,14 +229,17 @@ DROP TABLE IF EXISTS `user_routes`;
 CREATE TABLE `user_routes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
+  `sub_company_id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_user_routes_id` (`id`),
   KEY `FK_user_routes_user_accounts_id` (`user_id`),
+  KEY `FK_user_routes_sub_companies_id` (`sub_company_id`),
+  CONSTRAINT `FK_user_routes_sub_companies_id` FOREIGN KEY (`sub_company_id`) REFERENCES `sub_companies` (`id`),
   CONSTRAINT `FK_user_routes_user_accounts_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +260,7 @@ CREATE TABLE `user_station_points` (
   UNIQUE KEY `UK_user_station_points_id` (`id`),
   KEY `FK_user_station_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_station_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=369 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
+) ENGINE=InnoDB AUTO_INCREMENT=420 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +280,7 @@ CREATE TABLE `user_trigger_points` (
   UNIQUE KEY `UK_user_trigger_points_id` (`id`),
   KEY `FK_user_trigger_points_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_user_trigger_points_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=498 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
+) ENGINE=InnoDB AUTO_INCREMENT=588 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,431 +305,401 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary table structure for view `view_route_passed_stations`
+-- Temporary view structure for view `view_route_passed_stations`
 --
 
 DROP TABLE IF EXISTS `view_route_passed_stations`;
 /*!50001 DROP VIEW IF EXISTS `view_route_passed_stations`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_route_passed_stations` (
-  `user_route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `station_name` tinyint NOT NULL,
-  `trigger_time` tinyint NOT NULL,
-  `minutes_elapsed` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_route_passed_stations` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `route_name`,
+ 1 AS `station_sequence`,
+ 1 AS `station_name`,
+ 1 AS `trigger_time`,
+ 1 AS `minutes_elapsed`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_eligible_gps`
+-- Temporary view structure for view `view_subquery_eligible_gps`
 --
 
 DROP TABLE IF EXISTS `view_subquery_eligible_gps`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_gps`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_eligible_gps` (
-  `id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL,
-  `heading` tinyint NOT NULL,
-  `created` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `station_name` tinyint NOT NULL,
-  `trigger_lat` tinyint NOT NULL,
-  `trigger_lng` tinyint NOT NULL,
-  `trigger_heading` tinyint NOT NULL,
-  `time_diff` tinyint NOT NULL,
-  `gps_diff` tinyint NOT NULL,
-  `heading_diff` tinyint NOT NULL,
-  `latest_created` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_eligible_gps` AS SELECT 
+ 1 AS `id`,
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `latitude`,
+ 1 AS `longitude`,
+ 1 AS `heading`,
+ 1 AS `created`,
+ 1 AS `station_sequence`,
+ 1 AS `station_name`,
+ 1 AS `trigger_lat`,
+ 1 AS `trigger_lng`,
+ 1 AS `trigger_heading`,
+ 1 AS `time_diff`,
+ 1 AS `gps_diff`,
+ 1 AS `heading_diff`,
+ 1 AS `latest_created`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_eligible_stations`
+-- Temporary view structure for view `view_subquery_eligible_stations`
 --
 
 DROP TABLE IF EXISTS `view_subquery_eligible_stations`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_stations`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_eligible_stations` (
-  `id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL,
-  `heading` tinyint NOT NULL,
-  `created` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `station_name` tinyint NOT NULL,
-  `trigger_lat` tinyint NOT NULL,
-  `trigger_lng` tinyint NOT NULL,
-  `trigger_heading` tinyint NOT NULL,
-  `time_diff` tinyint NOT NULL,
-  `gps_diff` tinyint NOT NULL,
-  `heading_diff` tinyint NOT NULL,
-  `latest_created` tinyint NOT NULL,
-  `history_created` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_eligible_stations` AS SELECT 
+ 1 AS `id`,
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `latitude`,
+ 1 AS `longitude`,
+ 1 AS `heading`,
+ 1 AS `created`,
+ 1 AS `station_sequence`,
+ 1 AS `station_name`,
+ 1 AS `trigger_lat`,
+ 1 AS `trigger_lng`,
+ 1 AS `trigger_heading`,
+ 1 AS `time_diff`,
+ 1 AS `gps_diff`,
+ 1 AS `heading_diff`,
+ 1 AS `latest_created`,
+ 1 AS `history_created`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_latest_pos_created`
+-- Temporary view structure for view `view_subquery_latest_pos_created`
 --
 
 DROP TABLE IF EXISTS `view_subquery_latest_pos_created`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_latest_pos_created`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_latest_pos_created` (
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `created` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_latest_pos_created` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `created`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_positions_1_hour`
+-- Temporary view structure for view `view_subquery_positions_1_hour`
 --
 
 DROP TABLE IF EXISTS `view_subquery_positions_1_hour`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_positions_1_hour`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_positions_1_hour` (
-  `id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL,
-  `heading` tinyint NOT NULL,
-  `created` tinyint NOT NULL,
-  `modified` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_positions_1_hour` AS SELECT 
+ 1 AS `id`,
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `latitude`,
+ 1 AS `longitude`,
+ 1 AS `heading`,
+ 1 AS `created`,
+ 1 AS `modified`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_prev_next_run`
+-- Temporary view structure for view `view_subquery_prev_next_run`
 --
 
 DROP TABLE IF EXISTS `view_subquery_prev_next_run`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_prev_next_run`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_prev_next_run` (
-  `user_route_id` tinyint NOT NULL,
-  `time_now` tinyint NOT NULL,
-  `sequence` tinyint NOT NULL,
-  `name` tinyint NOT NULL,
-  `day_of_week` tinyint NOT NULL,
-  `run_sequence` tinyint NOT NULL,
-  `planned` tinyint NOT NULL,
-  `diff_now_and_planned` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_prev_next_run` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `time_now`,
+ 1 AS `sequence`,
+ 1 AS `name`,
+ 1 AS `day_of_week`,
+ 1 AS `run_sequence`,
+ 1 AS `planned`,
+ 1 AS `diff_now_and_planned`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_route_hist_60_days`
+-- Temporary view structure for view `view_subquery_route_hist_60_days`
 --
 
 DROP TABLE IF EXISTS `view_subquery_route_hist_60_days`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_route_hist_60_days`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_route_hist_60_days` (
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `replay_day` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_route_hist_60_days` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `replay_day`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_route_phone_pair`
+-- Temporary view structure for view `view_subquery_route_phone_pair`
 --
 
 DROP TABLE IF EXISTS `view_subquery_route_phone_pair`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_route_phone_pair`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_route_phone_pair` (
-  `user_id` tinyint NOT NULL,
-  `username` tinyint NOT NULL,
-  `route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `phone_number` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_route_phone_pair` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `username`,
+ 1 AS `route_id`,
+ 1 AS `route_name`,
+ 1 AS `phone_number`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_route_point_cnt`
+-- Temporary view structure for view `view_subquery_route_point_cnt`
 --
 
 DROP TABLE IF EXISTS `view_subquery_route_point_cnt`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_route_point_cnt`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_route_point_cnt` (
-  `user_route_id` tinyint NOT NULL,
-  `route_point_cnt` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_route_point_cnt` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `route_point_cnt`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_station_cnt`
+-- Temporary view structure for view `view_subquery_station_cnt`
 --
 
 DROP TABLE IF EXISTS `view_subquery_station_cnt`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_station_cnt`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_station_cnt` (
-  `user_route_id` tinyint NOT NULL,
-  `station_cnt` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_station_cnt` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `station_cnt`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_today_positions`
+-- Temporary view structure for view `view_subquery_today_positions`
 --
 
 DROP TABLE IF EXISTS `view_subquery_today_positions`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_today_positions`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_today_positions` (
-  `id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL,
-  `heading` tinyint NOT NULL,
-  `created` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_today_positions` AS SELECT 
+ 1 AS `id`,
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `latitude`,
+ 1 AS `longitude`,
+ 1 AS `heading`,
+ 1 AS `created`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_subquery_trigger_cnt`
+-- Temporary view structure for view `view_subquery_trigger_cnt`
 --
 
 DROP TABLE IF EXISTS `view_subquery_trigger_cnt`;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_trigger_cnt`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_subquery_trigger_cnt` (
-  `user_route_id` tinyint NOT NULL,
-  `trigger_cnt` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_subquery_trigger_cnt` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `trigger_cnt`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_latest_pos_phone`
+-- Temporary view structure for view `view_user_latest_pos_phone`
 --
 
 DROP TABLE IF EXISTS `view_user_latest_pos_phone`;
 /*!50001 DROP VIEW IF EXISTS `view_user_latest_pos_phone`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_latest_pos_phone` (
-  `real_time_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL,
-  `heading` tinyint NOT NULL,
-  `created` tinyint NOT NULL,
-  `modified` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `phone_number` tinyint NOT NULL,
-  `time_diff` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_latest_pos_phone` AS SELECT 
+ 1 AS `real_time_id`,
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `latitude`,
+ 1 AS `longitude`,
+ 1 AS `heading`,
+ 1 AS `created`,
+ 1 AS `modified`,
+ 1 AS `route_name`,
+ 1 AS `phone_number`,
+ 1 AS `time_diff`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_latest_positions`
+-- Temporary view structure for view `view_user_latest_positions`
 --
 
 DROP TABLE IF EXISTS `view_user_latest_positions`;
 /*!50001 DROP VIEW IF EXISTS `view_user_latest_positions`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_latest_positions` (
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `name` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL,
-  `heading` tinyint NOT NULL,
-  `created` tinyint NOT NULL,
-  `run_status` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_latest_positions` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `name`,
+ 1 AS `latitude`,
+ 1 AS `longitude`,
+ 1 AS `heading`,
+ 1 AS `created`,
+ 1 AS `run_status`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_notify_phone`
+-- Temporary view structure for view `view_user_notify_phone`
 --
 
 DROP TABLE IF EXISTS `view_user_notify_phone`;
 /*!50001 DROP VIEW IF EXISTS `view_user_notify_phone`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_notify_phone` (
-  `real_time_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `username` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `station_name` tinyint NOT NULL,
-  `phone_number` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_notify_phone` AS SELECT 
+ 1 AS `real_time_id`,
+ 1 AS `user_id`,
+ 1 AS `username`,
+ 1 AS `user_route_id`,
+ 1 AS `route_name`,
+ 1 AS `station_sequence`,
+ 1 AS `station_name`,
+ 1 AS `phone_number`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_operation_status`
+-- Temporary view structure for view `view_user_operation_status`
 --
 
 DROP TABLE IF EXISTS `view_user_operation_status`;
 /*!50001 DROP VIEW IF EXISTS `view_user_operation_status`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_operation_status` (
-  `user_route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `latest` tinyint NOT NULL,
-  `time_now` tinyint NOT NULL,
-  `day_of_week` tinyint NOT NULL,
-  `diff_latest_and_now` tinyint NOT NULL,
-  `previous_run_sequence` tinyint NOT NULL,
-  `previous_planned_diff` tinyint NOT NULL,
-  `previous_planned` tinyint NOT NULL,
-  `next_run_sequence` tinyint NOT NULL,
-  `next_planned_diff` tinyint NOT NULL,
-  `next_planned` tinyint NOT NULL,
-  `run_status` tinyint NOT NULL,
-  `ph` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_operation_status` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `route_name`,
+ 1 AS `latest`,
+ 1 AS `time_now`,
+ 1 AS `day_of_week`,
+ 1 AS `diff_latest_and_now`,
+ 1 AS `previous_run_sequence`,
+ 1 AS `previous_planned_diff`,
+ 1 AS `previous_planned`,
+ 1 AS `next_run_sequence`,
+ 1 AS `next_planned_diff`,
+ 1 AS `next_planned`,
+ 1 AS `run_status`,
+ 1 AS `ph`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_route_detail`
+-- Temporary view structure for view `view_user_route_detail`
 --
 
 DROP TABLE IF EXISTS `view_user_route_detail`;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_detail`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_route_detail` (
-  `user_id` tinyint NOT NULL,
-  `username` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `station_id` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `station_name` tinyint NOT NULL,
-  `station_lng` tinyint NOT NULL,
-  `station_lat` tinyint NOT NULL,
-  `trigger_lng` tinyint NOT NULL,
-  `trigger_lat` tinyint NOT NULL,
-  `trigger_heading` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_route_detail` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `username`,
+ 1 AS `user_route_id`,
+ 1 AS `route_name`,
+ 1 AS `station_id`,
+ 1 AS `station_sequence`,
+ 1 AS `station_name`,
+ 1 AS `station_lng`,
+ 1 AS `station_lat`,
+ 1 AS `trigger_lng`,
+ 1 AS `trigger_lat`,
+ 1 AS `trigger_heading`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_route_history_days`
+-- Temporary view structure for view `view_user_route_history_days`
 --
 
 DROP TABLE IF EXISTS `view_user_route_history_days`;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_history_days`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_route_history_days` (
-  `user_id` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `name` tinyint NOT NULL,
-  `replay_day` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_route_history_days` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `user_route_id`,
+ 1 AS `name`,
+ 1 AS `replay_day`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_route_maps`
+-- Temporary view structure for view `view_user_route_maps`
 --
 
 DROP TABLE IF EXISTS `view_user_route_maps`;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_maps`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_route_maps` (
-  `user_route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `sequence` tinyint NOT NULL,
-  `latitude` tinyint NOT NULL,
-  `longitude` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_route_maps` AS SELECT 
+ 1 AS `user_route_id`,
+ 1 AS `route_name`,
+ 1 AS `sequence`,
+ 1 AS `latitude`,
+ 1 AS `longitude`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_route_phone_number`
+-- Temporary view structure for view `view_user_route_phone_number`
 --
 
 DROP TABLE IF EXISTS `view_user_route_phone_number`;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_phone_number`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_route_phone_number` (
-  `user_id` tinyint NOT NULL,
-  `username` tinyint NOT NULL,
-  `route_id` tinyint NOT NULL,
-  `route_name` tinyint NOT NULL,
-  `station_sequence` tinyint NOT NULL,
-  `station_name` tinyint NOT NULL,
-  `station_lng` tinyint NOT NULL,
-  `station_lat` tinyint NOT NULL,
-  `trigger_lng` tinyint NOT NULL,
-  `trigger_lat` tinyint NOT NULL,
-  `trigger_heading` tinyint NOT NULL,
-  `phone_number` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_route_phone_number` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `username`,
+ 1 AS `route_id`,
+ 1 AS `route_name`,
+ 1 AS `station_sequence`,
+ 1 AS `station_name`,
+ 1 AS `station_lng`,
+ 1 AS `station_lat`,
+ 1 AS `trigger_lng`,
+ 1 AS `trigger_lat`,
+ 1 AS `trigger_heading`,
+ 1 AS `phone_number`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `view_user_route_summary`
+-- Temporary view structure for view `view_user_route_summary`
 --
 
 DROP TABLE IF EXISTS `view_user_route_summary`;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_summary`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `view_user_route_summary` (
-  `user_id` tinyint NOT NULL,
-  `username` tinyint NOT NULL,
-  `user_route_id` tinyint NOT NULL,
-  `name` tinyint NOT NULL,
-  `modified` tinyint NOT NULL,
-  `route_point_cnt` tinyint NOT NULL,
-  `station_cnt` tinyint NOT NULL,
-  `trigger_cnt` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `view_user_route_summary` AS SELECT 
+ 1 AS `user_id`,
+ 1 AS `username`,
+ 1 AS `user_route_id`,
+ 1 AS `name`,
+ 1 AS `modified`,
+ 1 AS `route_point_cnt`,
+ 1 AS `station_cnt`,
+ 1 AS `trigger_cnt`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Dumping events for database 'quick_bus_alpha'
---
-
---
--- Dumping routines for database 'quick_bus_alpha'
---
 
 --
 -- Final view structure for view `view_route_passed_stations`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_route_passed_stations`*/;
 /*!50001 DROP VIEW IF EXISTS `view_route_passed_stations`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -687,7 +718,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_eligible_gps`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_eligible_gps`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_gps`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -706,7 +736,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_eligible_stations`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_eligible_stations`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_eligible_stations`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -725,7 +754,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_latest_pos_created`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_latest_pos_created`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_latest_pos_created`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -744,7 +772,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_positions_1_hour`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_positions_1_hour`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_positions_1_hour`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -763,7 +790,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_prev_next_run`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_prev_next_run`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_prev_next_run`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -782,7 +808,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_route_hist_60_days`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_route_hist_60_days`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_route_hist_60_days`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -801,7 +826,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_route_phone_pair`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_route_phone_pair`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_route_phone_pair`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -820,7 +844,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_route_point_cnt`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_route_point_cnt`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_route_point_cnt`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -839,7 +862,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_station_cnt`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_station_cnt`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_station_cnt`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -858,7 +880,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_today_positions`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_today_positions`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_today_positions`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -877,7 +898,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_subquery_trigger_cnt`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_subquery_trigger_cnt`*/;
 /*!50001 DROP VIEW IF EXISTS `view_subquery_trigger_cnt`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -896,7 +916,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_latest_pos_phone`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_latest_pos_phone`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_latest_pos_phone`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -915,7 +934,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_latest_positions`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_latest_positions`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_latest_positions`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -934,7 +952,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_notify_phone`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_notify_phone`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_notify_phone`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -953,7 +970,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_operation_status`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_operation_status`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_operation_status`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -972,7 +988,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_route_detail`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_route_detail`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_detail`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -991,7 +1006,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_route_history_days`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_route_history_days`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_history_days`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1010,7 +1024,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_route_maps`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_route_maps`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_maps`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1029,7 +1042,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_route_phone_number`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_route_phone_number`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_phone_number`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1048,7 +1060,6 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `view_user_route_summary`
 --
 
-/*!50001 DROP TABLE IF EXISTS `view_user_route_summary`*/;
 /*!50001 DROP VIEW IF EXISTS `view_user_route_summary`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1072,4 +1083,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-10 11:01:07
+-- Dump completed on 2015-08-09 19:06:13
