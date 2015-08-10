@@ -14,7 +14,7 @@ class District extends AppModel {
             'className' => 'SubCompany',
             'foreignKey' => 'district_id',
             'conditions' => '',
-            'order' => 'SubCompany.id',
+            'order' => '',
             'limit' => '',
             'dependent' => true
         )

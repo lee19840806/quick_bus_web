@@ -19,7 +19,7 @@ class SubCompaniesController extends AppController {
 	public function beforeFilter()
 	{
 	    parent::beforeFilter();
-	    $this->Auth->allow('getSubCompaniesByCompany', 'getSubCompaniesByDistrict');
+	    $this->Auth->allow('getSubCompaniesByCompany', 'getSubCompaniesByDistrict', 'getNearbySubCompanies');
 	}
 	
 	public function getSubCompaniesByCompany()
@@ -47,6 +47,21 @@ class SubCompaniesController extends AppController {
 	    ));
 	
 	    $this->set('var', json_encode($subCompanies));
+	    $this->render('/Companies/ajaxReturn', 'ajax');
+	}
+	
+	public function getNearbySubCompanies()
+	{
+	    $this->request->onlyAllow('post');
+
+	    $nearbySubCompanies = $this->SubCompany->getNearbySubCompanies(
+	        $this->request->data('companyName'),
+	        $this->request->data('latitude'),
+	        $this->request->data('longitude'),
+	        $this->request->data('distance')
+	    );
+	
+	    $this->set('var', json_encode($nearbySubCompanies));
 	    $this->render('/Companies/ajaxReturn', 'ajax');
 	}
 }

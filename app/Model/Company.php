@@ -6,14 +6,6 @@ App::uses('AppModel', 'Model');
  * @property SubCompany $SubCompany
  */
 class Company extends AppModel {
-    
-    public $primaryKey = 'id';
-    
-    public $validate = array(
-        'id' => array(
-            'rule' => 'numeric'
-        )
-    );
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -22,7 +14,7 @@ class Company extends AppModel {
             'className' => 'SubCompany',
             'foreignKey' => 'company_id',
             'conditions' => '',
-            'order' => 'SubCompany.id',
+            'order' => '',
             'limit' => '',
             'dependent' => true
         )
