@@ -25,6 +25,7 @@ class CompaniesController extends AppController {
     public function getAllCompanies()
     {
 		$this->request->onlyAllow('post');
+		$this->response->header('Access-Control-Allow-Origin', '*');
         
 		$companies = $this->Company->find('all', array('recursive' => 0));
         
