@@ -22,7 +22,7 @@ class UserRoutesController extends AppController {
 	public function beforeFilter()
 	{
 	    parent::beforeFilter();
-	    $this->Auth->allow('getUserRoute');
+	    $this->Auth->allow('getUserRoute', 'getUserRoutesBySubCompanyID', 'getUserRouteByRouteID');
 	}
 	
 /**
@@ -215,6 +215,37 @@ class UserRoutesController extends AppController {
         $route = $this->UserRoute->find('first', array(
             'conditions' => array('UserRoute.name' => $this->request->data('name')),
             'fields' => array('UserRoute.*')
+        ));
+    
+        $this->set('var', json_encode($route));
+        $this->render('/Companies/ajaxReturn', 'ajax');
+    }
+    
+    public function getUserRoutesBySubCompanyID()
+    {
+        $this->request->onlyAllow('post');
+        $this->response->header('Access-Control-Allow-Origin', '*');
+    
+        $route = $this->UserRoute->find('all', array(
+            'conditions' => array('UserRoute.sub_company_id' => $this->request->data('subCompanyID')),
+            'order' => array('UserRoute.name'),
+            'recursive' => -1
+        ));
+    
+        $this->set('var', json_encode($route));
+        $this->render('/Companies/ajaxReturn', 'ajax');
+    }
+    
+    public function getUserRouteByRouteID()
+    {
+        $this->request->onlyAllow('post');
+        $this->response->header('Access-Control-Allow-Origin', '*');
+    
+        $route = $this->UserRoute->find('first', array(
+            'conditions' => array('UserRoute.id' => $this->request->data('routeID')),
+            'fields' => array('UserRoute.id', 'UserRoute.name', 'SubCompany.id', 'SubCompany.company_id', 'SubCompany.district_id', 'SubCompany.name'),
+            'order' => array('UserRoute.name'),
+            'recursive' => 1
         ));
     
         $this->set('var', json_encode($route));

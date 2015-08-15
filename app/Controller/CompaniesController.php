@@ -19,7 +19,7 @@ class CompaniesController extends AppController {
 	public function beforeFilter()
 	{
 	    parent::beforeFilter();
-	    $this->Auth->allow('getAllCompanies');
+	    $this->Auth->allow('getAllCompanies', 'getCompanies');
 	}
     
     public function getAllCompanies()
@@ -27,7 +27,10 @@ class CompaniesController extends AppController {
 		$this->request->onlyAllow('post');
 		$this->response->header('Access-Control-Allow-Origin', '*');
         
-		$companies = $this->Company->find('all', array('recursive' => 0));
+		$companies = $this->Company->find('all', array(
+		    'order' => array('Company.name'),
+		    'recursive' => 0
+		));
         
 		$this->set('var', json_encode($companies));
 		$this->render('/Companies/ajaxReturn', 'ajax');

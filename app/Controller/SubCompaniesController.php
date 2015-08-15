@@ -19,7 +19,7 @@ class SubCompaniesController extends AppController {
 	public function beforeFilter()
 	{
 	    parent::beforeFilter();
-	    $this->Auth->allow('getSubCompaniesByCompany', 'getSubCompaniesByDistrict', 'getNearbySubCompanies');
+	    $this->Auth->allow('getSubCompaniesByCompany', 'getSubCompaniesByDistrict', 'getNearbySubCompanies', 'getSubCompaniesByCompanyID');
 	}
 	
 	public function getSubCompaniesByCompany()
@@ -62,6 +62,21 @@ class SubCompaniesController extends AppController {
 	    );
 	
 	    $this->set('var', json_encode($nearbySubCompanies));
+	    $this->render('/Companies/ajaxReturn', 'ajax');
+	}
+	
+	public function getSubCompaniesByCompanyID()
+	{
+	    $this->request->onlyAllow('post');
+	    $this->response->header('Access-Control-Allow-Origin', '*');
+	
+	    $subCompanies = $this->SubCompany->find('all', array(
+	        'conditions' => array('SubCompany.company_id' => $this->request->data('companyID')),
+	        'order' => array('SubCompany.name'),
+	        'recursive' => -1
+	    ));
+	
+	    $this->set('var', json_encode($subCompanies));
 	    $this->render('/Companies/ajaxReturn', 'ajax');
 	}
 }
