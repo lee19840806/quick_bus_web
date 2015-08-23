@@ -7,19 +7,13 @@
 </div>
 <div class="row" style="display: none">
     <div id="infoArea" class="col-xs-12" style="height: 100%;">
-        <div class="col-xs-3">
+        <div class="col-xs-2">
             <h4 id="title">欢迎光临家乐福宝山店</h4>
             <hr>
             <h4><strong>班车状态</strong></h4>
             <ul id="busStatus" class="list-unstyled">
                 <li>家乐福万里店1号班车</li>
                 <li>正常运营</li>
-            </ul>
-            <hr>
-            <h4><strong>站点信息</strong></h4>
-            <ul id="stations" class="list-unstyled">
-                <li id="station1"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 1. 家乐福始发站</li>
-                <li id="station2"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 2. 大华路455弄</li>
             </ul>
             <hr>
             <h4><strong>公告</strong></h4>
@@ -33,10 +27,17 @@
             </div>
             <hr>
             <img src="/img/wanli_qr_code.png" class="img-responsive center-block" alt="Responsive image">
-            <h4 class="text-center"><strong>微信扫码，查班车更方便</strong></h4>
+            <h4 class="text-center"><strong>微信扫码查班车</strong></h4>
         </div>
-        <div class="col-xs-9" style="height: 100%;">
+        <div class="col-xs-8" style="height: 100%;">
             <div id="map" style="height: 100%;"></div>
+        </div>
+        <div class="col-xs-2">
+            <h4><strong>站点信息</strong></h4>
+            <ul id="stations" class="list-unstyled">
+                <li id="station1"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 1. 家乐福始发站</li>
+                <li id="station2"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 2. 大华路455弄</li>
+            </ul>
         </div>
     </div>
 </div>
