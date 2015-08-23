@@ -8,7 +8,7 @@
 <div class="row" style="display: none">
     <div id="infoArea" class="col-xs-12" style="height: 100%;">
         <div class="col-xs-3">
-            <h4 id="title">欢迎光临家乐福万里店</h4>
+            <h4 id="title">欢迎光临家乐福宝山店</h4>
             <hr>
             <h4><strong>班车状态</strong></h4>
             <ul id="busStatus" class="list-unstyled">
@@ -41,15 +41,18 @@
     </div>
 </div>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jENePgN7TufGt711E1uIb7BA"></script>
+<script type="text/javascript" src="/js/MapWrapper.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
 <script type="text/javascript">
     var NumMapsPerScreen = 1;
     var screenSwitchInterval = 10000;
     var getGpsInterval = 10000;
     var progressUpdateFrequency = 2000;
+    var intervalHandler;
     
     var progressValue = 0;
     var mapHandlers = {};
+    var gpsMarkers = {};
     var numberOfScreens = 0;
     var currentScreen = 0;
 
@@ -140,7 +143,7 @@
     {
         $.ajax(
         {
-            url: "/ViewUserLatestPositions/get_carrefour_buses_wanli",
+            url: "/ViewUserLatestPositions/get_carrefour_buses_baoshan",
             type: "GET",
             timeout: 15000,
             success: function(result) {
@@ -163,7 +166,7 @@
                             var infoArea = $("div[id='infoArea']").clone();
                             infoArea.attr("id", "infoArea" + ((i * NumMapsPerScreen) + j + 1));
                             
-                            infoArea.find("#title").html("<strong>欢迎光临家乐福万里店</strong>");
+                            infoArea.find("#title").html("<strong>欢迎光临家乐福宝山店</strong>");
                             
                             var busStatus = infoArea.find("#busStatus");
                             busStatus.empty();
@@ -199,14 +202,18 @@
 
                 for (var i = 0; i < numberOfBuses; i++)
                 {
+                    var routeName = buses[i]["UserRoute"]["name"];
                     var mapID = "map" + (i + 1);
-                    mapHandlers[mapID] = new BMap.Map(mapID);
-                    //mapHandlers[mapID].disableDoubleClickZoom();
+                    mapHandlers[routeName] = new BMap.Map(mapID);
+                    //mapHandlers[routeName].disableDoubleClickZoom();
 
-                    BaiduMapInitialize(buses[i], mapHandlers[mapID]);
+                    BaiduMapInitialize(buses[i], mapHandlers[routeName]);
                 }
 
-                setTimeout(function() {setInterval(UpdateProgressBar, progressUpdateFrequency);}, 5000);
+                setTimeout(function() {
+                    setInterval(UpdateProgressBar, progressUpdateFrequency);
+                    setInterval(UpdatePositions, getGpsInterval);
+                    }, 5000);
             },
             error: function(xhr, status) {
                 alert("初始化错误，请重新打开浏览器");
@@ -231,6 +238,88 @@
 
         progressValue += progressUpdateFrequency;
         progressValue = progressValue % (screenSwitchInterval);
+    }
+
+    function UpdatePositions()
+    {
+        $.ajax(
+            {
+                url: "/ViewUserLatestPositions/get_carrefour_buses_baoshan",
+                type: "GET",
+                timeout: 10000,
+                success: function(result) {
+                    var buses = JSON.parse(result);
+                    var numberOfBuses = buses.length;
+
+                    var convertPoints = "";
+                    var routeNameIndex = {};
+                    
+                    for (var i = 0; i < numberOfBuses; i++)
+                    {
+                        convertPoints += buses[i]["ViewUserLatestPosition"]["longitude"] + "," + buses[i]["ViewUserLatestPosition"]["latitude"] + ";";
+                        //routeNameIndex[buses[i]["UserRoute"]["name"]] = i;
+                        routeNameIndex[i] = buses[i]["UserRoute"]["name"];
+                    }
+
+                    convertPoints = convertPoints.substring(0, convertPoints.length - 1);
+                    var baiduConvertUrl = "http://api.map.baidu.com/geoconv/v1/?coords=" + convertPoints + "&ak=jENePgN7TufGt711E1uIb7BA";
+
+                    $.get(
+                        baiduConvertUrl,
+                        "",
+                        function(data) {
+                            for (var j = 0; j < data.result.length; j++)
+                            {
+                                if (gpsMarkers[routeNameIndex[j]] != undefined)
+                                {
+                                    gpsMarkers[routeNameIndex[j]].getMap().removeOverlay(gpsMarkers[routeNameIndex[j]]);
+                                }
+                                
+                                var busIcon = new BMap.Icon("/img/bus.ico", new BMap.Size(36, 36));
+                                busIcon.setImageSize(new BMap.Size(36, 36));
+                                busIcon.setAnchor(new BMap.Size(18, 18));
+                                var gpsMarker = new BMap.Marker(new BMap.Point(data.result[j].x, data.result[j].y), {icon: busIcon});
+                                gpsMarkers[routeNameIndex[j]] = gpsMarker;
+                                mapHandlers[routeNameIndex[j]].addOverlay(gpsMarkers[routeNameIndex[j]]);
+                            }
+                        },
+                        "jsonp"
+                    );
+
+                    for (var m = 0; m < numberOfBuses; m++)
+                    {
+                        var convertPoint = buses[m]["ViewUserLatestPosition"]["longitude"] + "," + buses[m]["ViewUserLatestPosition"]["latitude"];
+                        var baiduConvertUrl = "http://api.map.baidu.com/geoconv/v1/?coords=" + convertPoint + "&ak=jENePgN7TufGt711E1uIb7BA";
+                        
+                        $.ajax({
+                            url: baiduConvertUrl,
+                            async: false,
+                            dataType: "jsonp",
+                            success: function(data) {
+                                for (var j = 0; j < data.result.length; j++)
+                                {
+                                    if (m < numberOfBuses)
+                                    {
+                                        var b = m;
+                                        var busIcon = new BMap.Icon("/img/bus.ico", new BMap.Size(36, 36));
+                                        busIcon.setImageSize(new BMap.Size(36, 36));
+                                        busIcon.setAnchor(new BMap.Size(18, 18));
+                                        var gpsMarker = new BMap.Marker(new BMap.Point(data.result[j].x, data.result[j].y), {icon: busIcon});
+                                        gpsMarkers[buses[m]["UserRoute"]["name"]] = gpsMarker;
+                                        mapHandlers[buses[m]["UserRoute"]["name"]].addOverlay(gpsMarkers[buses[m]["UserRoute"]["name"]]);
+    
+                                        var mp = gpsMarkers[buses[m]["UserRoute"]["name"]].getMap();
+                                        var a = 1;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, status) {
+                    
+                }
+            });
     }
 
     $(document).ready(initialize);
