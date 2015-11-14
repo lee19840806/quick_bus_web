@@ -165,6 +165,7 @@ class RealTimePosition extends AppModel {
     	$imei = $realTimePosition['imei'];
     	$latitude = (double)$realTimePosition['latitude'];
     	$longitude = (double)$realTimePosition['longitude'];
+    	$speed = (int)$realTimePosition['speed'];
     	$heading = (int)$realTimePosition['heading'];
     
     	$latitude_error = ($latitude < -90 || $latitude > 90);
@@ -191,6 +192,7 @@ class RealTimePosition extends AppModel {
     		'user_route_id' => $user_route_id,
     		'latitude' => $latitude,
     		'longitude' => $longitude,
+    	    'speed' => $speed,
     		'heading' => $heading
     	);
     

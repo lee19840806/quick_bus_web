@@ -98,6 +98,7 @@ CREATE TABLE `real_time_positions` (
   `user_route_id` int(10) unsigned NOT NULL,
   `latitude` decimal(12,8) NOT NULL,
   `longitude` decimal(12,8) NOT NULL,
+  `speed` int(10) unsigned DEFAULT NULL,
   `heading` int(10) unsigned NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -107,7 +108,7 @@ CREATE TABLE `real_time_positions` (
   KEY `FK_real_time_positions_users_id` (`user_id`),
   CONSTRAINT `FK_real_time_positions_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `FK_real_time_positions_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=716730 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+) ENGINE=InnoDB AUTO_INCREMENT=744415 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +155,7 @@ CREATE TABLE `user_notify_phone_history` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_table1_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10082 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
+) ENGINE=InnoDB AUTO_INCREMENT=10130 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=275;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +175,7 @@ CREATE TABLE `user_route_imei_mappings` (
   UNIQUE KEY `UK_user_route_imei_mappings_id` (`id`),
   KEY `FK_user_route_imei_mappings_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_imei_mappings_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +195,7 @@ CREATE TABLE `user_route_points` (
   UNIQUE KEY `UK_user_route_points_id` (`id`),
   KEY `FK_user_route_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_route_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2470 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
+) ENGINE=InnoDB AUTO_INCREMENT=2934 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=50;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,10 +237,8 @@ CREATE TABLE `user_routes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_user_routes_id` (`id`),
   KEY `FK_user_routes_user_accounts_id` (`user_id`),
-  KEY `FK_user_routes_sub_companies_id` (`sub_company_id`),
-  CONSTRAINT `FK_user_routes_sub_companies_id` FOREIGN KEY (`sub_company_id`) REFERENCES `sub_companies` (`id`),
   CONSTRAINT `FK_user_routes_user_accounts_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1170;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,7 +259,7 @@ CREATE TABLE `user_station_points` (
   UNIQUE KEY `UK_user_station_points_id` (`id`),
   KEY `FK_user_station_points_user_routes_id` (`user_route_id`),
   CONSTRAINT `FK_user_station_points_user_routes_id` FOREIGN KEY (`user_route_id`) REFERENCES `user_routes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=420 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
+) ENGINE=InnoDB AUTO_INCREMENT=492 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,7 +279,7 @@ CREATE TABLE `user_trigger_points` (
   UNIQUE KEY `UK_user_trigger_points_id` (`id`),
   KEY `FK_user_trigger_points_user_station_points_id` (`user_station_id`),
   CONSTRAINT `FK_user_trigger_points_user_station_points_id` FOREIGN KEY (`user_station_id`) REFERENCES `user_station_points` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=588 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
+) ENGINE=InnoDB AUTO_INCREMENT=681 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=237;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1083,4 +1082,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-09 19:06:13
+-- Dump completed on 2015-11-14 16:01:32
